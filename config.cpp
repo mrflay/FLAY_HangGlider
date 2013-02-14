@@ -14,7 +14,7 @@ class CfgPatches
 {
 	class FLAY_HangGlider
 	{
-		units[] = {"FLAY_HangGlider"};
+		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DeathWing","FLAY_WingSuit"};
 		requiredVersion = 1.04;
 		requiredAddons[] = {"CACharacters","CAData"};
 	};
@@ -39,31 +39,27 @@ class CfgVehicles
 		class AnimationSources;
 		class Turrets;
 	};
-	class FLAY_HangGlider: Plane
+	
+	class FLAY_GliderBase: Plane
 	{
-		class EventHandlers: DefaultEventhandlers
-		{
-			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init.sqf"";";
-		};
-
-		weapons[] = {"HangGliderRPK","HangGliderBombs"};
-		magazines[] = {"300Rnd_545x39_RPK_HangGlider","4Rnd_Bomb_HangGlider","2000Rnd_762x51_M134"};	
-		gunAimDown = 0.15;
-		armor = 5;
+		weapons[] = {};
+		magazines[] = {};	
+		armor = 1;
 		scope = 2;
-		displayName = "Hang Glider";
-		model = "FLAY\FLAY_HangGlider\hangglider2";
+
 		ejectSpeed[] = {0,0,0};
 		side = 4;
 		Icon = "\ca\air\data\map_ico\icomap_Para_CA.paa";
 		mapSize = 5;
 		nameSound = "veh_parachute";
-		accuracy = 0.5;
-		camouflage = 2;
+		accuracy = 0.1;
+		camouflage = 1;
 		audible = 0;
 		hasGunner = 0;
 		fuelCapacity = 0;
+		
 		picture = "\ca\air\data\ico\Para_CA.paa";
+		
 		soundEngine[] = {};
 		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
 		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
@@ -71,36 +67,33 @@ class CfgVehicles
 		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
 		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
 		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
-		//gunnerCanSee = "2+8+CanSeePeripheral";
-		//driverCanSee = "1+2+4+8+16+32";
-		//driverCanSee = "2+4+8+32";
+
 		driverCanSee = "2";
 		secondaryExplosion = -1;
-		extCameraPosition[] = {0,3,-9};
+		extCameraPosition[] = {0,1,-3};
 		destrType = "DestructNo";
-		enableGPS = 1;
+		enableGPS = 0;
 
-		driverOpticsModel = "\ca\weapons\optika_empty";		
+		driverOpticsModel = "\ca\weapons\optika_empty";
+		
 		class ViewPilot: ViewPilot
 		{
-			initFov = 1.2;
+			initFov = 1.0;
 			minFov = 0.5;
-			maxFov = 1.2;
+			maxFov = 1.0;
 			initAngleX = -80;
-			minAngleX = -89;
-			maxAngleX = 89;
+			minAngleX = -80;
+			maxAngleX = 80;
 			initAngleY = 0;
-			minAngleY = -160;
-			maxAngleY = 160;
+			minAngleY = -110;
+			maxAngleY = 110;
 		};
 
-		driverAction = "HangGlider_Pilot";
-		driverInAction = "HangGlider_Pilot";
+		driverAction = "WingSuit_Pilot";
+		driverInAction = "WingSuit_Pilot";
 		getInAction = "GetInLow";
 		getOutAction = "GetOutLow";
 		
-		HeadAimDown = 8;
-
 		occludeSoundsWhenIn = 1.0;
 		obstructSoundsWhenIn = 1.0;
 		class Turrets {};
@@ -109,19 +102,122 @@ class CfgVehicles
 		{
 			disabled = 1;
 		};
+		
 		gearRetracting = 0;
 		flaps = 0;
-		envelope[] = { 0.4, 0.9, 1.7, 2.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
-		//               0,  18,  36,  54,  72,  90, 108, 126, 144, 162, 180, 198, 216, 234, 252
-		maxSpeed = 180;
-		aileronSensitivity = 2.0; //0.8
-		elevatorSensitivity = 0.12; // 0.1
-		wheelSteeringSensitivity = 0.7; //0.5
-		noseDownCoef = 0.0025;
-		ejectDeadDriver = true;
-		driverCompartments = "Compartment1";
+		envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
+
+		maxSpeed = 200;
+		aileronSensitivity = 0.5;
+		elevatorSensitivity = 0.05;
+		wheelSteeringSensitivity = 0.001;
+		noseDownCoef = 0.1;
+		ejectDeadDriver = false;
 
 	};
+	
+	class FLAY_HangGlider: FLAY_GliderBase
+	{
+		class EventHandlers: DefaultEventhandlers
+		{
+			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init.sqf"";";
+		};
+
+		displayName = "FLAY Hang Glider";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider";
+
+		Icon = "\ca\air\data\map_ico\icomap_Para_CA.paa";
+		picture = "\ca\air\data\ico\Para_CA.paa";
+
+		weapons[] = {};
+		magazines[] = {};	
+		armor = 5;
+		accuracy = 0.5;
+		camouflage = 2;
+
+		extCameraPosition[] = {0,4,-9};
+		enableGPS = 1;
+
+		driverAction = "HangGlider_Pilot";
+		driverInAction = "HangGlider_Pilot";
+		getInAction = "GetInLow";
+		getOutAction = "GetOutLow";
+		
+		envelope[] = { 0.4, 0.9, 1.7, 2.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
+
+		maxSpeed = 180;
+		aileronSensitivity = 2.0;
+		elevatorSensitivity = 0.12;
+		wheelSteeringSensitivity = 0.7;
+		noseDownCoef = 0.0025;
+		ejectDeadDriver = true;
+
+	};
+	
+	class FLAY_HangGlider2: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 2";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider2";
+	};
+	
+	class FLAY_HangGlider3: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 3";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider3";
+	};
+	
+	class FLAY_NightWing: FLAY_HangGlider
+	{
+		displayName = "FLAY Night Wing";
+		model = "FLAY\FLAY_HangGlider\FLAY_NightWing";
+	};
+	
+	class FLAY_DeathWing: FLAY_HangGlider
+	{
+		displayName = "FLAY Death Wing";
+		model = "FLAY\FLAY_HangGlider\FLAY_DeathWing";
+		weapons[] = {"HangGliderRPK","HangGliderBombs"};
+		magazines[] = {"300Rnd_545x39_RPK_HangGlider","4Rnd_Bomb_HangGlider","2000Rnd_762x51_M134"};
+		gunAimDown = 0.15;
+		HeadAimDown = 8;
+		/*
+		class AnimationSources: AnimationSources
+		{
+			class RX
+			{
+				source = "horizonBank";
+				animPeriod = 0.1;
+				initPhase = 0;
+			};
+			class RY
+			{
+				source = "horizonDive";
+				animPeriod = 0.1;
+				initPhase = 0;
+			};
+		};
+		*/
+	};
+
+	class FLAY_WingSuit: FLAY_GliderBase
+	{
+		displayName = "FLAY Wing Suit";
+		model = "FLAY\FLAY_HangGlider\FLAY_WingSuit";
+		Icon = "\ca\air\data\map_ico\icomap_Para_CA.paa";
+		picture = "\ca\air\data\ico\Para_CA.paa";
+		
+		driverAction = "WingSuit_Pilot";
+		driverInAction = "WingSuit_Pilot";
+
+		envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
+
+		maxSpeed = 200;
+		aileronSensitivity = 0.5;
+		elevatorSensitivity = 0.05;
+		wheelSteeringSensitivity = 0.001;
+		noseDownCoef = 0.1;
+	};
+	
 };
 
 // ===========================================================================
@@ -344,6 +440,7 @@ class CfgMovesBasic
 		HangGlider_Pilot = "HangGlider_Pilot";
 		HangGlider_Pilot2 = "HangGlider_Pilot2";
 		HangGlider_Pilot3 = "HangGlider_Pilot3";
+		WingSuit_Pilot = "WingSuit_Pilot";
 		CarryHangGliderGesture[] = {"CarryHangGlider","Gesture"};
 		ResetGesture[] = {"ResetGesture","Gesture"};
 	};
@@ -389,7 +486,12 @@ class CfgMovesMaleSdr: CfgMovesBasic
 		{
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_Pilot3.rtm";
 			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot2",0.1,"HangGlider_Pilot",0.1};
-		};	
+		};
+		class WingSuit_Pilot: Crew
+		{
+			file = "\FLAY\FLAY_HangGlider\anims\WingSuit_Pilot.rtm";
+			interpolateTo[] = {"HangGlider_Dead",1};
+		};		
 	};
 };
 

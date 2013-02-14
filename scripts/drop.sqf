@@ -17,4 +17,4 @@ _primaryWeapon = _glider getVariable "primaryWeapon";
 player removeWeapon "HangGliderDummyWeapon";
 player addWeapon _primaryWeapon;
 _glider setVariable ["primaryWeapon",""];
-player playAction "CarryHangGliderResetGesture";
+player playAction "ResetGesture";

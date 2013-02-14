@@ -6,7 +6,7 @@ _glider = _this select 3;
 _glider setpos [_p select 0, _p select 1, (_p select 2) + 1.1];
 _glider setdir _d;
 //_glider setVehicleLock "UNLOCKED";
-player playAction "CarryHangGliderResetGesture";
+player playAction "ResetGesture";
 player moveInDriver _glider;
 _glider enableSimulation true;
 _u = vehicle player;
