@@ -438,8 +438,8 @@ class CfgMovesBasic
 	class ManActions
 	{
 		HangGlider_Pilot = "HangGlider_Pilot";
-		HangGlider_Pilot2 = "HangGlider_Pilot2";
-		HangGlider_Pilot3 = "HangGlider_Pilot3";
+		HangGlider_PilotWpn = "HangGlider_PilotWpn";
+		HangGlider_PilotLand = "HangGlider_PilotLand";
 		WingSuit_Pilot = "WingSuit_Pilot";
 		CarryHangGliderGesture[] = {"CarryHangGlider","Gesture"};
 		ResetGesture[] = {"ResetGesture","Gesture"};
@@ -475,17 +475,18 @@ class CfgMovesMaleSdr: CfgMovesBasic
 			head = "empty";
 			soundEnabled = 0;
 			ConnectTo[] = {};			
-			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot2",0.1,"HangGlider_Pilot3",0.1};
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_PilotLand",0.1};
 		};
-		class HangGlider_Pilot2: Crew
+		class HangGlider_PilotWpn: Crew
 		{
-			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_Pilot2.rtm";
-			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot",0.1,"HangGlider_Pilot3",0.1};
+			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotWpn.rtm";
+			disableWeapons = 0;
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot",0.1,"HangGlider_PilotLand",0.1};
 		};		
-		class HangGlider_Pilot3: Crew
+		class HangGlider_PilotLand: Crew
 		{
-			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_Pilot3.rtm";
-			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot2",0.1,"HangGlider_Pilot",0.1};
+			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotLand.rtm";
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_Pilot",0.1};
 		};
 		class WingSuit_Pilot: Crew
 		{
