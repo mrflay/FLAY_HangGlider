@@ -156,6 +156,13 @@ class CfgVehicles
 				animPeriod = 0;
 				initPhase = 0;
 			};
+			class FeetRotation
+			{
+				source = "user";
+				animPeriod = 0;
+				initPhase = 0;
+			};
+			class FeetDamper {};
 		};
 
 	};
