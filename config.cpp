@@ -14,7 +14,7 @@ class CfgPatches
 {
 	class FLAY_HangGlider
 	{
-		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DragonWing","FLAY_DeathWing","FLAY_WingSuit"};
+		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DragonWing","FLAY_DeathWing","FLAY_WingSuit","FLAY_ArrowDownHelper"};
 		requiredVersion = 1.04;
 		requiredAddons[] = {"CACharacters","CAData"};
 	};
@@ -31,6 +31,7 @@ class DefaultEventhandlers;
 
 class CfgVehicles
 {
+	class Static;
 	class Air;
 	class Plane: Air
 	{
@@ -127,7 +128,7 @@ class CfgVehicles
 
 		weapons[] = {};
 		magazines[] = {};	
-		armor = 2;
+		armor = 500;
 		accuracy = 0.5;
 		camouflage = 2;
 
@@ -139,12 +140,13 @@ class CfgVehicles
 		getInAction = "GetInLow";
 		getOutAction = "GetOutLow";
 		
-		envelope[] = { 0.4, 0.9, 1.7, 2.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
+		//envelope[] = { 0.4, 0.9, 1.7, 2.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
+		envelope[] = { 0.1, 0.2, 0.9, 1.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
 
 		maxSpeed = 180;
-		aileronSensitivity = 2.0;
-		elevatorSensitivity = 0.12;
-		wheelSteeringSensitivity = 0.7;
+		aileronSensitivity = 2.5;
+		elevatorSensitivity = 0.2;
+		wheelSteeringSensitivity = 2.7;
 		noseDownCoef = 0.0025;
 		ejectDeadDriver = true;
 		
@@ -153,7 +155,7 @@ class CfgVehicles
 			class HarnessHide
 			{
 				source = "user";
-				animPeriod = 0;
+				animPeriod = 0.000001;
 				initPhase = 0;
 			};
 			class FeetRotation
@@ -163,6 +165,42 @@ class CfgVehicles
 				initPhase = 0;
 			};
 			class FeetDamper {};
+			class LegsDamper 
+			{
+				source = "user";
+				animPeriod = 0;
+				initPhase = 1;
+			};
+			class FeetStabilizer
+			{
+				source = "user";
+				animPeriod = 0;
+				initPhase = 1;
+			};
+			class HelperHide
+			{
+				source = "user";
+				animPeriod = 0.000001;
+				initPhase = 1;
+			};
+			class PilotPosX
+			{
+				source = "user";
+				animPeriod = 0.000001;
+				initPhase = 0;	
+			};
+			class PilotPosY
+			{
+				source = "user";
+				animPeriod = 0.000001;
+				initPhase = 0;	
+			};
+			class PilotPosZ
+			{
+				source = "user";
+				animPeriod = 0.000001;
+				initPhase = 0;	
+			};			
 		};
 
 	};
@@ -224,6 +262,22 @@ class CfgVehicles
 		noseDownCoef = 0.1;
 	};
 	
+	class FLAY_ArrowDownHelper: Static
+	{
+		scope = 1;
+		displayName = "FLAY Arrow Down Helper";
+		model = "FLAY\FLAY_HangGlider\FLAY_ArrowDownHelper.p3d";
+		vehicleClass = "Misc";
+		class AnimationSources
+		{
+			class RotY
+			{
+				source = "user";
+				animPeriod = 5;
+				initPhase = "360*20";
+			};
+		};
+	};	
 };
 
 // ===========================================================================
@@ -513,8 +567,8 @@ class CfgGesturesMale
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_Carry.rtm";
 			looped = 0;
 			speed = 0;
-			//mask = "handsWeapon";
-			mask = "upperTorso";
+			mask = "handsWeapon";
+			//mask = "upperTorso";
 			headBobStrength = 0;
 			headBobMode = 0;
 			leftHandIKCurve[] = {0};
