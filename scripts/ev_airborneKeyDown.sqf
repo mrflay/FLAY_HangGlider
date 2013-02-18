@@ -32,10 +32,12 @@ if (_key in _down) then
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
     _handled=true;
 };
-/*
+
 if (_key in _space) then
 {
     _handled=true;
+	if (_glider getVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", false]) exitWith { true; };
+	
 	_anim = "HangGlider_PilotLand";
 	if (animationState player != _anim) then {
 		_glider animate ["PilotPosY", 0];
@@ -46,8 +48,10 @@ if (_key in _space) then
 	_k = -0.2;
 	if (_speed < 15) then {
 		_k = 0;
-	};	
+	};
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
+	_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
+	_glider animate ["FeetStabilizer", 1];
 };
-*/
+
 _handled;

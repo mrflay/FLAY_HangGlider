@@ -5,13 +5,13 @@ _glider = (_this select 0);
 //if (not _airborne) then {
 //};
 
-_KeyDownHandlerId = _glider getVariable "FLAY_HangGlider_KeyDownHandlerId";
-if (_KeyDownHandlerId != objNull) then {
+_KeyDownHandlerId = _glider getVariable ["FLAY_HangGlider_KeyDownHandlerId", -1];
+if (_KeyDownHandlerId != -1) then {
 	(findDisplay 46) displayRemoveEventHandler ["KeyDown", _KeyDownHandlerId];
 };
 
-_KeyUpHandlerId = _glider getVariable "FLAY_HangGlider_KeyUpHandlerId";
-if (_KeyUpHandlerId != objNull) then {
+_KeyUpHandlerId = _glider getVariable ["FLAY_HangGlider_KeyUpHandlerId", -1];
+if (_KeyUpHandlerId != -1) then {
 	(findDisplay 46) displayRemoveEventHandler ["KeyUp", _KeyUpHandlerId];
 };
 
@@ -28,3 +28,4 @@ player playAction "CarryHangGliderGesture";
 player switchMove "AmovPercMstpSlowWrflDnon";
 
 _glider setVariable ["FLAY_HangGlider_airborne", false];
+_glider animate ["FeetStabilizer", 1];

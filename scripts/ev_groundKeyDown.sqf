@@ -147,6 +147,8 @@ if (_key in _down) then
 if (_key in _space) then
 {
     _handled=true;
+	if (_glider getVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", false]) exitWith { true; };
+	
 	_anim = "HangGlider_Pilot";
 	if (animationState player != _anim) then {
 		_glider animate ["PilotPosY", 0];
@@ -161,6 +163,7 @@ if (_key in _space) then
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2) + 1.0];
 	_glider setVariable ["FLAY_HangGlider_airborne", true];
 	[_glider] call FLAY_HangGlider_fnc_Airborne;
+	_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
 };
 
 _handled;
