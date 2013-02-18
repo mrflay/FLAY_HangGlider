@@ -32,3 +32,6 @@ _glider setVariable ["FLAY_HangGlider_airborne", false];
 
 _glider animate ["FeetStabilizer", 1];
 _glider setVectorUp (vectorUp _glider);
+
+_glider removeAction 0;
+player removeAction 0;

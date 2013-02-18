@@ -23,7 +23,7 @@ _sprinting = false;
 
 _speed = sqrt((_v select 0)^2+(_v select 1)^2+(_v select 2)^2);
 _altitude = _glider animationPhase "FeetDamper";
-hint str format ["speed=%1 alt=%2", str (round _speed), str (round _altitude)];
+
 if (_speed > 5) then {
 	_sprinting = true;
 };

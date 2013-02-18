@@ -82,7 +82,7 @@ class CfgVehicles
 		transportMaxMagazines = 0;
 		transportMaxWeapons = 0;
 		
-		//driverCanSee = "2";
+		driverCanSee = "2";
 		secondaryExplosion = 0;
 		extCameraPosition[] = {0,1,-3};
 		destrType = "DestructNo";
@@ -219,6 +219,11 @@ class CfgVehicles
 				animPeriod = 0.000001;
 				initPhase = 0;	
 			};
+			class Variometer {
+				source = "vertSpeed";
+				animPeriod = 0.000001;
+				initPhase = 0;
+			};
 		};
 
 		class Sounds: Sounds
@@ -231,58 +236,17 @@ class CfgVehicles
 			//};
 			class CreakNoiseIn
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,80};
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,10};
 				frequency = "(randomizer*0.05+1.0)";
-				volume = "5*(speed factor[1, 60])*(1-camPos)";
+				volume = "10*(speed factor[1, 80])*(1-camPos)";
 			};
 			class CreakNoiseOut
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,80};
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,10};
 				frequency = "(randomizer*0.05+1.0)";
-				volume = "5*camPos*(speed factor[1, 60])";
+				volume = "10*camPos*(speed factor[1, 80])";
 			};
-		};
-		
-		class MFD
-		{
-			class HUD
-			{
-				class Pos10Vector
-				{
-					type = "vector";
-					pos0[] = {0.485,0.4};
-					pos10[] = {1.225,1.1};
-				};
-				topLeft = "HUD LH";
-				topRight = "HUD PH";
-				bottomLeft = "HUD LD";
-				borderLeft = 0;
-				borderRight = 0;
-				borderTop = 0;
-				borderBottom = 0;
-				color[] = {0,1,0,0.1};
-				class Bones
-				{
-				};
-				class Draw
-				{
-					class VspeedNumber
-					{
-						type = "text";
-						align = "right";
-						scale = 1;
-						source = "vspeed";
-						sourceScale = 1;
-						pos[] = {
-							{ 0.86,"0.52-0.4" },1};
-						right[] = {
-							{ 0.94,"0.52-0.4" },1};
-						down[] = {
-							{ 0.86,"0.57-0.4" },1};
-					};
-				};
-			};
-		};
+		};		
 	};
 	
 	class FLAY_HangGlider2: FLAY_HangGlider
@@ -360,12 +324,73 @@ class CfgVehicles
 	};
 	
 	class Sound;
-	class Sound_Vario1: Sound
+	class Sound_VarioDn01: Sound
 	{
 		scope = 2;
-		sound = "FLAY_VarioSfx";
-		displayName = "Vario1";
+		sound = "FLAY_VarioDn01Sfx";
+		displayName = "VarioDn01";
+	};
+	class Sound_Silence: Sound
+	{
+		scope = 2;
+		sound = "FLAY_SilenceSfx";
+		displayName = "Silence";
 	};	
+	class Sound_VarioUp01: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp01Sfx";
+		displayName = "VarioUp01";
+	};
+	class Sound_VarioUp05: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp05Sfx";
+		displayName = "VarioUp05";
+	};
+	class Sound_VarioUp10: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp10Sfx";
+		displayName = "VarioUp10";
+	};
+	class Sound_VarioUp15: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp15Sfx";
+		displayName = "VarioUp15";
+	};
+	class Sound_VarioUp20: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp20Sfx";
+		displayName = "VarioUp20";
+	};
+	class Sound_VarioUp25: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp25Sfx";
+		displayName = "VarioUp25";
+	};
+	class Sound_VarioUp30: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp30Sfx";
+		displayName = "VarioUp30";
+	};
+	class Sound_VarioUp35: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp35Sfx";
+		displayName = "VarioUp35";
+	};
+	class Sound_VarioUp40: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioUp40Sfx";
+		displayName = "VarioUp40";
+	};
+	
 };
 
 // ===========================================================================
@@ -689,27 +714,117 @@ class CfgSFX
 	access = 2;
 	class FLAY_VarioSfx
 	{
-		sounds[] = {"sound1","sound2"};
+		sounds[] = {"sound3"};
 		name = "FLAY_VarioSfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",0.31622776,1,500,0.5,0,2,5};
-		sound2[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario2.ogg",0.31622776,1,500,0.4,0,1,10};
-		empty[] = {"",0,0,0,0,1,5,20};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",0.31622776,1,30,0.5,0,2,5};
+		sound2[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario2.ogg",0.31622776,1,30,0.4,0,1,10};
+		sound3[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario3.ogg",0.31622776,1,30,1,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
 	};
+	
+	class FLAY_VarioDn01Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioDn01Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\varioDn1.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_SilenceSfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_SilenceSfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\silence.ogg",0.31622776,1,1,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};	
+	
+	class FLAY_VarioUp01Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp01Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp05Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp05Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario5.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp10Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp10Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario10.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};	
+	
+	class FLAY_VarioUp15Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp15Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario15.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp20Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp20Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario20.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp25Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp25Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario25.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp30Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp30Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario30.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp35Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp35Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario35.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
+	class FLAY_VarioUp40Sfx
+	{
+		sounds[] = {"sound1"};
+		name = "FLAY_VarioUp40Sfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario40.ogg",0.31622776,1,300,1.0,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	
 	class FLAY_MusicSfx
 	{
 		sounds[] = {"music1","music2","music3","music4"};
 		name = "FLAY_MusicSfx";
-		music1[] = {"\FLAY\FLAY_HangGlider\data\music\sample1.ogg",0.0031622776,1,30,1,0,0,0};
-		music2[] = {"\FLAY\FLAY_HangGlider\data\music\sample2.ogg",0.0031622776,1,30,1,0,0,0};
-		music3[] = {"\FLAY\FLAY_HangGlider\data\music\sample3.ogg",0.0031622776,1,30,1,0,0,0};
-		music4[] = {"\FLAY\FLAY_HangGlider\data\music\sample4.ogg",0.0031622776,1,30,1,0,0,0};
+		music1[] = {"\FLAY\FLAY_HangGlider\data\music\sample1.ogg",0.0031622776,1,300,1,0,0,0};
+		music2[] = {"\FLAY\FLAY_HangGlider\data\music\sample2.ogg",0.0031622776,1,300,1,0,0,0};
+		music3[] = {"\FLAY\FLAY_HangGlider\data\music\sample3.ogg",0.0031622776,1,300,1,0,0,0};
+		music4[] = {"\FLAY\FLAY_HangGlider\data\music\sample4.ogg",0.0031622776,1,300,1,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	class FLAY_IntroMusicSfx
 	{
 		sounds[] = {"music1"};
 		name = "FLAY_IntroMusicSfx";
-		music1[] = {"\FLAY\FLAY_HangGlider\data\music\intro1.ogg",0.0031622776,1,30,1,0,0,0};
+		music1[] = {"\FLAY\FLAY_HangGlider\data\music\intro1.ogg",0.0031622776,1,300,1,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 };
