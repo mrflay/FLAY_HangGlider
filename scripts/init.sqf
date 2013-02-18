@@ -15,12 +15,26 @@ _glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
 _glider addEventHandler ["GetIn", {[_this select 0] call FLAY_HangGlider_EH_GetIn;}];
 _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_GetOut;}]; 
 
-[_glider] call FLAY_HangGlider_fnc_VapourTrails;
+[_glider] spawn {
+	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;
+};
+
+_soundSource = createSoundSource ["Sound_Vario1", [0,0,0], [], 0];
+_soundSource attachTo [_glider, [0.5,0,0.2]];
 
 [_glider] spawn {
 	_glider = _this select 0;
+	_counter = 2;
+	player sidechat "start";
+	
 	while { alive _glider } do {
 		sleep 0.5;
+		_counter = _counter - 1;
+		if (_counter <= 0) then {
+			//if (not (isNull _soundSource)) then { deletevehicle _soundSource; };
+			//_glider say2d "FLAY_VarioClimb1";
+			_counter = 2;
+		};
 		_v = velocity _glider;
 		_speed = sqrt((_v select 0)^2+(_v select 1)^2+(_v select 2)^2);
 		_altitude = _glider animationPhase "FeetDamper";
@@ -42,4 +56,6 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 			};
 		};
 	};
+	hint "dead";
+	player sidechat "end";
 };

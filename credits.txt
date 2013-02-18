@@ -1,0 +1,10 @@
+CREDITS
+=======
+
+BRSSEB - OFP Addon Tutorial Site
+		 http://ofp.gamepark.cz/_hosted/brsseb/tutorials.htm
+
+Clayman - Arma2:OA Animation Viewer
+          http://www.armaholic.com/page.php?id=10941&highlight=ANIMATIONVIEWER
+
+Maddmatt/BIS - Aircraft vapour simulation

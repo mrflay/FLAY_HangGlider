@@ -16,7 +16,7 @@ class CfgPatches
 	{
 		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DragonWing","FLAY_DeathWing","FLAY_WingSuit","FLAY_ArrowDownHelper"};
 		requiredVersion = 1.04;
-		requiredAddons[] = {"CACharacters","CAData"};
+		requiredAddons[] = {"CACharacters","CAData","CASounds"};
 	};
 };
 
@@ -39,6 +39,7 @@ class CfgVehicles
 		class ViewPilot;
 		class AnimationSources;
 		class Turrets;
+		class Sounds;
 	};
 	
 	class FLAY_GliderBase: Plane
@@ -62,12 +63,12 @@ class CfgVehicles
 		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
 		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
 		soundGetOut[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
-		//soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		//soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		//soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
+		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
+		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
+		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
 
 		threat[] = {0.0,0.0,0.0};
-		class DestructionEffects{};
+		class DestructionEffects {};
 		
 		htMin = 60;
 		htMax = 1800;
@@ -81,7 +82,7 @@ class CfgVehicles
 		transportMaxMagazines = 0;
 		transportMaxWeapons = 0;
 		
-		driverCanSee = "0";
+		//driverCanSee = "2";
 		secondaryExplosion = 0;
 		extCameraPosition[] = {0,1,-3};
 		destrType = "DestructNo";
@@ -111,6 +112,7 @@ class CfgVehicles
 		occludeSoundsWhenIn = 1.0;
 		obstructSoundsWhenIn = 1.0;
 		
+		class Sounds: Sounds {};
 		class Turrets {};
 		class Reflectors {};
 		class Armory
@@ -216,9 +218,71 @@ class CfgVehicles
 				source = "user";
 				animPeriod = 0.000001;
 				initPhase = 0;	
-			};			
+			};
 		};
 
+		class Sounds: Sounds
+		{
+			//class BeepIn
+			//{
+			//	sound[] = {"\ca\sounds_e\sfx\locking_target_1",0.17782794,1.0,50};
+			//	frequency = "1";
+			//	volume = "0.5";
+			//};
+			class CreakNoiseIn
+			{
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,80};
+				frequency = "(randomizer*0.05+1.0)";
+				volume = "5*(speed factor[1, 60])*(1-camPos)";
+			};
+			class CreakNoiseOut
+			{
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,80};
+				frequency = "(randomizer*0.05+1.0)";
+				volume = "5*camPos*(speed factor[1, 60])";
+			};
+		};
+		
+		class MFD
+		{
+			class HUD
+			{
+				class Pos10Vector
+				{
+					type = "vector";
+					pos0[] = {0.485,0.4};
+					pos10[] = {1.225,1.1};
+				};
+				topLeft = "HUD LH";
+				topRight = "HUD PH";
+				bottomLeft = "HUD LD";
+				borderLeft = 0;
+				borderRight = 0;
+				borderTop = 0;
+				borderBottom = 0;
+				color[] = {0,1,0,0.1};
+				class Bones
+				{
+				};
+				class Draw
+				{
+					class VspeedNumber
+					{
+						type = "text";
+						align = "right";
+						scale = 1;
+						source = "vspeed";
+						sourceScale = 1;
+						pos[] = {
+							{ 0.86,"0.52-0.4" },1};
+						right[] = {
+							{ 0.94,"0.52-0.4" },1};
+						down[] = {
+							{ 0.86,"0.57-0.4" },1};
+					};
+				};
+			};
+		};
 	};
 	
 	class FLAY_HangGlider2: FLAY_HangGlider
@@ -293,6 +357,14 @@ class CfgVehicles
 				initPhase = "360*20";
 			};
 		};
+	};
+	
+	class Sound;
+	class Sound_Vario1: Sound
+	{
+		scope = 2;
+		sound = "FLAY_VarioSfx";
+		displayName = "Vario1";
 	};	
 };
 
@@ -597,3 +669,82 @@ class CfgGesturesMale
 // ===========================================================================
 // PARTICLES
 // ===========================================================================
+
+// ===========================================================================
+// SOUNDS
+// ===========================================================================
+
+class CfgSounds
+{
+	class FLAY_VarioClimb1
+	{
+		name = "VarioClimb1";
+		sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",1.0,1.0};
+		titles[] = {};
+	};
+};
+
+class CfgSFX
+{
+	access = 2;
+	class FLAY_VarioSfx
+	{
+		sounds[] = {"sound1","sound2"};
+		name = "FLAY_VarioSfx";
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",0.31622776,1,500,0.5,0,2,5};
+		sound2[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario2.ogg",0.31622776,1,500,0.4,0,1,10};
+		empty[] = {"",0,0,0,0,1,5,20};
+	};
+	class FLAY_MusicSfx
+	{
+		sounds[] = {"music1","music2","music3","music4"};
+		name = "FLAY_MusicSfx";
+		music1[] = {"\FLAY\FLAY_HangGlider\data\music\sample1.ogg",0.0031622776,1,30,1,0,0,0};
+		music2[] = {"\FLAY\FLAY_HangGlider\data\music\sample2.ogg",0.0031622776,1,30,1,0,0,0};
+		music3[] = {"\FLAY\FLAY_HangGlider\data\music\sample3.ogg",0.0031622776,1,30,1,0,0,0};
+		music4[] = {"\FLAY\FLAY_HangGlider\data\music\sample4.ogg",0.0031622776,1,30,1,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};
+	class FLAY_IntroMusicSfx
+	{
+		sounds[] = {"music1"};
+		name = "FLAY_IntroMusicSfx";
+		music1[] = {"\FLAY\FLAY_HangGlider\data\music\intro1.ogg",0.0031622776,1,30,1,0,0,0};
+		empty[] = {"",0,0,0,0,0,0,0};
+	};	
+};
+
+class CfgEnvSounds
+{
+	//class Rain
+	//{
+	//	name = "$STR_DN_RAIN";
+	//	sound[] = {"\Ca\sounds\Ambient\rain\rain_hard1",0.17782794,1};
+	//	soundNight[] = {"\Ca\sounds\Ambient\rain\rain_hard1",0.17782794,1};
+	//};
+	//class WindNoForestHigh
+	//{
+	//	name = "$STR_DN_WIND";
+	//	sound[] = {"ca\sounds\Ambient\forest\wind-global-2",0.03981072,1};
+	//	volume = "(1-forest)*(windy factor[0,1])*(0.1+(hills factor[0,1])*0.9)-(night*0.25)";
+	//};
+	//class Forest
+	//{
+	//	name = "$STR_DN_WIND";
+	//	sound[] = {"ca\sounds\Ambient\forest\forest-day-2",0.03981072,1};
+	//	volume = "forest*(1-night)";
+	//	randSamp11[] = {"ca\sounds\Ambient\forest\forest-sfx-9bird",0.1,1,30,0.14,5,8,10};
+	//	randSamp10[] = {"ca\sounds\Ambient\forest\forest-sfx-12datel",0.1,30,0.125,10,20,40};
+	//	randSamp0[] = {"ca\sounds\Ambient\forest\forest-sfx-5bird",0.12589253,1,30,0.13,4,8,12};
+	//	randSamp1[] = {"ca\sounds\Ambient\forest\forest-sfx-6bird",0.12589253,1,30,0.125,4,8,12};
+	//	randSamp2[] = {"ca\sounds\Ambient\forest\forest-sfx-7bird",0.12589253,1,30,0.125,4,8,12};
+	//	randSamp3[] = {"ca\sounds\Ambient\forest\forest-sfx-8bird",0.12589253,1,30,0.1,4,8,12};
+	//	randSamp8[] = {"ca\sounds\Ambient\forest\forest-sfx-10bird-flapping",0.1,1,30,0.04,10,20,40};
+	//	randSamp9[] = {"ca\sounds\Ambient\forest\forest-sfx-11holub-flapping",0.1,1,30,0.04,10,20,40};
+	//	randSamp4[] = {"ca\sounds\Ambient\forest\forest-sfx-1",0.1,1,30,0.025,4,8,10};
+	//	randSamp5[] = {"ca\sounds\Ambient\forest\forest-sfx-2",0.1,1,30,0.025,4,8,10};
+	//	randSamp6[] = {"ca\sounds\Ambient\forest\forest-sfx-3",0.1,1,30,0.025,4,8,10};
+	//	randSamp7[] = {"ca\sounds\Ambient\forest\forest-sfx-4",0.1,1,30,0.025,4,8,10};
+	//	random[] = {"randSamp11","randSamp10","randSamp0","randSamp1","randSamp2","randSamp3","randSamp8","randSamp9","randSamp4","randSamp5","randSamp6","randSamp7"};
+	//};
+};
