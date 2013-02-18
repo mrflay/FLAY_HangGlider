@@ -31,7 +31,7 @@ class DefaultEventhandlers;
 
 class CfgVehicles
 {
-	class Static { class ladders; };
+	class Static { ladders[] = {}; };
 	class Air;
 	class Plane: Air
 	{
@@ -43,9 +43,9 @@ class CfgVehicles
 	
 	class FLAY_GliderBase: Plane
 	{
-		armor = 1;
+		armor = 5;
 		scope = 2;
-
+		
 		side = 4;
 		Icon = "\flay\flay_hangglider\data\glider_ico_ca.paa";
 		picture = "\flay\flay_hangglider\data\glider_pic_ca.paa";
@@ -62,12 +62,27 @@ class CfgVehicles
 		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
 		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
 		soundGetOut[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
-		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
+		//soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
+		//soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
+		//soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
 
+		threat[] = {0.0,0.0,0.0};
+		class DestructionEffects{};
+		
+		htMin = 60;
+		htMax = 1800;
+		afMax = 100;
+		mfMax = 80;
+		mFact = 0;
+		tBody = 0;
+		turnCoef = 2;
+		outsideSoundFilter = 0;
+		wheelCircumference = 2.28;
+		transportMaxMagazines = 0;
+		transportMaxWeapons = 0;
+		
 		driverCanSee = "0";
-		secondaryExplosion = -1;
+		secondaryExplosion = 0;
 		extCameraPosition[] = {0,1,-3};
 		destrType = "DestructNo";
 		enableGPS = 0;
@@ -126,8 +141,9 @@ class CfgVehicles
 		displayName = "FLAY Hang Glider";
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider";
 
-		weapons[] = {};
-		magazines[] = {};	
+		weapons[] = {"BikeHorn"};
+		//weapons[] = {};
+		//magazines[] = {};	
 		armor = 5000;
 		accuracy = 0.5;
 		camouflage = 2;

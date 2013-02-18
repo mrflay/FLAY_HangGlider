@@ -29,8 +29,8 @@ if (_speed > 5) then {
 };
 
 _speedWalk = 0.8;
-_speedRun = 6.5;
-_speedSprint = 8.0;
+_speedRun = 6;
+_speedSprint = 7.0;
 _speedLaunch = 11.0;
 _maxSpeed = _speedWalk;
 
@@ -62,7 +62,7 @@ if (_key in _up) then
 
 	_k = 0.1;
 	if (_speed < 1.0) then {
-		_k = 0.8;
+		_k = 1;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -86,7 +86,7 @@ if (_key in _left) then
 	_k = 0.1;
 	
 	if (_speed < 1.0) then {
-		_k = 0.8;
+		_k = 0.7;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -111,7 +111,7 @@ if (_key in _right) then
 	_k = 0.1;
 	
 	if (_speed < 1.0) then {
-		_k = 0.8;
+		_k = 0.7;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -134,7 +134,7 @@ if (_key in _down) then
 	
 	_k = -0.2;
 	if (_speed < 1.0) then {
-		_k = -0.8;
+		_k = -1;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -156,7 +156,7 @@ if (_key in _space) then
 		player playAction "ResetGesture";
 		player switchMove _anim;
 	};
-	_k = 1.5;
+	_k = 3;
 	if (_speed > _speedLaunch) then {
 		_k = 0;
 	};	
