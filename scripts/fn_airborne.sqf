@@ -19,5 +19,6 @@ _glider setVariable ["FLAY_HangGlider_KeyUpHandlerId", _KeyUpHandlerId];
 
 _glider setVariable ["FLAY_HangGlider_airborne", true];
 _glider animate ["FeetStabilizer", 0];
+_glider setVectorUp (vectorUp _glider);
 
 FLAY_HangGlider_BlockSpaceKeyUntilReleased = true;

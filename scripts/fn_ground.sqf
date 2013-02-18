@@ -28,4 +28,6 @@ player playAction "CarryHangGliderGesture";
 player switchMove "AmovPercMstpSlowWrflDnon";
 
 _glider setVariable ["FLAY_HangGlider_airborne", false];
+
 _glider animate ["FeetStabilizer", 1];
+_glider setVectorUp (vectorUp _glider);

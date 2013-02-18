@@ -31,7 +31,7 @@ class DefaultEventhandlers;
 
 class CfgVehicles
 {
-	class Static;
+	class Static { class ladders; };
 	class Air;
 	class Plane: Air
 	{
@@ -128,7 +128,7 @@ class CfgVehicles
 
 		weapons[] = {};
 		magazines[] = {};	
-		armor = 500;
+		armor = 5000;
 		accuracy = 0.5;
 		camouflage = 2;
 
@@ -174,8 +174,8 @@ class CfgVehicles
 			class FeetStabilizer
 			{
 				source = "user";
-				animPeriod = 0;
-				initPhase = 1;
+				animPeriod = 0.1;
+				initPhase = 0;
 			};
 			class HelperHide
 			{
@@ -289,15 +289,6 @@ class cfgWeapons
 {
     class Default;
 	class Rifle;
-	class HangGliderDummyWeapon: Rifle
-	{
-		model="\FLAY\FLAY_HangGlider\HangGliderDummyWeapon\HangGliderDummyWeapon.p3d";
-		displayName="HangGlider DummyWeapon";
-		displayNameMagazine="HangGlider DummyWeapon Mag";
-		handAnim[] = {"OFP2_ManSkeleton", "\FLAY\FLAY_HangGlider\HangGliderDummyWeapon\HangGliderDummyWeaponAnim.rtm"};
-		magazines[] = {};
-		modes[] = {};
-	};	
 	class LauncherCore;
 	class RocketPods: LauncherCore {};	
 	class HangGliderBombs: RocketPods
