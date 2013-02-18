@@ -40,14 +40,45 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 		["Sound_VarioDn01", [0,0,0], [], 0],
 		["Sound_VarioDn01", [0,0,0], [], 0],
 		["Sound_Silence",   [0,0,0], [], 0],
-		["Sound_VarioUp01", [0,0,0], [], 0],
-		["Sound_VarioUp05", [0,0,0], [], 0],
+		//["Sound_VarioUp01", [0,0,0], [], 0],
+		["Sound_VarioUp02", [0,0,0], [], 0],
+		//["Sound_VarioUp03", [0,0,0], [], 0],
+		["Sound_VarioUp04", [0,0,0], [], 0],
+		//["Sound_VarioUp05", [0,0,0], [], 0],
+		["Sound_VarioUp06", [0,0,0], [], 0],
+		//["Sound_VarioUp07", [0,0,0], [], 0],
+		["Sound_VarioUp08", [0,0,0], [], 0],
+		//["Sound_VarioUp09", [0,0,0], [], 0],
 		["Sound_VarioUp10", [0,0,0], [], 0],
-		["Sound_VarioUp15", [0,0,0], [], 0],
+		//["Sound_VarioUp11", [0,0,0], [], 0],
+		["Sound_VarioUp12", [0,0,0], [], 0],
+		//["Sound_VarioUp13", [0,0,0], [], 0],
+		["Sound_VarioUp14", [0,0,0], [], 0],
+		//["Sound_VarioUp15", [0,0,0], [], 0],
+		["Sound_VarioUp16", [0,0,0], [], 0],
+		//["Sound_VarioUp17", [0,0,0], [], 0],
+		["Sound_VarioUp18", [0,0,0], [], 0],
+		//["Sound_VarioUp19", [0,0,0], [], 0],
 		["Sound_VarioUp20", [0,0,0], [], 0],
-		["Sound_VarioUp25", [0,0,0], [], 0],
+		//["Sound_VarioUp21", [0,0,0], [], 0],
+		["Sound_VarioUp22", [0,0,0], [], 0],
+		//["Sound_VarioUp23", [0,0,0], [], 0],
+		["Sound_VarioUp24", [0,0,0], [], 0],
+		//["Sound_VarioUp25", [0,0,0], [], 0],
+		["Sound_VarioUp26", [0,0,0], [], 0],
+		//["Sound_VarioUp27", [0,0,0], [], 0],
+		["Sound_VarioUp28", [0,0,0], [], 0],
+		//["Sound_VarioUp29", [0,0,0], [], 0],
 		["Sound_VarioUp30", [0,0,0], [], 0],
-		["Sound_VarioUp35", [0,0,0], [], 0],
+		//["Sound_VarioUp31", [0,0,0], [], 0],
+		["Sound_VarioUp32", [0,0,0], [], 0],
+		//["Sound_VarioUp33", [0,0,0], [], 0],
+		["Sound_VarioUp34", [0,0,0], [], 0],
+		//["Sound_VarioUp35", [0,0,0], [], 0],
+		["Sound_VarioUp36", [0,0,0], [], 0],
+		//["Sound_VarioUp37", [0,0,0], [], 0],
+		["Sound_VarioUp38", [0,0,0], [], 0],
+		//["Sound_VarioUp39", [0,0,0], [], 0],
 		["Sound_VarioUp40", [0,0,0], [], 0]
 	];
 	
@@ -61,7 +92,9 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 		
 		if (vehicle player == _glider) then {
 			
-			sleep 0.1;
+			sleep 0.2;
+			
+			player removeAction 0;
 			
 			_v = velocity _glider;
 			
@@ -69,54 +102,19 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 			_altitude = _glider animationPhase "FeetDamper";
 			
 			_count = _count + 1;
-			if (_count < 10) then {
+			if (_count < 5) then {
 				_vSpeedCur = _v select 2;
 				_vSpeedAvg = _vSpeedAvg + _vSpeedCur;
 			} else {
 				_vSpeedAvg = _vSpeedAvg / 10.0;
-								
 				_index = 9;
 				
-				if (_vSpeedAvg < -5) then {
+				if (_vSpeedAvg < -3) then {
 					_index = 8;
-					hint "-5";
 				};
 				if (_vSpeedAvg > 0.1) then {
-					_index = 10;
-					hint "0.1";
+					_index = (10 + round (2 * _vSpeedAvg)) min 19;
 				};
-				if (_vSpeedAvg > 0.5) then {
-					_index = 11;
-					hint "0.5";
-				};
-				if (_vSpeedAvg > 1.0) then {
-					_index = 12;
-					hint "1.0";
-				};
-				if (_vSpeedAvg > 1.5) then {
-					_index = 13;
-					hint "1.5";
-				};
-				if (_vSpeedAvg > 2.0) then {
-					_index = 14;
-					hint "2.0";
-				};
-				if (_vSpeedAvg > 3.0) then {
-					_index = 15;
-					hint "3.0";
-				};
-				if (_vSpeedAvg > 4.0) then {
-					_index = 16;
-					hint "4.0";
-				};
-				if (_vSpeedAvg > 5.0) then {
-					_index = 17;
-					hint "5.0";
-				};
-				if (_vSpeedAvg > 6.0) then {
-					_index = 18;
-					hint "6.0";
-				};			
 				
 				if (_prevIndex != _index) then {
 					if (not (isNull _soundSource)) then {
