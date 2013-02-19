@@ -42,10 +42,6 @@ if (_sprinting) then {
 	_maxSpeed = _speedSprint;
 };
 
-if ((_key in _up) and (_key in _left)) then {
-	player sidechat "both up and left pressed";
-};
-
 if (_key in _up) then
 {
 	_anim = "AmovPercMwlkSlowWrflDf";
@@ -62,7 +58,7 @@ if (_key in _up) then
 
 	_k = 0.1;
 	if (_speed < 1.0) then {
-		_k = 1;
+		_k = 2.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -86,13 +82,18 @@ if (_key in _left) then
 	_k = 0.1;
 	
 	if (_speed < 1.0) then {
-		_k = 0.7;
+		_k = 2.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
 	};
 	
-	_glider setVelocity [(_v select 0) + _k * sin _dirLeft, (_v select 1) + _k * cos _dirLeft, (_v select 2) + _k * (_dir select 2)];
+	_dFx = 0;
+	_dFy = 0;
+	_dLx = _k * (sin _dirLeft);
+	_dLy = _k * (cos _dirLeft);
+	
+	_glider setVelocity [(_v select 0) + (_dFx + _dLx), (_v select 1) + (_dFy + _dLy), (_v select 2) + _k * (_dir select 2)];
     _handled=true;
 };
 
@@ -111,13 +112,18 @@ if (_key in _right) then
 	_k = 0.1;
 	
 	if (_speed < 1.0) then {
-		_k = 0.7;
+		_k = 2.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
 	};
 	
-	_glider setVelocity [(_v select 0) + _k * sin _dirRight, (_v select 1) + _k * cos _dirRight, (_v select 2) + _k * (_dir select 2)];
+	_dFx = 0;
+	_dFy = 0;
+	_dRx = _k * (sin _dirRight);
+	_dRy = _k * (cos _dirRight);
+	
+	_glider setVelocity [(_v select 0) + (_dFx + _dRx), (_v select 1) + (_dFy + _dRy), (_v select 2) + _k * (_dir select 2)];
     _handled=true;
 };
 
@@ -134,7 +140,7 @@ if (_key in _down) then
 	
 	_k = -0.2;
 	if (_speed < 1.0) then {
-		_k = -1;
+		_k = -2.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;

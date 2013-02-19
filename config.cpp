@@ -170,6 +170,12 @@ class CfgVehicles
 		
 		class AnimationSources: AnimationSources
 		{
+			class GliderPitch
+			{
+				source = "user";
+				animPeriod = 0.05;
+				initPhase = 0;
+			};		
 			class HarnessHide
 			{
 				source = "user";
@@ -246,7 +252,16 @@ class CfgVehicles
 				frequency = "(randomizer*0.05+1.0)";
 				volume = "10*camPos*(speed factor[1, 80])";
 			};
-		};		
+		};
+
+		class assembleInfo
+		{
+			primary = 0;
+			base = "";
+			assembleTo = "";
+			dissasembleTo[] = {"FLAY_HangGlider_Bag","Tripod_Bag"};
+			displayName = "";
+		};
 	};
 	
 	class FLAY_HangGlider2: FLAY_HangGlider
@@ -306,19 +321,54 @@ class CfgVehicles
 		noseDownCoef = 0.1;
 	};
 	
-	class FLAY_ArrowDownHelper: Static
+	// Assemble Info
+	
+	class Bag_Base_EP1;
+	class Weapon_Bag_Base_EP1: Bag_Base_EP1
+	{
+		class assembleInfo{};
+	};
+	class FLAY_HangGlider_Bag: Weapon_Bag_Base_EP1
+	{
+		scope = 2;
+		displayName = "Hang Glider Bag";
+		class assembleInfo: assembleInfo
+		{
+			displayName = "Hang Glider";
+			assembleTo = "FLAY_HangGlider";
+		};
+	};
+	
+	class FLAY_ArrowDnHelper: Static
 	{
 		scope = 1;
 		displayName = "FLAY Arrow Down Helper";
-		model = "FLAY\FLAY_HangGlider\FLAY_ArrowDownHelper.p3d";
+		model = "FLAY\FLAY_HangGlider\FLAY_ArrowDnHelper.p3d";
 		vehicleClass = "Misc";
 		class AnimationSources
 		{
-			class RotY
+			class RY
 			{
 				source = "user";
 				animPeriod = 5;
-				initPhase = "360*20";
+				initPhase = "0";
+			};
+		};
+	};
+	
+	class FLAY_ArrowUpHelper: Static
+	{
+		scope = 1;
+		displayName = "FLAY Arrow Up Helper";
+		model = "FLAY\FLAY_HangGlider\FLAY_ArrowUpHelper.p3d";
+		vehicleClass = "Misc";
+		class AnimationSources
+		{
+			class RY
+			{
+				source = "user";
+				animPeriod = 5;
+				initPhase = "0";
 			};
 		};
 	};
@@ -649,7 +699,28 @@ class cfgWeapons
 			//dispersion = 0.0008;
 			reloadTime = 0.06;
 		};
-	};	
+	};
+	/*
+	class Binocular;
+	class Binocular_Vector: Binocular
+	{
+		displayName = "$STR_EP1_DN_cfgWeapons_Binocular_Vector";
+		visionMode[] = {"Normal","NVG"};
+		modelOptics = "\ca\weapons_E\optics_vector.p3d";
+		opticsZoomInit = 0.0293;
+		opticsZoomMin = 0.0293;
+		opticsZoomMax = 0.0293;
+		weaponInfoType = "RscWeaponRangeFinder";
+		model = "\ca\weapons_E\vector\vector21dt";
+		Picture = "\CA\weapons_E\Data\icons\bino_vector_CA.paa";
+	};
+	class Laserdesignator: Binocular
+	{
+		weaponInfoType = "RscWeaponRangeFinder";
+		visionMode[] = {"Normal","NVG","TI"};
+		thermalMode[] = {0,1};
+	};
+	*/
 };
 
 

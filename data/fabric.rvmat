@@ -1,6 +1,8 @@
 PixelShaderID="Detail";
 VertexShaderID="Basic";
 
+renderFlags[] = {"NoZWrite"};
+
 class Stage1
 {
    texture="ca\data\detail_maps\fabric1_256_dt.paa"; // path to detail texture 

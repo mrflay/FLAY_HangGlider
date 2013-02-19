@@ -94,7 +94,7 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 			
 			sleep 0.2;
 			
-			player removeAction 0;
+{ _glider removeAction _x; player removeAction _x; } forEach [0,1,2,3,4,5,6,7,8,9,10];
 			
 			_v = velocity _glider;
 			
@@ -109,7 +109,7 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 				_vSpeedAvg = _vSpeedAvg / 10.0;
 				_index = 9;
 				
-				if (_vSpeedAvg < -3) then {
+				if (_vSpeedAvg < -1) then {
 					_index = 8;
 				};
 				if (_vSpeedAvg > 0.1) then {

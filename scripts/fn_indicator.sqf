@@ -1,0 +1,144 @@
+scriptName "fn_enemyIndicator.sqf";
+/*
+	Author: Karel Moricky
+
+	Description:
+	Direction indicator (similar to one CWC-era military game)
+
+	Parameter(s):
+	_this select 0: OBJECT - object
+	_this select 1: OBJECT - mempoint
+
+	Returns:
+	True
+*/
+_this spawn {
+	disableserialization;
+	
+	_fadeOut = 1;
+	_color = [1,0,0,1];
+	_colorGreen = [0,1,0,1];
+	_thresholdX = 0.1;
+	_thresholdY = 0.1;
+	
+	17 cutrsc ["RscMissionScreen","plain"];
+	waituntil {!isnull (uinamespace getvariable "BIS_RscMissionScreen")};
+	uinamespace setvariable ["BIS_RscMissionScreen_dirIndicator",uinamespace getvariable "BIS_RscMissionScreen"];
+	
+	#define IND_DISPLAY	(uinamespace getvariable "BIS_RscMissionScreen_dirIndicator")
+	#define IND_CONTROL	1200
+
+	#define IND_W		(0.1045752)
+	#define IND_H		(IND_W * 4/3)
+	#define IND_COEF	(1.0)
+
+	#define IND_SNDSRC	(IND_DISPLAY displayctrl (IND_CONTROL + 1))	//--- Left
+	#define IND_REPAIR	(IND_DISPLAY displayctrl (IND_CONTROL + 2))	//--- Top
+	#define IND_REFUEL	(IND_DISPLAY displayctrl (IND_CONTROL + 3))	//--- Right
+	#define IND_GUNNER	(IND_DISPLAY displayctrl (IND_CONTROL + 4))	//--- Bottom
+
+	//--- Init
+	_pos = [
+		(safezoneX + safezoneW / 2) - ((IND_W) * IND_COEF)/2,
+		(safezoneY + safezoneH) - (IND_H) * IND_COEF,
+		IND_W,
+		IND_H
+	];
+
+	_centerPos = [
+		(0.5) - ((IND_W/2) * IND_COEF)/2,
+		(0.5) - ((IND_H/2) * IND_COEF)/2,
+		IND_W/2,
+		IND_H/2
+	];	
+	
+	IND_SNDSRC ctrlsetposition _pos;
+	IND_REPAIR ctrlsetposition _pos;
+	IND_REFUEL ctrlsetposition _pos;
+	IND_GUNNER ctrlsetposition _centerPos;
+
+	IND_SNDSRC ctrlsettextcolor _color;
+	IND_REPAIR ctrlsettextcolor _color;
+	IND_REFUEL ctrlsettextcolor _color;
+	IND_GUNNER ctrlsettextcolor _colorGreen;
+
+	IND_SNDSRC ctrlsetfade _fadeOut;
+	IND_REPAIR ctrlsetfade _fadeOut;
+	IND_REFUEL ctrlsetfade _fadeOut;
+	IND_GUNNER ctrlsetfade _fadeOut;
+
+	IND_SNDSRC ctrlcommit 0;
+	IND_REPAIR ctrlcommit 0;
+	IND_REFUEL ctrlcommit 0;
+	IND_GUNNER ctrlcommit 0;
+
+	IND_SNDSRC ctrlsettext "ca\sounds\data\icon_soundsource_ca.paa";
+	IND_REPAIR ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_repair_ca.paa";
+	IND_REFUEL ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_refuel_ca.paa";
+	IND_RELOAD ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_reload_ca.paa";
+	IND_REAMMO ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_reammo_ca.paa";
+	IND_GUNNER ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_gunner_ca.paa";
+	
+	//--- Display again after load
+	_this spawn {scriptName "fn_enemyIndicator.sqf: Load restart";
+		_load = [] spawn {scriptName "fn_enemyIndicator.sqf: Load detection";
+			disableserialization;
+			waituntil {false};
+		};
+		waituntil {scriptdone _load || isnull IND_DISPLAY};
+		_this spawn FLAY_fnc_enemyIndicator;
+	};
+	
+	_object = _this select 0;
+	_mempoint = _this select 1;
+	_modelPos = _object selectionPosition _mempoint;
+	
+	// onEachFrame 1.63+
+	while { true } do {
+		_worldPos = _object modelToWorld _modelPos;
+		_screenPos = worldToScreen (_worldPos);
+		if (count _screenPos == 0) then {
+			IND_SNDSRC ctrlsetfade 1;
+			IND_SNDSRC ctrlcommit 0;
+			//sleep 0.5;
+		} else {
+		
+			_screenX = _screenPos select 0;
+			_screenY = _screenPos select 1;
+		
+			_pos = [
+				(_screenX) - ((IND_W) * IND_COEF)/2,
+				(_screenY) - ((IND_H) * IND_COEF)/2,
+				IND_W,
+				IND_H
+			];
+			
+			_screenCenterX = _centerPos select 0;
+			_screenCenterY = _centerPos select 1;
+			
+			if ( (abs (_screenCenterX - _screenX) < _thresholdX) and (abs (_screenCenterY - _screenY) < _thresholdY)) then {
+				IND_SNDSRC ctrlsettextcolor _colorGreen;
+			} else {
+				IND_SNDSRC ctrlsettextcolor _color;
+			};
+			
+			//if (abs (_screenCenterX - _screenX) < _thresholdX) then {
+			//};
+			
+			IND_SNDSRC ctrlsetposition _pos;
+			//IND_REPAIR ctrlsetposition _screenPos;
+			//IND_REFUEL ctrlsetposition _screenPos;
+			IND_GUNNER ctrlsetposition _centerPos;
+			
+			IND_SNDSRC ctrlsetfade 0.1;
+			//IND_REPAIR ctrlsetfade 0.5;
+			//IND_REFUEL ctrlsetfade 0.5;
+			IND_GUNNER ctrlsetfade 0.1;
+			IND_SNDSRC ctrlcommit 0;
+			//IND_REPAIR ctrlcommit 0;
+			//IND_REFUEL ctrlcommit 0;
+			IND_GUNNER ctrlcommit 0;
+			//sleep 0.0001;
+		};
+	};
+};

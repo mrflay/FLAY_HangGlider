@@ -22,16 +22,23 @@ _speed = sqrt((_v select 0)^2+(_v select 1)^2+(_v select 2)^2);
 
 if (_key in _up) then
 {
-	//_k = 0.05;
-	//_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
-    //_handled=true;
+	_k = 0.05;
+	if (_speed > 30) then {
+		_k = 0;
+	};	
+	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
+    _handled=true;
 };
 
 if (_key in _down) then
 {
-	//_k = -0.2;
-	//_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
-    //_handled=true;
+	_k = -0.2;
+	if (speed _glider < 0.1) then {
+		_k = 0;
+	};
+	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
+    _handled=true;
+	_glider animate ["GliderPitch",45];
 };
 
 if (_key in _space) then
@@ -52,6 +59,7 @@ if (_key in _space) then
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
 	//_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
 	_glider animate ["FeetStabilizer", 1];
+	
 };
 
 _handled;
