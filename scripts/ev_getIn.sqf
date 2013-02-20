@@ -24,14 +24,13 @@ player switchMove "AmovPknlMrunSnonWnonDf";
 	while { not _playbackDone } do {
 		_playbackDone = player getVariable ["FLAY_HangGlider_PlaybackDone", false];
 	};
-	moveOut player;
+	moveOut player;	
 	player moveInDriver _glider;
 	_glider setVectorUp [0,0,1];
 	player switchMove "AmovPknlMstpSnonWnonDnon_AinvPknlMstpSnonWnonDnon";
 	player playAction "CarryHangGliderGesture";
 	sleep 1;
 	player switchMove "AmovPknlMstpSnonWnonDnon_AmovPercMstpSnonWnonDnon";
-	deleteVehicle _trolley;
 	
 	0=[_glider] spawn {
 		private ["_glider","_actionId"];

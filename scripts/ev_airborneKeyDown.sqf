@@ -59,7 +59,7 @@ if (_key in _space) then
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
 	//_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
 	_glider animate ["FeetStabilizer", 1];
-	
+	_glider animate ["HideHarness",0];
 };
 
 _handled;

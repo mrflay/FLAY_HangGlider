@@ -240,15 +240,27 @@ class CfgVehicles
 			//	frequency = "1";
 			//	volume = "0.5";
 			//};
-			class CreakNoiseIn
+			class CreakNoiseIn1
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,10};
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,50};
 				frequency = "(randomizer*0.05+1.0)";
 				volume = "10*(speed factor[1, 80])*(1-camPos)";
 			};
+			class CreakNoiseIn2
+			{
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,50};
+				frequency = "(randomizer*0.5+0.5)";
+				volume = "10*(speed factor[70, 100])*(1-camPos)";
+			};
+			class CreakNoiseIn3
+			{
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak3.ogg",0.31622776,1,50};
+				frequency = "(randomizer*0.5+0.2)";
+				volume = "10*(speed factor[70, 100])*(1-camPos)";
+			};			
 			class CreakNoiseOut
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,10};
+				sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,50};
 				frequency = "(randomizer*0.05+1.0)";
 				volume = "10*camPos*(speed factor[1, 80])";
 			};
@@ -363,14 +375,6 @@ class CfgVehicles
 		audible = 0;
 		hasGunner = 0;
 		fuelCapacity = 0;
-		
-		soundEngine[] = {};
-		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
-		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
-		soundGetOut[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
-		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
 
 		threat[] = {0.0,0.0,0.0};
 		class DestructionEffects {};
@@ -417,7 +421,6 @@ class CfgVehicles
 		occludeSoundsWhenIn = 1.0;
 		obstructSoundsWhenIn = 1.0;
 		
-		class Sounds: Sounds {};
 		class Turrets {};
 		class Reflectors {};
 		class Armory
@@ -436,6 +439,14 @@ class CfgVehicles
 		noseDownCoef = 0.1;
 		ejectDeadDriver = false;
 		ejectSpeed[] = {0,0,0};		
+	};
+	
+	class FLAY_HangGlider_Bag: Static
+	{
+		scope = 1;
+		displayName = "FLAY HangGlider Bag";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider_Bag.p3d";
+		vehicleClass = "Misc";
 	};
 	
 	class FLAY_ArrowDnHelper: Static

@@ -24,6 +24,7 @@ _glider setVariable ["FLAY_HangGlider_KeyUpHandlerId", _KeyUpHandlerId];
 _glider animate ["PilotPosY",0.5];
 _glider animate ["PilotPosZ",-0.1];
 
+_glider animate ["HideHarness",1];
 
 //player switchMove "AmovPercMstpSlowWrflDnon";
 //player switchMove "AmovPknlMstpSlowWrflDnon";

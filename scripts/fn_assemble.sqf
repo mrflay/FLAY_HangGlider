@@ -104,8 +104,8 @@ _this spawn {
 		_worldPos = _vehicle modelToWorld _modelPos;
 		_screenPos = worldToScreen (_worldPos);
 		if (count _screenPos == 0) then {
-			IND_SNDSRC ctrlsetfade 1;
-			IND_SNDSRC ctrlcommit 0;
+			IND_REPAIR ctrlsetfade 1;
+			IND_REPAIR ctrlcommit 0;
 		} else {
 		
 			_screenX = _screenPos select 0;
@@ -122,32 +122,28 @@ _this spawn {
 			_screenCenterY = _centerPos select 1;
 			
 			if ( (abs (_screenCenterX - _screenX) < _thresholdX) and (abs (_screenCenterY - _screenY) < _thresholdY)) then {
-				IND_SNDSRC ctrlsettextcolor _colorGreen;
-				IND_SNDSRC ctrlsetfade 0;
-				_actionId = _vehicle getVariable ["FLAY_HangGlider_GetInActionId", -1];
+				IND_REPAIR ctrlsettextcolor _colorGreen;
+				IND_REPAIR ctrlsetfade 0;
+				_actionId = _vehicle getVariable ["FLAY_HangGlider_AssembleActionId", -1];
 				if (_actionId == -1) then {
-					_actionId = _vehicle addAction [
-						"Get In", "\FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf", [], 1, false, true, "", "isNull (driver _target)"
-					];
-					_vehicle setVariable ["FLAY_HangGlider_GetInActionId", _actionId];
+					_actionId = player addAction [
+						"Assemble", "\FLAY\FLAY_HangGlider\scripts\ev_assemble.sqf"
+					];			
+					_vehicle setVariable ["FLAY_HangGlider_AssembleActionId", _actionId];
 				};
 			} else {
-				IND_SNDSRC ctrlsettextcolor _colorGreen;
-				IND_SNDSRC ctrlsetfade 0.5;
-				_actionId = _vehicle getVariable ["FLAY_HangGlider_GetInActionId", -1];
+				IND_REPAIR ctrlsettextcolor _colorGreen;
+				IND_REPAIR ctrlsetfade 0.5;
+				_actionId = _vehicle getVariable ["FLAY_HangGlider_AssembleActionId", -1];
 				if (_actionId != -1) then {
-					_vehicle removeAction _actionId;
+					player removeAction _actionId;
 					_actionId = -1;
-					_vehicle setVariable ["FLAY_HangGlider_GetInActionId", _actionId];
+					_vehicle setVariable ["FLAY_HangGlider_AssembleActionId", _actionId];
 				};
 			};
 	
-			IND_SNDSRC ctrlsetposition _pos;
-			IND_CENTER ctrlsetposition _centerPos;
-			IND_CENTER ctrlsetfade 0.5;
-			IND_SNDSRC ctrlcommit 0;
-			IND_CENTER ctrlcommit 0;			
-			
+			IND_REPAIR ctrlsetposition _pos;
+			IND_REPAIR ctrlcommit 0;
 		};
 	};
 };

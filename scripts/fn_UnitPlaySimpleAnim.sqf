@@ -51,7 +51,7 @@ scriptName "modules_e\Functions\scenes\fn_UnitPlaySimple.sqf";
 private ["_skipTime","_targetUnit","_capturedData","_totalFrames","_startedTime","_currentTime","_lastPlayedFrame","_secondPassed","_FPS","_totalFPS","_endFrameTime","_ignoreDisabled","_endSeq","_debug","_sleep","_totalData","_selectedData","_currentData","_currentDataNext","_frameTime","_tmpTime","_tmpTimeNext","_tmpPos","_tmpDir","_tmpPosNext","_tmpDirNext","_tmpTimeDiff","_tmpPosX","_tmpPosY","_tmpPosZ","_tmpDirX"];
 
 _targetUnit = _this select 0;
-[objNull, _targetUnit, rENABLESIMULATION, true] call RE;
+//[objNull, _targetUnit, rENABLESIMULATION, true] call RE;
 
 // Disable move AI
 _targetUnit disableAI "MOVE";
@@ -215,8 +215,8 @@ if (time > _startedTime) then {_totalFPS = _totalFPS / (time - _startedTime);};
 if (_debug) then {hint format ["Avg. FPS was %1\nCalculated over %2s", _totalFPS, (time - _startedTime)];};
 
 // Re-enable move AI
-_targetUnit enableAI "MOVE";
-driver _targetUnit enableAI "MOVE";
+//_targetUnit enableAI "MOVE";
+//driver _targetUnit enableAI "MOVE";
 
 if (count _this > 2) then
 {
