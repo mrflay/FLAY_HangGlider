@@ -32,10 +32,11 @@ _this spawn {
 	#define IND_H		(IND_W * 4/3)
 	#define IND_COEF	(1.0)
 
-	#define IND_SNDSRC	(IND_DISPLAY displayctrl (IND_CONTROL + 1))	//--- Left
-	#define IND_REPAIR	(IND_DISPLAY displayctrl (IND_CONTROL + 2))	//--- Top
-	#define IND_REFUEL	(IND_DISPLAY displayctrl (IND_CONTROL + 3))	//--- Right
-	#define IND_GUNNER	(IND_DISPLAY displayctrl (IND_CONTROL + 4))	//--- Bottom
+	#define IND_SNDSRC	(IND_DISPLAY displayctrl (IND_CONTROL + 1))	
+	#define IND_REPAIR	(IND_DISPLAY displayctrl (IND_CONTROL + 2))	
+	#define IND_REFUEL	(IND_DISPLAY displayctrl (IND_CONTROL + 3))
+	#define IND_GUNNER	(IND_DISPLAY displayctrl (IND_CONTROL + 4))	
+	#define IND_CENTER	(IND_DISPLAY displayctrl (IND_CONTROL + 5))	
 
 	//--- Init
 	_pos = [
@@ -46,31 +47,35 @@ _this spawn {
 	];
 
 	_centerPos = [
-		(0.5) - ((IND_W/2) * IND_COEF)/2,
-		(0.5) - ((IND_H/2) * IND_COEF)/2,
-		IND_W/2,
-		IND_H/2
+		(0.5) - ((IND_W/2) * IND_COEF)/8,
+		(0.5) - ((IND_H/2) * IND_COEF)/8,
+		IND_W/8,
+		IND_H/8
 	];	
 	
 	IND_SNDSRC ctrlsetposition _pos;
 	IND_REPAIR ctrlsetposition _pos;
 	IND_REFUEL ctrlsetposition _pos;
-	IND_GUNNER ctrlsetposition _centerPos;
+	IND_GUNNER ctrlsetposition _pos;
+	IND_CENTER ctrlsetposition _centerPos;
 
 	IND_SNDSRC ctrlsettextcolor _color;
 	IND_REPAIR ctrlsettextcolor _color;
 	IND_REFUEL ctrlsettextcolor _color;
-	IND_GUNNER ctrlsettextcolor _colorGreen;
+	IND_GUNNER ctrlsettextcolor _color;
+	IND_CENTER ctrlsettextcolor _colorGreen;
 
 	IND_SNDSRC ctrlsetfade _fadeOut;
 	IND_REPAIR ctrlsetfade _fadeOut;
 	IND_REFUEL ctrlsetfade _fadeOut;
 	IND_GUNNER ctrlsetfade _fadeOut;
+	IND_CENTER ctrlsetfade _fadeOut;
 
 	IND_SNDSRC ctrlcommit 0;
 	IND_REPAIR ctrlcommit 0;
 	IND_REFUEL ctrlcommit 0;
 	IND_GUNNER ctrlcommit 0;
+	IND_CENTER ctrlcommit 0;
 
 	IND_SNDSRC ctrlsettext "ca\sounds\data\icon_soundsource_ca.paa";
 	IND_REPAIR ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_repair_ca.paa";
@@ -78,6 +83,7 @@ _this spawn {
 	IND_RELOAD ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_reload_ca.paa";
 	IND_REAMMO ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_reammo_ca.paa";
 	IND_GUNNER ctrlsettext "ca\modules_e\Functions\hints\img_icons\icon_gunner_ca.paa";
+	IND_CENTER ctrlsettext "flay\flay_hangglider\data\ui_point_ca.paa";
 	
 	//--- Display again after load
 	_this spawn {scriptName "fn_enemyIndicator.sqf: Load restart";
@@ -89,18 +95,17 @@ _this spawn {
 		_this spawn FLAY_fnc_enemyIndicator;
 	};
 	
-	_object = _this select 0;
+	_vehicle = _this select 0;
 	_mempoint = _this select 1;
-	_modelPos = _object selectionPosition _mempoint;
-	
+	_modelPos = _vehicle selectionPosition _mempoint;
+	_actionId=-1;
 	// onEachFrame 1.63+
 	while { true } do {
-		_worldPos = _object modelToWorld _modelPos;
+		_worldPos = _vehicle modelToWorld _modelPos;
 		_screenPos = worldToScreen (_worldPos);
 		if (count _screenPos == 0) then {
 			IND_SNDSRC ctrlsetfade 1;
 			IND_SNDSRC ctrlcommit 0;
-			//sleep 0.5;
 		} else {
 		
 			_screenX = _screenPos select 0;
@@ -118,8 +123,21 @@ _this spawn {
 			
 			if ( (abs (_screenCenterX - _screenX) < _thresholdX) and (abs (_screenCenterY - _screenY) < _thresholdY)) then {
 				IND_SNDSRC ctrlsettextcolor _colorGreen;
+				_actionId = _vehicle getVariable ["FLAY_HangGlider_GetInActionId", -1];
+				if (_actionId == -1) then {
+					_actionId = _vehicle addAction [
+						"Get In", "\FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf", [], 1, false, true, "", "isNull (driver _target)"
+					];
+					_vehicle setVariable ["FLAY_HangGlider_GetInActionId", _actionId];
+				};
 			} else {
 				IND_SNDSRC ctrlsettextcolor _color;
+				_actionId = _vehicle getVariable ["FLAY_HangGlider_GetInActionId", -1];
+				if (_actionId != -1) then {
+					_vehicle removeAction _actionId;
+					_actionId = -1;
+					_vehicle setVariable ["FLAY_HangGlider_GetInActionId", _actionId];
+				};
 			};
 			
 			//if (abs (_screenCenterX - _screenX) < _thresholdX) then {
@@ -128,17 +146,19 @@ _this spawn {
 			IND_SNDSRC ctrlsetposition _pos;
 			//IND_REPAIR ctrlsetposition _screenPos;
 			//IND_REFUEL ctrlsetposition _screenPos;
-			IND_GUNNER ctrlsetposition _centerPos;
+			IND_CENTER ctrlsetposition _centerPos;
 			
 			IND_SNDSRC ctrlsetfade 0.1;
 			//IND_REPAIR ctrlsetfade 0.5;
 			//IND_REFUEL ctrlsetfade 0.5;
-			IND_GUNNER ctrlsetfade 0.1;
+			IND_CENTER ctrlsetfade 0.2;
 			IND_SNDSRC ctrlcommit 0;
 			//IND_REPAIR ctrlcommit 0;
 			//IND_REFUEL ctrlcommit 0;
-			IND_GUNNER ctrlcommit 0;
+			IND_CENTER ctrlcommit 0;
 			//sleep 0.0001;
+			
+			
 		};
 	};
 };

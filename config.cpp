@@ -252,16 +252,22 @@ class CfgVehicles
 				frequency = "(randomizer*0.05+1.0)";
 				volume = "10*camPos*(speed factor[1, 80])";
 			};
+			//class FootStepsIn
+			//{
+			//	sound[] = {"\FLAY\FLAY_HangGlider\data\sfx\squeak1.ogg",0.31622776,1,10};
+			//	frequency = "(randomizer*0.05+1.0)";
+			//	volume = "10*camPos*(speed factor[1, 80])";
+			//};			
 		};
 
-		class assembleInfo
-		{
-			primary = 0;
-			base = "";
-			assembleTo = "";
-			dissasembleTo[] = {"FLAY_HangGlider_Bag","Tripod_Bag"};
-			displayName = "";
-		};
+		//class assembleInfo
+		//{
+		//	primary = 0;
+		//	base = "";
+		//	assembleTo = "";
+		//	dissasembleTo[] = {"FLAY_HangGlider_Bag","Tripod_Bag"};
+		//	displayName = "";
+		//};
 	};
 	
 	class FLAY_HangGlider2: FLAY_HangGlider
@@ -323,20 +329,113 @@ class CfgVehicles
 	
 	// Assemble Info
 	
-	class Bag_Base_EP1;
-	class Weapon_Bag_Base_EP1: Bag_Base_EP1
-	{
-		class assembleInfo{};
-	};
-	class FLAY_HangGlider_Bag: Weapon_Bag_Base_EP1
+//	class Bag_Base_EP1;
+//	class Weapon_Bag_Base_EP1: Bag_Base_EP1
+//	{
+//		class assembleInfo{};
+//	};
+//	class FLAY_HangGlider_Bag: Weapon_Bag_Base_EP1
+//	{
+//		scope = 2;
+//		displayName = "Hang Glider Bag";
+//		class assembleInfo: assembleInfo
+//		{
+//			displayName = "Hang Glider";
+//			assembleTo = "FLAY_HangGlider";
+//		};
+//	};
+
+	class FLAY_HiddenTrolley: Plane
 	{
 		scope = 2;
-		displayName = "Hang Glider Bag";
-		class assembleInfo: assembleInfo
+		displayName = "FLAY - Hidden Trolley";
+		model = "FLAY\FLAY_HangGlider\FLAY_HiddenTrolley";
+		armor = 5;
+		
+		side = 4;
+		Icon = "\flay\flay_hangglider\data\glider_ico_ca.paa";
+		picture = "\flay\flay_hangglider\data\glider_pic_ca.paa";
+		mapSize = 10;
+		
+		//nameSound = "veh_parachute";
+		accuracy = 0.1;
+		camouflage = 1;
+		audible = 0;
+		hasGunner = 0;
+		fuelCapacity = 0;
+		
+		soundEngine[] = {};
+		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
+		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
+		soundGetOut[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
+		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
+		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
+		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
+
+		threat[] = {0.0,0.0,0.0};
+		class DestructionEffects {};
+		
+		htMin = 60;
+		htMax = 1800;
+		afMax = 100;
+		mfMax = 80;
+		mFact = 0;
+		tBody = 0;
+		turnCoef = 2;
+		outsideSoundFilter = 0;
+		wheelCircumference = 2.28;
+		transportMaxMagazines = 0;
+		transportMaxWeapons = 0;
+		
+		driverCanSee = "2";
+		secondaryExplosion = 0;
+		extCameraPosition[] = {0,1,-3};
+		destrType = "DestructNo";
+		enableGPS = 0;
+
+		driverOpticsModel = "\ca\weapons\optika_empty";
+		
+		class ViewPilot: ViewPilot
 		{
-			displayName = "Hang Glider";
-			assembleTo = "FLAY_HangGlider";
+			initFov = 1.2;
+			minFov = 0.5;
+			maxFov = 1.2;
+			initAngleX = 0;
+			minAngleX = -80;
+			maxAngleX = 80;
+			initAngleY = 30;
+			minAngleY = -110;
+			maxAngleY = 110;
 		};
+
+		driverAction = "HangGlider_Pilot";
+		driverInAction = "HangGlider_Pilot";
+		getInAction = "";
+		getOutAction = "";
+		
+		cabinOpening = 1;
+		occludeSoundsWhenIn = 1.0;
+		obstructSoundsWhenIn = 1.0;
+		
+		class Sounds: Sounds {};
+		class Turrets {};
+		class Reflectors {};
+		class Armory
+		{
+			disabled = 1;
+		};
+		
+		gearRetracting = 0;
+		flaps = 0;
+		envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
+		
+		maxSpeed = 200;
+		aileronSensitivity = 0.5;
+		elevatorSensitivity = 0.05;
+		wheelSteeringSensitivity = 0.001;
+		noseDownCoef = 0.1;
+		ejectDeadDriver = false;
+		ejectSpeed[] = {0,0,0};		
 	};
 	
 	class FLAY_ArrowDnHelper: Static

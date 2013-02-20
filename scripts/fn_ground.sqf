@@ -24,9 +24,9 @@ _glider setVariable ["FLAY_HangGlider_KeyUpHandlerId", _KeyUpHandlerId];
 _glider animate ["PilotPosY",0.5];
 _glider animate ["PilotPosZ",-0.1];
 
-player playAction "CarryHangGliderGesture";
+
 //player switchMove "AmovPercMstpSlowWrflDnon";
-player switchMove "AmovPknlMstpSlowWrflDnon";
+//player switchMove "AmovPknlMstpSlowWrflDnon";
 
 _glider setVariable ["FLAY_HangGlider_airborne", false];
 

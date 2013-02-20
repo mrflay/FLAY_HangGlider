@@ -58,7 +58,7 @@ if (_key in _up) then
 
 	_k = 0.1;
 	if (_speed < 1.0) then {
-		_k = 2.0;
+		_k = 1.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -82,7 +82,7 @@ if (_key in _left) then
 	_k = 0.1;
 	
 	if (_speed < 1.0) then {
-		_k = 2.0;
+		_k = 1.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -112,7 +112,7 @@ if (_key in _right) then
 	_k = 0.1;
 	
 	if (_speed < 1.0) then {
-		_k = 2.0;
+		_k = 1.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -140,7 +140,7 @@ if (_key in _down) then
 	
 	_k = -0.2;
 	if (_speed < 1.0) then {
-		_k = -2.0;
+		_k = -1.0;
 	};
 	if (_speed > _maxSpeed) then {
 		_k = 0;
@@ -152,7 +152,8 @@ if (_key in _down) then
 
 if (_key in _space) then
 {
-    _handled=true;
+	// When the glider is airborne, space is used to switch into landing pose. This prevents the switch 
+	// from triggering immedietly if space is pressed during takeoff (it is cleared in the KeyUp event handler).
 	if (_glider getVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", false]) exitWith { true; };
 	
 	_anim = "HangGlider_Pilot";
@@ -170,6 +171,7 @@ if (_key in _space) then
 	_glider setVariable ["FLAY_HangGlider_airborne", true];
 	[_glider] call FLAY_HangGlider_fnc_Airborne;
 	_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
+	_handled=true;
 };
 
 _handled;

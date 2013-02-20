@@ -14,12 +14,14 @@ FLAY_HangGlider_EH_GetIn = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts
 FLAY_HangGlider_EH_GetOut = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_getOut.sqf";
 
 _glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
-_glider addEventHandler ["GetIn", {[_this select 0] call FLAY_HangGlider_EH_GetIn;}];
+//_glider addEventHandler ["GetIn", {[_this select 0] call FLAY_HangGlider_EH_GetIn;}];
 _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_GetOut;}]; 
 
-//[_glider] spawn {
-//	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;
-//};
+_glider setVehicleLock "LOCKED";
+
+[_glider] spawn {
+	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;
+};
 
 [_glider] spawn {
 
@@ -94,7 +96,7 @@ _glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_Get
 			
 			sleep 0.2;
 			
-{ _glider removeAction _x; player removeAction _x; } forEach [0,1,2,3,4,5,6,7,8,9,10];
+//{ _glider removeAction -_x; player removeAction -_x; } forEach [0,1,2,3,4,5,6,7,8,9,10];
 			
 			_v = velocity _glider;
 			
