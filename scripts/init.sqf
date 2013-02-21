@@ -91,15 +91,14 @@ _glider setVehicleLock "LOCKED";
 	_count = 0;
 	_vSpeedAvg = 0;
 	_soundSource = objNull;
+	_camShakeTimeout = 0;
 	
 	while { alive _glider } do {
 		
 		if (vehicle player == _glider) then {
 			
 			sleep 0.2;
-			
-//{ _glider removeAction -_x; player removeAction -_x; } forEach [0,1,2,3,4,5,6,7,8,9,10];
-			
+						
 			_v = velocity _glider;
 			
 			_speed = sqrt((_v select 0)^2+(_v select 1)^2+(_v select 2)^2);
@@ -136,23 +135,21 @@ _glider setVehicleLock "LOCKED";
 				_vSpeedAvg = 0;
 			};
 			
-			//if (vehicle player == _glider and _altitude > 2) then {
-				//_anim = "HangGlider_Pilot";
-				//if (animationState player != _anim) then {
-				//	player playAction "ResetGesture";
-				//	player switchMove _anim;
-				//	_glider animate ["PilotPosY", 0];
-				//	_glider animate ["PilotPosZ", 0];
-				//};
-			//} else {
-			//	_anim = "AmovPercMstpSlowWrflDnon";
-			//	if ((animationState player != _anim) and (_speed < 0.1) and (vehicle player == _glider)) then {
-			//		_airborne = _glider getVariable ["FLAY_HangGlider_airborne", false];
-			//		if (not _airborne) then {
-			//			//player switchMove _anim;
-			//		};
-			//	};
-			//};
+			// TODO - Camera shake
+			if (_speed > 5 and time > _camShakeTimeout) then {
+				addCamShake [_speed / 50, 15, _speed / 2];
+				_camShakeTimeout = time + 5;
+			};
+			
+			if (vehicle player == _glider and _altitude < 2) then {
+				_anim = "AmovPercMstpSlowWrflDnon";
+				if ((animationState player != _anim) and (_speed < 0.1)) then {
+					_airborne = _glider getVariable ["FLAY_HangGlider_airborne", false];
+					if (not _airborne) then {
+						player switchMove _anim;
+					};
+				};
+			};
 			
 		} else {
 			sleep 5;
