@@ -148,7 +148,7 @@ while {!(isnull _v)} do
 		_trail1 setParticleParams [["\ca\Data\ParticleEffects\Universal\Universal.p3d", 16, 13, 3, 0],
 		"", "Billboard", 1, 1*_intensity, 
 		[0,0,0], velocity _v, 
-		0, 1.0, 0.79, 0.18, 
+		0, 1.0, 0.79, 0.5, 
 		[0.2, 0.1], 
 		[[1, 1, 1, 0.04*_intensity],[1, 1, 1, 0.14*_intensity],[1, 1, 1, 0.05*_intensity], [1, 1, 1, 0]], [1000], 100, 0.01, "", "", "",360];
 		
@@ -156,7 +156,7 @@ while {!(isnull _v)} do
 		_trail2 setParticleParams [["\ca\Data\ParticleEffects\Universal\Universal.p3d", 16, 13, 3, 0],
 		"", "Billboard", 1, 1*_intensity, 
 		[0,0,0], velocity _v, 
-		0, 1.0, 0.79, 0.18, 
+		0, 1.0, 0.79, 0.5, 
 		[0.2, 0.1], 
 		[[1, 1, 1, 0.04*_intensity],[1, 1, 1, 0.14*_intensity],[1, 1, 1, 0.05*_intensity], [1, 1, 1, 0]], [1000], 100, 0.01, "", "", "",360];
 		

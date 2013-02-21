@@ -17,7 +17,7 @@ FLAY_HangGlider_IndicatorCounter = -1;
 
 _glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
 //_glider addEventHandler ["GetIn", {[_this select 0] call FLAY_HangGlider_EH_GetIn;}];
-_glider addEventHandler ["GetOut", {[_this select 0] call FLAY_HangGlider_EH_GetOut;}]; 
+_glider addEventHandler ["GetOut", FLAY_HangGlider_EH_GetOut]; 
 
 _glider setVehicleLock "LOCKED";
 
@@ -141,12 +141,18 @@ _glider setVehicleLock "LOCKED";
 				_camShakeTimeout = time + 5;
 			};
 			
-			if (vehicle player == _glider and _altitude < 2) then {
-				_anim = "AmovPercMstpSlowWrflDnon";
-				if ((animationState player != _anim) and (_speed < 0.1)) then {
-					_airborne = _glider getVariable ["FLAY_HangGlider_airborne", false];
+			if (_altitude < 2) then {
+				_landAnim = "HangGlider_PilotLand";
+				_stopAnim = "AmovPercMstpSlowWrflDnon";
+				_airborne = _glider getVariable ["FLAY_HangGlider_airborne", false];
+				if ((animationState player != _stopAnim) and (_speed < 0.1)) then {
 					if (not _airborne) then {
-						player switchMove _anim;
+						player switchMove _stopAnim;
+					};
+				} else {
+					// enable ground movement
+					if (not _airborne) then {
+						[_glider] call FLAY_HangGlider_fnc_Ground;
 					};
 				};
 			};

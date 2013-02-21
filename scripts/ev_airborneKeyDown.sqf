@@ -42,9 +42,7 @@ if (_key in _down) then
 };
 
 if (_key in _space) then
-{
-    _handled=true;
-	
+{	
 	_anim = "HangGlider_PilotLand";
 	if (animationState player != _anim) then {
 		_glider animate ["PilotPosY", 0];
@@ -57,9 +55,12 @@ if (_key in _space) then
 		_k = 0;
 	};
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
-	//_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
+	_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
+	_glider setVariable ["FLAY_HangGlider_airborne", false];
 	_glider animate ["FeetStabilizer", 1];
 	_glider animate ["HideHarness",0];
+	[_glider] call FLAY_HangGlider_fnc_Ground;
+	_handled=true;
 };
 
 _handled;

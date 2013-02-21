@@ -19,7 +19,6 @@ if (_key in _down) then
 if (_key in _space) then
 {
 	_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", false];
-	
 };
 
 _handled;

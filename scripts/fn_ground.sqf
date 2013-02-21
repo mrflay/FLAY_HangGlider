@@ -1,9 +1,5 @@
-// FLAY_HangGlider_fnc_Airborne
+// FLAY_HangGlider_fnc_Ground
 _glider = (_this select 0);
-
-//_airborne = _glider getVariable ["FLAY_HangGlider_airborne", false];
-//if (not _airborne) then {
-//};
 
 _KeyDownHandlerId = _glider getVariable ["FLAY_HangGlider_KeyDownHandlerId", -1];
 if (_KeyDownHandlerId != -1) then {
@@ -23,11 +19,7 @@ _glider setVariable ["FLAY_HangGlider_KeyUpHandlerId", _KeyUpHandlerId];
 
 _glider animate ["PilotPosY",0.5];
 _glider animate ["PilotPosZ",-0.1];
-
 _glider animate ["HideHarness",1];
-
-//player switchMove "AmovPercMstpSlowWrflDnon";
-//player switchMove "AmovPknlMstpSlowWrflDnon";
 
 _glider setVariable ["FLAY_HangGlider_airborne", false];
 
