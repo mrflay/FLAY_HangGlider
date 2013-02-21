@@ -67,7 +67,8 @@ class CfgVehicles
 		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
 		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
 
-		threat[] = {0.0,0.0,0.0};
+		//threat[] = {0.0,0.0,0.0};
+		threat[] = {1,0.900000,0.100000};
 		class DestructionEffects {};
 		
 		htMin = 60;
@@ -76,7 +77,7 @@ class CfgVehicles
 		mfMax = 80;
 		mFact = 0;
 		tBody = 0;
-		turnCoef = 2;
+		turnCoef = 5;//TEST
 		outsideSoundFilter = 0;
 		wheelCircumference = 2.28;
 		transportMaxMagazines = 0;
@@ -167,6 +168,7 @@ class CfgVehicles
 		wheelSteeringSensitivity = 2.7;
 		noseDownCoef = 0.0025;
 		ejectDeadDriver = true;
+		ejectSpeed[] = {0,-1,-5};
 		
 		class AnimationSources: AnimationSources
 		{
@@ -320,6 +322,21 @@ class CfgVehicles
 		HeadAimDown = 8;
 	};
 
+	class FLAY_HangGliderAI: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider (AI)";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider3";
+		fuelCapacity = 100;
+		maxSpeed = 100;
+		landingSpeed = 70;
+		landingAoa = "rad -15";
+		envelope[] = { 0.1, 0.2, 1.0, 2.0, 3.5, 3.5, 3.5, 3.5, 4.5, 4.5, 4.5, 3.5, 3.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5 };
+		aileronSensitivity = 3.5;
+		elevatorSensitivity = 0.1;
+		wheelSteeringSensitivity = 2.7;
+		noseDownCoef = 0.00000025;		
+	};
+	
 	class FLAY_WingSuit: FLAY_GliderBase
 	{
 		displayName = "FLAY Wing Suit";

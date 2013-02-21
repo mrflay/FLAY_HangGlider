@@ -17,3 +17,5 @@ freesound      Various sound effects
 			
 soundbible     Various sound effects
                http://soundbible.com/
+			   
+RKSL-Rock      Envelope info (biki)
