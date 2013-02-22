@@ -18,8 +18,10 @@ FLAY_HangGlider_IndicatorCounter = -1;
 _glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
 //_glider addEventHandler ["GetIn", {[_this select 0] call FLAY_HangGlider_EH_GetIn;}];
 _glider addEventHandler ["GetOut", FLAY_HangGlider_EH_GetOut]; 
-
 _glider setVehicleLock "LOCKED";
+
+// EXPERIMENTAL - assemble / disassemble
+[_glider, "FLAY.craft.ui.pos_disassemble","Disassemble Hang Glider","FLAY\FLAY_HangGlider\scripts\ev_disassemble.sqf"] execVM "FLAY\FLAY_HangGlider\scripts\fn_assemble.sqf";
 
 [_glider] spawn {
 	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;

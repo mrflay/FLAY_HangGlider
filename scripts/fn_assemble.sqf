@@ -8,7 +8,8 @@ scriptName "fn_enemyIndicator.sqf";
 	Parameter(s):
 	_this select 0: OBJECT - object
 	_this select 1: OBJECT - mempoint
-
+	_this select 2: STRING - title
+	_this select 3: STRING - filename
 	Returns:
 	True
 */
@@ -97,10 +98,13 @@ _this spawn {
 	
 	_vehicle = _this select 0;
 	_mempoint = _this select 1;
+	_title = _this select 2;
+	_filename = _this select 3;
+	
 	_modelPos = _vehicle selectionPosition _mempoint;
 	_actionId=-1;
 	// onEachFrame 1.63+
-	while { true } do {
+	while { alive _vehicle } do {
 		_worldPos = _vehicle modelToWorld _modelPos;
 		_screenPos = worldToScreen (_worldPos);
 		if (count _screenPos == 0) then {
@@ -112,10 +116,10 @@ _this spawn {
 			_screenY = _screenPos select 1;
 		
 			_pos = [
-				(_screenX) - ((IND_W) * IND_COEF)/2,
-				(_screenY) - ((IND_H) * IND_COEF)/2,
-				IND_W,
-				IND_H
+				(_screenX) - ((IND_W) * IND_COEF)/4,
+				(_screenY) - ((IND_H) * IND_COEF)/4,
+				IND_W/2,
+				IND_H/2
 			];
 			
 			_screenCenterX = _centerPos select 0;
@@ -126,9 +130,7 @@ _this spawn {
 				IND_REPAIR ctrlsetfade 0;
 				_actionId = _vehicle getVariable ["FLAY_HangGlider_AssembleActionId", -1];
 				if (_actionId == -1) then {
-					_actionId = player addAction [
-						"Assemble", "\FLAY\FLAY_HangGlider\scripts\ev_assemble.sqf"
-					];			
+					_actionId = _vehicle addAction [_title, _filename, [_vehicle]];	
 					_vehicle setVariable ["FLAY_HangGlider_AssembleActionId", _actionId];
 				};
 			} else {
@@ -136,7 +138,7 @@ _this spawn {
 				IND_REPAIR ctrlsetfade 0.5;
 				_actionId = _vehicle getVariable ["FLAY_HangGlider_AssembleActionId", -1];
 				if (_actionId != -1) then {
-					player removeAction _actionId;
+					_vehicle removeAction _actionId;
 					_actionId = -1;
 					_vehicle setVariable ["FLAY_HangGlider_AssembleActionId", _actionId];
 				};

@@ -1,121 +1,164 @@
-scriptName "fn_gearIndicator.sqf";
+scriptName "fn_variometer.sqf";
 /*
-	Author: Karel Moricky
+	Author: mrflay
 
 	Description:
-	Direction indicator (similar to one CWC-era military game)
+	 ...
 
 	Parameter(s):
-	_this select 0: OBJECT - Center
-	_this select 1: OBJECT - Related object
+	_this select 0: OBJECT - unit
 
 	Returns:
 	True
 */
 _this spawn {
 	disableserialization;
+		
+	17 cutRsc ["RscMissionScreen","plain"];
+	waitUntil {!isNull (uiNamespace getVariable "BIS_RscMissionScreen")};
+	uiNamespace setVariable ["FLAY_RscMissionScreen_Variometer", uinamespace getvariable "BIS_RscMissionScreen"];
 	
-	_fadeOut = 0.8;
-	_color = [1,1,1,1];
+	#define UI_DISPLAY	(uiNamespace getVariable "FLAY_RscMissionScreen_Variometer")
+	#define UI_CONTROL	(1100)
+
+	#define UI_WIDTH	(0.7)
+	#define UI_HEIGHT	(UI_WIDTH * 4/3)
+	#define UI_LAYER(x)	(UI_DISPLAY displayctrl (UI_CONTROL + (x)))
+	#define UI_FLYTEC	(UI_LAYER(1))
 	
-	17 cutrsc ["RscMissionScreen","plain"];
-	waituntil {!isnull (uinamespace getvariable "BIS_RscMissionScreen")};
-	uinamespace setvariable ["BIS_RscMissionScreen_dirIndicator",uinamespace getvariable "BIS_RscMissionScreen"];
-	
-	#define IND_DISPLAY	(uinamespace getvariable "BIS_RscMissionScreen_dirIndicator")
-	#define IND_CONTROL	1200
-
-	#define IND_W		(0.35)
-	#define IND_H		(IND_W * 4/3)
-	#define IND_COEF	(1.0)
-
-	#define GEAR_R	(IND_DISPLAY displayctrl (IND_CONTROL + 1))	//--- Reverse
-	#define GEAR_N	(IND_DISPLAY displayctrl (IND_CONTROL + 2))	//--- Neutral
-	#define GEAR_1	(IND_DISPLAY displayctrl (IND_CONTROL + 3))	//--- First
-	#define GEAR_2	(IND_DISPLAY displayctrl (IND_CONTROL + 4))	//--- Second
-	#define GEAR_3	(IND_DISPLAY displayctrl (IND_CONTROL + 5))	//--- Third
-	#define GEAR_4	(IND_DISPLAY displayctrl (IND_CONTROL + 6))	//--- Fourth
-	#define GEAR_5	(IND_DISPLAY displayctrl (IND_CONTROL + 7))	//--- Fifth
-
-	//--- Init
-	_pos = [
-		(safezoneX + safezoneW / 2) - ((IND_W) * IND_COEF)/2,
-		(safezoneY + safezoneH) - (IND_H) * IND_COEF,
-		IND_W,
-		IND_H
+	#define UI_SETUP(x,pos,img) \
+			UI_LAYER(x) ctrlsetposition (pos); \
+			UI_LAYER(x) ctrlsettextcolor [1,1,1,1]; \
+			UI_LAYER(x) ctrlsetfade 1; \
+			UI_LAYER(x) ctrlcommit 0; \
+			UI_LAYER(x) ctrlsettext (img);
+		
+	_uiPos = [
+		(safezoneX + 0.01),
+		(safezoneY + safezoneH) - (UI_HEIGHT) - 0.01,
+		UI_WIDTH,
+		UI_HEIGHT
 	];
-
-	GEAR_R ctrlsetposition _pos;
-	GEAR_N ctrlsetposition _pos;
-	GEAR_1 ctrlsetposition _pos;
-	GEAR_2 ctrlsetposition _pos;
-	GEAR_3 ctrlsetposition _pos;
-	GEAR_4 ctrlsetposition _pos;
-	GEAR_5 ctrlsetposition _pos;
-
-	GEAR_R ctrlsettextcolor _color;
-	GEAR_N ctrlsettextcolor _color;
-	GEAR_1 ctrlsettextcolor _color;
-	GEAR_2 ctrlsettextcolor _color;
-	GEAR_3 ctrlsettextcolor _color;
-	GEAR_4 ctrlsettextcolor _color;
-	GEAR_5 ctrlsettextcolor _color;
-
-	GEAR_R ctrlsetfade 1;
-	GEAR_N ctrlsetfade 1;
-	GEAR_1 ctrlsetfade 1;
-	GEAR_2 ctrlsetfade 1;
-	GEAR_3 ctrlsetfade 1;
-	GEAR_4 ctrlsetfade 1;
-	GEAR_5 ctrlsetfade 1;
-
-	GEAR_R ctrlcommit 0;
-	GEAR_N ctrlcommit 0;
-	GEAR_1 ctrlcommit 0;
-	GEAR_2 ctrlcommit 0;
-	GEAR_3 ctrlcommit 0;
-	GEAR_4 ctrlcommit 0;
-	GEAR_5 ctrlcommit 0;
-
-	GEAR_R ctrlsettext "data\ui_variometer_ca.paa";
 	
-	//--- Display again after load
-	_this spawn {scriptName "fn_variometer.sqf: Load restart";
-		_load = [] spawn {scriptName "fn_variometer.sqf: Load detection";
-			disableserialization;
-			waituntil {false};
-		};
-		waituntil {scriptdone _load || isnull IND_DISPLAY};
-		_this spawn FLAY_fnc_variometer;
-	};
+	_uiVSpeedPos = [
+		(_uiPos select 0) - 0.07,
+		(_uiPos select 1) + 0.275,
+		(_uiPos select 2),
+		(_uiPos select 3)
+	];	
 	
-
-	// onEachFrame 1.63+
-	while { true } do {
+	// background
+	UI_SETUP( 1, _uiPos, "FLAY\FLAY_HangGlider\data\flytec3040L2_ca.paa");
 	
-		_vehicle = vehicle player;
-		if (_vehicle != player) then 
-		{
-			_gear = _vehicle getVariable ["FLAY_cars_gear",0];
-			_throttle = _vehicle getVariable ["FLAY_cars_throttle",0];
-			_clutch = _vehicle getVariable ["FLAY_cars_clutch",0];
+	// up indicators
+	UI_SETUP( 2, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario01_ca.paa");
+	UI_SETUP( 3, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario02_ca.paa");
+	UI_SETUP( 4, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario03_ca.paa");
+	UI_SETUP( 5, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario04_ca.paa");
+	UI_SETUP( 6, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario05_ca.paa");	
+	UI_SETUP( 7, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario06_ca.paa");	
+	UI_SETUP( 8, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario07_ca.paa");	
+	UI_SETUP( 9, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario08_ca.paa");	
+	UI_SETUP(10, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario09_ca.paa");	
+	UI_SETUP(11, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario10_ca.paa");	
+	UI_SETUP(12, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario11_ca.paa");	
+	UI_SETUP(13, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario12_ca.paa");	
+	UI_SETUP(14, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario13_ca.paa");	
+	UI_SETUP(15, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario14_ca.paa");	
+	UI_SETUP(16, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario15_ca.paa");	
+	UI_SETUP(17, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario16_ca.paa");	
+	UI_SETUP(18, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario17_ca.paa");	
+	UI_SETUP(19, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario18_ca.paa");	
+	UI_SETUP(20, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario19_ca.paa");	
+	UI_SETUP(21, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario20_ca.paa");	
+	UI_SETUP(22, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario21_ca.paa");	
+	UI_SETUP(23, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario22_ca.paa");	
+	UI_SETUP(24, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario23_ca.paa");	
+	UI_SETUP(25, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario24_ca.paa");	
+	UI_SETUP(26, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario25_ca.paa");	
+	UI_SETUP(27, _uiPos, "FLAY\FLAY_HangGlider\data\vario\vario26_ca.paa");
+	
+	// down indicators
+	UI_SETUP(28, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn01_ca.paa");
+	UI_SETUP(29, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn02_ca.paa");
+	UI_SETUP(30, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn03_ca.paa");
+	UI_SETUP(31, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn04_ca.paa");
+	UI_SETUP(32, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn05_ca.paa");	
+	UI_SETUP(33, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn06_ca.paa");	
+	UI_SETUP(34, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn07_ca.paa");	
+	UI_SETUP(35, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn08_ca.paa");	
+	UI_SETUP(36, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn09_ca.paa");	
+	UI_SETUP(37, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn10_ca.paa");	
+	UI_SETUP(38, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn11_ca.paa");	
+	UI_SETUP(39, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn12_ca.paa");	
+	UI_SETUP(40, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn13_ca.paa");	
+	UI_SETUP(41, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn14_ca.paa");	
+	UI_SETUP(42, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn15_ca.paa");	
+	UI_SETUP(43, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn16_ca.paa");	
+	UI_SETUP(44, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn17_ca.paa");	
+	UI_SETUP(45, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn18_ca.paa");	
+	UI_SETUP(46, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn19_ca.paa");	
+	UI_SETUP(47, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn20_ca.paa");	
+	UI_SETUP(48, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn21_ca.paa");	
+	UI_SETUP(49, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn22_ca.paa");	
+	UI_SETUP(50, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn23_ca.paa");	
+	UI_SETUP(51, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn24_ca.paa");	
+	UI_SETUP(52, _uiPos, "FLAY\FLAY_HangGlider\data\vario\varioDn25_ca.paa");	
+	
+	UI_SETUP(200, _uiVSpeedPos, "");
+	UI_LAYER(200) ctrlSetFade 0;
+	UI_LAYER(200) ctrlCommit 0;
 			
-			GEAR_R ctrlsetfade ( if (_gear == -1) then { 1-_clutch - 0.3 } else { 1 } );
-			GEAR_N ctrlsetfade ( if (_gear ==  0) then { 1-_clutch - 0.3 } else { 1 } );
-			GEAR_1 ctrlsetfade ( if (_gear ==  1) then { 1-_clutch - 0.3 } else { 1 } );
-			GEAR_2 ctrlsetfade ( if (_gear ==  2) then { 1-_clutch - 0.3 } else { 1 } );
-			GEAR_3 ctrlsetfade ( if (_gear ==  3) then { 1-_clutch - 0.3 } else { 1 } );
-			GEAR_4 ctrlsetfade ( if (_gear ==  4) then { 1-_clutch - 0.3 } else { 1 } );
-			GEAR_5 ctrlsetfade ( if (_gear ==  5) then { 1-_clutch - 0.3 } else { 1 } );
+	_unit = _this select 0;
+	
+	_index = 2;
+	_prevIndex = 2;
+	_count = 0;
+	_vSpeedAvg = 0;
+	
+	UI_LAYER(1) ctrlsetfade 0;
+	UI_LAYER(1) ctrlcommit 0;
+	
+	while { alive _unit } do {
+		
+		sleep 0.01;
+
+		_velocity = velocity (vehicle _unit);
+		
+		_count = _count + 1;
+		if (_count < 5) then {
+			_vSpeedCur = _velocity select 2;
+			_vSpeedAvg = _vSpeedAvg + _vSpeedCur;
+		} else {
+			_vSpeedAvg = _vSpeedAvg / _count;
+			_index = 2;
 			
-			GEAR_R ctrlcommit 0.1 * (1-_clutch);
-			GEAR_N ctrlcommit 0.1 * (1-_clutch);
-			GEAR_1 ctrlcommit 0.1 * (1-_clutch);
-			GEAR_2 ctrlcommit 0.1 * (1-_clutch);
-			GEAR_3 ctrlcommit 0.1 * (1-_clutch);
-			GEAR_4 ctrlcommit 0.1 * (1-_clutch);
-			GEAR_5 ctrlcommit 0.1 * (1-_clutch);
+			if (_vSpeedAvg < 0.5) then {
+				_index = (28 + round (abs _vSpeedAvg)) min 52; // TODO define constants
+			};
+			
+			if (_vSpeedAvg > 0.5) then {
+				_index = (2 + round (_vSpeedAvg)) min 27; // TODO define constants
+			};
+			
+			// round vspeed to two decimal places for display
+			_vSpeedAvgText = str (round (_vSpeedAvg * (10 ^ 1)) / (10 ^ 1));
+			
+			UI_LAYER(200) ctrlSetText _vSpeedAvgText;
+			UI_LAYER(200) ctrlCommit 0;
+	
+			UI_LAYER(_prevIndex) ctrlsetfade 1;
+			UI_LAYER(_prevIndex) ctrlcommit 0;
+			
+			if ((abs _vSpeedAvg) >= 0.5) then {
+				UI_LAYER(_index) ctrlsetfade 0;
+				UI_LAYER(_index) ctrlcommit 0;
+			};
+			
+			_prevIndex = _index;
+			_count = 0;
+			_vSpeedAvg = 0;
 		};
-		sleep 0.1;
-	};
+	};	
+	player sidechat "vario dead";
 };

@@ -31,6 +31,7 @@ class DefaultEventhandlers;
 
 class CfgVehicles
 {
+	class Thing;
 	class Static { ladders[] = {}; };
 	class Air;
 	class Plane: Air
@@ -63,13 +64,16 @@ class CfgVehicles
 		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
 		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
 		soundGetOut[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
-		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,1,50};
-		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,1,80};
+		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,0,0};
+		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,0,0};
+		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,0,0};
 
+		class DestructionEffects {};
+		destrType = "DestructNo";
+		secondaryExplosion = 0;
+		
 		//threat[] = {0.0,0.0,0.0};
 		threat[] = {1,0.900000,0.100000};
-		class DestructionEffects {};
 		
 		htMin = 60;
 		htMax = 1800;
@@ -80,15 +84,14 @@ class CfgVehicles
 		turnCoef = 5;//TEST
 		outsideSoundFilter = 0;
 		wheelCircumference = 2.28;
+		
 		transportMaxMagazines = 0;
 		transportMaxWeapons = 0;
 		
-		driverCanSee = "2";
-		secondaryExplosion = 0;
+		driverCanSee = "2"; // crosshair / no compass
 		extCameraPosition[] = {0,1,-3};
-		destrType = "DestructNo";
-		enableGPS = 0;
 
+		enableGPS = 0;
 		driverOpticsModel = "\ca\weapons\optika_empty";
 		
 		class ViewPilot: ViewPilot
@@ -138,20 +141,20 @@ class CfgVehicles
 	{
 		class EventHandlers: DefaultEventhandlers
 		{
-			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init.sqf"";";
+			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_HangGlider.sqf"";";
 		};
 
 		displayName = "FLAY Hang Glider";
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider";
 
-		weapons[] = {"BikeHorn"};
-		//weapons[] = {};
-		//magazines[] = {};	
+		//weapons[] = {"BikeHorn"};
+		weapons[] = {};
+		magazines[] = {};	
 		armor = 5000;
 		accuracy = 0.5;
 		camouflage = 2;
 
-		extCameraPosition[] = {0,4,-9};
+		extCameraPosition[] = {0,3.5,-9};
 		enableGPS = 1;
 
 		driverAction = "HangGlider_Pilot";
@@ -296,6 +299,42 @@ class CfgVehicles
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider3";
 	};
 	
+	class FLAY_HangGlider4: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 4";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider4";
+	};
+
+	class FLAY_HangGlider5: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 5";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider5";
+	};
+	
+	class FLAY_HangGlider6: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 6";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider6";
+	};
+
+	class FLAY_HangGlider7: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 7";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider7";
+	};
+	
+	class FLAY_HangGlider8: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 8";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider8";
+	};
+
+	class FLAY_HangGlider9: FLAY_HangGlider
+	{
+		displayName = "FLAY Hang Glider 9";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider9";
+	};	
+	
 	class FLAY_NightWing: FLAY_HangGlider
 	{
 		displayName = "FLAY Night Wing";
@@ -325,11 +364,11 @@ class CfgVehicles
 	class FLAY_HangGliderAI: FLAY_HangGlider
 	{
 		displayName = "FLAY Hang Glider (AI)";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider3";
-		fuelCapacity = 100;
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider8";
+		fuelCapacity = 1000;
 		maxSpeed = 100;
 		landingSpeed = 70;
-		landingAoa = "rad -15";
+		landingAoa = "rad -5";
 		envelope[] = { 0.1, 0.2, 1.0, 2.0, 3.5, 3.5, 3.5, 3.5, 4.5, 4.5, 4.5, 3.5, 3.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5 };
 		aileronSensitivity = 3.5;
 		elevatorSensitivity = 0.1;
@@ -458,8 +497,12 @@ class CfgVehicles
 		ejectSpeed[] = {0,0,0};		
 	};
 	
-	class FLAY_HangGlider_Bag: Static
+	class FLAY_HangGlider_Bag: Thing
 	{
+		class EventHandlers: DefaultEventhandlers
+		{
+			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_HangGliderBag.sqf"";";
+		};	
 		scope = 1;
 		displayName = "FLAY HangGlider Bag";
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider_Bag.p3d";
@@ -764,9 +807,7 @@ class CfgVehicles
 class cfgWeapons
 {
     class Default;
-	class Rifle;
-	class LauncherCore;
-	class RocketPods: LauncherCore {};	
+	class RocketPods;
 	class HangGliderBombs: RocketPods
 	{
 		scope = 1;
@@ -809,6 +850,7 @@ class cfgWeapons
 			maxRangeProbab = 0.004;
 		};
 	};
+	class Rifle;
 	class M60A4_EP1: Rifle {
 		class manual;
 	};	
@@ -827,6 +869,37 @@ class cfgWeapons
 			reloadTime = 0.06;
 		};
 	};
+	
+	class Launcher;
+	class FLAY_HangGlider_BagLauncher: Launcher
+	{
+		scope = 2;
+		displayName = "FLAY Hang Glider Bag";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider_Bag.p3d";
+		cursorAim = "\ca\Weapons\Data\clear_empty";
+		cursor = "\ca\Weapons\Data\clear_empty";
+		handAnim[] = {"OFP2_ManSkeleton","\Ca\weapons\Data\Anim\m136.rtm"};
+		modelOptics = "-";
+		magazines[] = {"M136"};
+		sound[] = {"",10.0,1,1400};
+		drySound[] = {"",0.0001,1,10};
+		reloadMagazineSound[] = {"",0.00031622776,1,20};
+		soundFly[] = {"",100.0,1.5,700};
+		picture = "\CA\weapons\data\equip\W_m136_launcher_CA.paa";
+		UiPicture = "\CA\weapons\data\Ico\i_at_CA.paa";
+		recoil = "launcherBase";
+		minRange = 0;
+		midRange = 0;
+		maxRange = 0;
+		aiRateOfFire = 0;
+		aiRateOfFireDistance = 0;
+		class Library
+		{
+			libTextDesc = "$STR_LIB_M136";
+		};
+		descriptionShort = "$STR_DSS_M136";
+	};
+	
 	/*
 	class Binocular;
 	class Binocular_Vector: Binocular

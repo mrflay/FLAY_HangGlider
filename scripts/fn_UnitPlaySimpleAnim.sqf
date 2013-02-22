@@ -153,7 +153,7 @@ while { ((_selectedData <= _totalData) && !(_endSeq)) } do
 			_tmpDirX = _tmpTimeDiff * (_tmpDirNext - _tmpDir) + _tmpDir;
 			_tmpDirNew = _tmpDirX;
 
-			_targetUnit setPosASL _tmpPosNew;
+			_targetUnit setPosATL _tmpPosNew;
 			_targetUnit setDir _tmpDirNew;
 			
 			if (_debug) then
@@ -175,7 +175,7 @@ while { ((_selectedData <= _totalData) && !(_endSeq)) } do
 		_tmpPos = _currentData select 1;
 		_tmpDir = _currentData select 2;
 	
-		_targetUnit setPosASL _tmpPos;
+		_targetUnit setPosATL _tmpPos;
 		_targetUnit setDir _tmpDir;
 		
 		if (_debug) then

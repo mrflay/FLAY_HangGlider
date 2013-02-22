@@ -9,9 +9,15 @@ _trolley setPosASL (getPosASL player);
 player moveInDriver _trolley;
 player setVariable ["FLAY_HangGlider_PlaybackDone", false];
 
-BIS_fnc_UnitPlaySimple = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\fn_UnitPlaySimpleAnim.sqf";
-_animData = [[0,getPosASL player,getDir player],[2,getPosASL _glider, getDir player]];
-[_trolley, _animData, [player, "FLAY_HangGlider_PlaybackDone"], true, false, 0, 0] spawn BIS_fnc_UnitPlaySimple;
+_p = getPosATL player;
+_q = getPosATL _glider;
+
+_dist = sqrt (((_q select 0)-(_p select 0))^2 + ((_q select 1)-(_p select 1))^2 + ((_q select 2)-(_p select 2))^2);
+_time = (_dist / 2);
+
+FLAY_fnc_UnitPlaySimpleAnim = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\fn_UnitPlaySimpleAnim.sqf";
+_animData = [[0, getPosATL player, getDir player],[_time, getPosATL _glider, getDir player]];
+[_trolley, _animData, [player, "FLAY_HangGlider_PlaybackDone"], true, false, 0, 0] spawn FLAY_fnc_UnitPlaySimpleAnim;
 
 player switchMove "AmovPknlMrunSnonWnonDf";
 
