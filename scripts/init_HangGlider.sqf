@@ -32,70 +32,12 @@ _glider addAction ["Get In", "FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf"];
 
 [_glider] spawn {
 
-	private ["_glider","_v","_speed","_altitude","_vSpeedAvg","_anim","_airborne","_soundSource","_prevSoundSource"];
+	private ["_glider","_v","_speed","_altitude","_anim","_airborne"];
 	
 	_glider = (_this select 0);
 
 	player sidechat "start";
-		
-	_soundSourceArray = [
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_VarioDn01", [0,0,0], [], 0],
-		["Sound_Silence",   [0,0,0], [], 0],
-		//["Sound_VarioUp01", [0,0,0], [], 0],
-		["Sound_VarioUp02", [0,0,0], [], 0],
-		//["Sound_VarioUp03", [0,0,0], [], 0],
-		["Sound_VarioUp04", [0,0,0], [], 0],
-		//["Sound_VarioUp05", [0,0,0], [], 0],
-		["Sound_VarioUp06", [0,0,0], [], 0],
-		//["Sound_VarioUp07", [0,0,0], [], 0],
-		["Sound_VarioUp08", [0,0,0], [], 0],
-		//["Sound_VarioUp09", [0,0,0], [], 0],
-		["Sound_VarioUp10", [0,0,0], [], 0],
-		//["Sound_VarioUp11", [0,0,0], [], 0],
-		["Sound_VarioUp12", [0,0,0], [], 0],
-		//["Sound_VarioUp13", [0,0,0], [], 0],
-		["Sound_VarioUp14", [0,0,0], [], 0],
-		//["Sound_VarioUp15", [0,0,0], [], 0],
-		["Sound_VarioUp16", [0,0,0], [], 0],
-		//["Sound_VarioUp17", [0,0,0], [], 0],
-		["Sound_VarioUp18", [0,0,0], [], 0],
-		//["Sound_VarioUp19", [0,0,0], [], 0],
-		["Sound_VarioUp20", [0,0,0], [], 0],
-		//["Sound_VarioUp21", [0,0,0], [], 0],
-		["Sound_VarioUp22", [0,0,0], [], 0],
-		//["Sound_VarioUp23", [0,0,0], [], 0],
-		["Sound_VarioUp24", [0,0,0], [], 0],
-		//["Sound_VarioUp25", [0,0,0], [], 0],
-		["Sound_VarioUp26", [0,0,0], [], 0],
-		//["Sound_VarioUp27", [0,0,0], [], 0],
-		["Sound_VarioUp28", [0,0,0], [], 0],
-		//["Sound_VarioUp29", [0,0,0], [], 0],
-		["Sound_VarioUp30", [0,0,0], [], 0],
-		//["Sound_VarioUp31", [0,0,0], [], 0],
-		["Sound_VarioUp32", [0,0,0], [], 0],
-		//["Sound_VarioUp33", [0,0,0], [], 0],
-		["Sound_VarioUp34", [0,0,0], [], 0],
-		//["Sound_VarioUp35", [0,0,0], [], 0],
-		["Sound_VarioUp36", [0,0,0], [], 0],
-		//["Sound_VarioUp37", [0,0,0], [], 0],
-		["Sound_VarioUp38", [0,0,0], [], 0],
-		//["Sound_VarioUp39", [0,0,0], [], 0],
-		["Sound_VarioUp40", [0,0,0], [], 0]
-	];
-	
-	_index = 9;
-	_prevIndex = 9;
-	_count = 0;
-	_vSpeedAvg = 0;
-	_soundSource = objNull;
+			
 	_camShakeTimeout = 0;
 	
 	while { alive _glider } do {
@@ -108,37 +50,6 @@ _glider addAction ["Get In", "FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf"];
 			
 			_speed = sqrt((_v select 0)^2+(_v select 1)^2+(_v select 2)^2);
 			_altitude = _glider animationPhase "FeetDamper";
-			
-			_count = _count + 1;
-			if (_count < 5) then {
-				_vSpeedCur = _v select 2;
-				_vSpeedAvg = _vSpeedAvg + _vSpeedCur;
-			} else {
-				_vSpeedAvg = _vSpeedAvg / 10.0;
-				_index = 9;
-				
-				if (_vSpeedAvg < -1) then {
-					_index = 8;
-				};
-				if (_vSpeedAvg > 0.1) then {
-					_index = (10 + round (2 * _vSpeedAvg)) min 19;
-				};
-				
-				if (_prevIndex != _index) then {
-					if (not (isNull _soundSource)) then {
-						detach _soundSource;
-						deleteVehicle _soundSource;
-					};
-					if (_index != 9) then {
-						_soundSource = createSoundSource (_soundSourceArray select _index);
-						_soundSource attachTo [_glider, [0,0,0], "pos_vario"];
-					};
-					_prevIndex = _index;
-				};
-				
-				_count = 0;
-				_vSpeedAvg = 0;
-			};
 			
 			// TODO - Camera shake
 			if (_speed > 5 and time > _camShakeTimeout) then {

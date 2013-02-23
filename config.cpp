@@ -20,8 +20,24 @@ class CfgPatches
 	};
 };
 
-
 class DefaultEventhandlers;
+
+class CfgDamageAround
+{
+	class DamageAroundPole
+	{
+		radiusRatio = "0.1";
+		indirectHit = "1";
+	};
+};
+class CfgDestructPos
+{
+	class DelayedDestruction
+	{
+		timeBeforeHiding = "0.2";
+		hideDuration = "0.65+lifeTime*0.05";
+	};
+};
 
 
 // ===========================================================================
@@ -68,9 +84,30 @@ class CfgVehicles
 		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,0,0};
 		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,0,0};
 
-		class DestructionEffects {};
-		destrType = "DestructNo";
-		secondaryExplosion = 0;
+		class DestructionEffects
+		{
+			class DamageAround1
+			{
+				simulation = "damageAround";
+				type = "DamageAroundPole";
+				position = "";
+				intensity = 1;
+				interval = 1;
+				lifeTime = 1;
+			};
+			class Smoke1
+			{
+				simulation = "particles";
+				type = "BarelDestructionSmoke";
+				position = "destructionEffect1";
+				intensity = 0.15;
+				interval = 1;
+				lifeTime = 3.2;
+			};			
+		};
+		
+		//destrType = "DestructNo";
+		//secondaryExplosion = 0;
 		
 		//threat[] = {0.0,0.0,0.0};
 		threat[] = {1,0.900000,0.100000};
@@ -162,7 +199,6 @@ class CfgVehicles
 		getInAction = "GetInLow";
 		getOutAction = "GetOutLow";
 		
-		//envelope[] = { 0.4, 0.9, 1.7, 2.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
 		envelope[] = { 0.1, 0.2, 0.9, 1.5, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.0 };
 
 		maxSpeed = 180;
@@ -237,6 +273,8 @@ class CfgVehicles
 			};
 		};
 
+		class UserActions {};
+		
 		class Sounds: Sounds
 		{
 			//class BeepIn
@@ -542,6 +580,18 @@ class CfgVehicles
 			};
 		};
 	};
+	
+	class FLAY_Thermal: Thing
+	{
+		scope = 1;
+		displayName = "FLAY Thermal";
+		model = "FLAY\FLAY_HangGlider\FLAY_ArrowUpHelper.p3d";
+		vehicleClass = "Misc";
+		class EventHandlers: DefaultEventhandlers
+		{
+			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf"";";
+		};		
+	};	
 	
 	class Sound;
 	class Sound_VarioDn01: Sound
