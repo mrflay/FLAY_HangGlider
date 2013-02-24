@@ -581,6 +581,35 @@ class CfgVehicles
 		};
 	};
 	
+	class FLAY_3DAxis10m: Static
+	{
+		scope = 1;
+		displayName = "FLAY 3D Axis 10m";
+		model = "FLAY\FLAY_HangGlider\FLAY_3DAxis10m.p3d";
+		vehicleClass = "Misc";
+		class AnimationSources
+		{
+			class RX
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = "0";
+			};
+			class RY
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = "0";
+			};
+			class RZ
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = "0";
+			};			
+		};
+	};	
+	
 	class FLAY_Thermal: Thing
 	{
 		scope = 1;
@@ -591,6 +620,18 @@ class CfgVehicles
 		{
 			init = "_scr = _this execVM '\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf';";
 		};		
+	};
+	
+	class FLAY_Ridge: Thing
+	{
+		scope = 1;
+		displayName = "FLAY Ridge";
+		model = "ca\misc\empty.p3d";
+		vehicleClass = "Misc";
+		//class EventHandlers: DefaultEventhandlers
+		//{
+		//	init = "_scr = _this execVM '\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf';";
+		//};		
 	};	
 
 	class Man;

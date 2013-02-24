@@ -1,3 +1,4 @@
+// fn_lift.sqf
 
 _this spawn {
 
@@ -7,12 +8,13 @@ _this spawn {
 	
 	// maximum radius too look for thermals
 	_THERMAL_MAX_RADIUS = 1000;
+	_RIDGE_MAX_RADIUS = 1000;
 	
 	_done = false;
 	
 	while { not _done } do {
 	
-		// find all appropriate vehicles (FIXME - only checking player for now)
+		// find all appropriate vehicles (FIXME: only checking player for now)
 		_vehicles = [vehicle player];
 		
 		{
@@ -20,10 +22,10 @@ _this spawn {
 			_speed = speed _vehicle;
 			_altitudeATL = (getPosATL _vehicle) select 2;
 			
-			// FIXME - lift is limit to FLAY_HangGlider for now
+			// FIXME: lift is only applied to FLAY_HangGlider at the moment
 			if (_vehicle isKindOf "FLAY_HangGlider") then {
 				_enableThermalLift = _vehicle getVariable ["FLAY.HangGlider.lift.thermal.enable", false];
-				_enableHillLift = _vehicle getVariable ["FLAY.HangGlider.lift.ridge.enable", false];
+				_enableRidgeLift = _vehicle getVariable ["FLAY.HangGlider.lift.ridge.enable", false];
 				_enableWaveLift = _vehicle getVariable ["FLAY.HangGlider.lift.wave.enable", false];
 				_enableWindGusts = _vehicle getVariable ["FLAY.HangGlider.lift.gusts.enable", false];
 				_enableTurbulence = _vehicle getVariable ["FLAY.HangGlider.lift.turbulence.enable", false];
@@ -70,6 +72,25 @@ _this spawn {
 					hint format ["LIFT: str=%1", _strengthTotal];
 					//addCamShake [1, 25, 15];
 				};
+				
+				if (_enableRidgeLift) then {
+					// find the thermals affecting the vehicle
+					_ridges = (position _vehicle) nearObjects ["FLAY_Ridge", _RIDGE_MAX_RADIUS];
+					
+					{
+						_ridge = _x;
+						_axis = _ridge getVariable ["FLAY.HangGlider.lift.debug.axis", objNull];
+						if (isNull _axis) then {
+							_axis = "FLAY_3DAxis10m" createVehicleLocal (getPos _ridge);
+							_axis setPosASL (getPosASL _ridge);
+							_axis setVectorDir wind;
+						} else {
+							_axis setVectorDir wind;
+						};
+					} forEach _ridges;
+					
+				};
+				
 			} else {
 				// not a supported vehicle
 			};
