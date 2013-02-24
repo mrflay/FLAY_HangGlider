@@ -589,9 +589,41 @@ class CfgVehicles
 		vehicleClass = "Misc";
 		class EventHandlers: DefaultEventhandlers
 		{
-			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf"";";
+			init = "_scr = _this execVM '\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf';";
 		};		
 	};	
+
+	class Man;
+	class CaManbase: Man
+	{
+		class UserActions
+		{
+			class FLAY_Flytec3040_ON
+			{
+				displayNameDefault = "Flytec 3040 ON";
+				showWindow = 0;
+				//hideOnUse = 1;
+				displayName = "Flytec 3040 ON";
+				position = "action";
+				radius = 1.0000;
+				onlyForPlayer = 1;
+				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and not (player getVariable ['FLAY.variometer.power.on',false])";
+				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_show.sqf'";
+			};
+			class FLAY_Flytec3040_OFF
+			{
+				displayNameDefault = "Flytec 3040 OFF";
+				showWindow = 0;
+				//hideOnUse = 1;
+				displayName = "Flytec 3040 OFF";
+				position = "action";
+				radius = 1.0000;
+				onlyForPlayer = 1;
+				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and (player getVariable ['FLAY.variometer.power.on',false])";
+				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_hide.sqf'";
+			};			
+		};	
+	};
 	
 	class Sound;
 	class Sound_VarioDn01: Sound
@@ -846,7 +878,6 @@ class CfgVehicles
 		sound = "FLAY_VarioUp40Sfx";
 		displayName = "VarioUp40";
 	};
-	
 };
 
 // ===========================================================================
@@ -857,6 +888,14 @@ class CfgVehicles
 class cfgWeapons
 {
     class Default;
+	class ItemCore: Default {};
+	class FLAY_Flytec3040_Variometer: ItemCore
+	{
+		scope=2;
+		displayName="Flytec 3040";
+		picture="\FLAY\FLAY_HangGlider\data\img\item_vario.paa";
+		descriptionShort="Visual and acoustic vario display with adjustable sink alarm tone.";
+	};	
 	class RocketPods;
 	class HangGliderBombs: RocketPods
 	{

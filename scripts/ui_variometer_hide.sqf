@@ -1,0 +1,1 @@
+player setVariable ["FLAY.variometer.power.on",false];
