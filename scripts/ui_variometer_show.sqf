@@ -36,7 +36,7 @@ _this spawn {
 		17 cutRsc ["RscMissionScreen","plain"];
 		waitUntil {!isNull (uiNamespace getVariable "BIS_RscMissionScreen")};
 		uiNamespace setVariable ["FLAY_RscVarioScreen", uiNamespace getVariable "BIS_RscMissionScreen"];
-		
+				
 		#define UI_DISPLAY	(uiNamespace getVariable "FLAY_RscVarioScreen")
 		#define UI_CONTROL	(1100)
 

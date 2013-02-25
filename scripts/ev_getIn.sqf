@@ -32,6 +32,7 @@ player switchMove "AmovPknlMrunSnonWnonDf";
 	};
 	moveOut player;	
 	player moveInDriver _glider;
+	_glider animate ["HarnessHide", 1];
 	//player attachTo [_glider, [0,0,0]];
 	_glider setVectorUp [0,0,1];
 	player switchMove "AmovPknlMstpSnonWnonDnon_AinvPknlMstpSnonWnonDnon";

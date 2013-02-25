@@ -6,6 +6,7 @@ FLAY_HangGlider_fnc_Airborne = compile preprocessFile "\FLAY\FLAY_HangGlider\scr
 FLAY_HangGlider_fnc_Ground = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\fn_ground.sqf";
 FLAY_HangGlider_fnc_VapourTrails = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\fn_vapourTrails.sqf";
 
+FLAY_HangGlider_EH_UiKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_uiKeyUp.sqf";
 FLAY_HangGlider_EH_AirborneKeyDown = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_airborneKeyDown.sqf";
 FLAY_HangGlider_EH_AirborneKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_airborneKeyUp.sqf";
 FLAY_HangGlider_EH_GroundKeyDown = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_groundKeyDown.sqf";
@@ -13,10 +14,7 @@ FLAY_HangGlider_EH_GroundKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\s
 FLAY_HangGlider_EH_GetIn = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf";
 FLAY_HangGlider_EH_GetOut = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_getOut.sqf";
 
-FLAY_HangGlider_IndicatorCounter = -1;
-
 _glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
-//_glider addEventHandler ["GetIn", {[_this select 0] call FLAY_HangGlider_EH_GetIn;}];
 _glider addEventHandler ["GetOut", FLAY_HangGlider_EH_GetOut]; 
 _glider setVehicleLock "LOCKED";
 
@@ -25,6 +23,8 @@ _glider setVehicleLock "LOCKED";
 
 // TEMPORARY - testing "Get In" animation.
 //_glider addAction ["Get In", "FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf"];
+
+_UiKeyUpHandlerId = (findDisplay 46) displayAddEventHandler ["KeyUp","_this call FLAY_HangGlider_EH_UiKeyUp"];
 
 [_glider] spawn {
 	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;
