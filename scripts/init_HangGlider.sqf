@@ -24,7 +24,7 @@ _glider setVehicleLock "LOCKED";
 //[_glider, "FLAY.craft.ui.pos_assemble","Disassemble Hang Glider","FLAY\FLAY_HangGlider\scripts\ev_disassemble.sqf"] execVM "FLAY\FLAY_HangGlider\scripts\fn_assemble.sqf";
 
 // TEMPORARY - testing "Get In" animation.
-_glider addAction ["Get In", "FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf"];
+//_glider addAction ["Get In", "FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf"];
 
 [_glider] spawn {
 	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;

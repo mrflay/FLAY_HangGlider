@@ -273,7 +273,45 @@ class CfgVehicles
 			};
 		};
 
-		class UserActions {};
+		class UserActions
+		{
+			class FLAY_Flytec3040_ON
+			{
+				displayNameDefault = "Flytec 3040 ON";
+				showWindow = 0;
+				//hideOnUse = 1;
+				displayName = "Flytec 3040 ON";
+				position = "action";
+				radius = 0.5000;
+				onlyForPlayer = 1;
+				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and not (player getVariable ['FLAY.variometer.power.on',false])";
+				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_show.sqf'";
+			};
+			class FLAY_Flytec3040_OFF
+			{
+				displayNameDefault = "Flytec 3040 OFF";
+				showWindow = 0;
+				//hideOnUse = 1;
+				displayName = "Flytec 3040 OFF";
+				position = "action";
+				radius = 0.5000;
+				onlyForPlayer = 1;
+				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and (player getVariable ['FLAY.variometer.power.on',false])";
+				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_hide.sqf'";
+			};	
+			class FLAY_GetIn
+			{
+				displayNameDefault = "Get In";
+				showWindow = 0;
+				//hideOnUse = 1;
+				displayName = "Get In";
+				position = "camera";
+				radius = 3.0000;
+				onlyForPlayer = 1;
+				condition = "(alive player) and isNull (driver this)";
+				statement = "[this,-1,player] execVM 'FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf'";
+			};
+		};
 		
 		class Sounds: Sounds
 		{
@@ -546,42 +584,8 @@ class CfgVehicles
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider_Bag.p3d";
 		vehicleClass = "Misc";
 	};
-	
-	class FLAY_ArrowDnHelper: Static
-	{
-		scope = 1;
-		displayName = "FLAY Arrow Down Helper";
-		model = "FLAY\FLAY_HangGlider\FLAY_ArrowDnHelper.p3d";
-		vehicleClass = "Misc";
-		class AnimationSources
-		{
-			class RY
-			{
-				source = "user";
-				animPeriod = 5;
-				initPhase = "0";
-			};
-		};
-	};
-	
-	class FLAY_ArrowUpHelper: Static
-	{
-		scope = 1;
-		displayName = "FLAY Arrow Up Helper";
-		model = "FLAY\FLAY_HangGlider\FLAY_ArrowUpHelper.p3d";
-		vehicleClass = "Misc";
-		class AnimationSources
-		{
-			class RY
-			{
-				source = "user";
-				animPeriod = 5;
-				initPhase = "0";
-			};
-		};
-	};
-	
-	class FLAY_3DAxis10m: Static
+		
+	class FLAY_3DAxis10m: Thing
 	{
 		scope = 1;
 		displayName = "FLAY 3D Axis 10m";
@@ -608,30 +612,103 @@ class CfgVehicles
 				initPhase = "0";
 			};			
 		};
+	};
+	
+	class FLAY_ArrowFwdGreen: Thing
+	{
+		scope = 2;
+		displayName = "FLAY Arrow Green";
+		model = "FLAY\FLAY_HangGlider\FLAY_ArrowFwGreen.p3d";
+		vehicleClass = "Misc";
+		animated = 1;
 	};	
 	
-	class FLAY_Thermal: Thing
+	class FLAY_Thermal: Static
 	{
-		scope = 1;
+		scope = 2;
 		displayName = "FLAY Thermal";
-		model = "FLAY\FLAY_HangGlider\FLAY_ArrowUpHelper.p3d";
+		model = "FLAY\FLAY_HangGlider\FLAY_Thermal.p3d";
 		vehicleClass = "Misc";
+		animated=1;
 		class EventHandlers: DefaultEventhandlers
 		{
 			init = "_scr = _this execVM '\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf';";
+		};
+		class AnimationSources
+		{
+			class SizeArrowRed
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};
+			class SizeArrowBlue 
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;			
+			};
+			class HideArrow
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};
+			class HideArrowRed
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};
+			class HideArrowBlue
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};		
 		};		
 	};
 	
-	class FLAY_Ridge: Thing
+	class FLAY_Ridge: Static
 	{
-		scope = 1;
+		scope = 2;
 		displayName = "FLAY Ridge";
-		model = "ca\misc\empty.p3d";
+		model = "FLAY\FLAY_HangGlider\FLAY_Thermal.p3d";
 		vehicleClass = "Misc";
-		//class EventHandlers: DefaultEventhandlers
-		//{
-		//	init = "_scr = _this execVM '\FLAY\FLAY_HangGlider\scripts\init_Thermal.sqf';";
-		//};		
+		animated=1;
+		class AnimationSources
+		{
+			class SizeArrowRed
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};
+			class SizeArrowBlue 
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;			
+			};
+			class HideArrow
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};
+			class HideArrowRed
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};
+			class HideArrowBlue
+			{
+				source = "user";
+				animPeriod = 0.0001;
+				initPhase = 0;
+			};		
+		};			
 	};	
 
 	class Man;
@@ -646,7 +723,7 @@ class CfgVehicles
 				//hideOnUse = 1;
 				displayName = "Flytec 3040 ON";
 				position = "action";
-				radius = 1.0000;
+				radius = 3.0000;
 				onlyForPlayer = 1;
 				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and not (player getVariable ['FLAY.variometer.power.on',false])";
 				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_show.sqf'";
@@ -658,7 +735,7 @@ class CfgVehicles
 				//hideOnUse = 1;
 				displayName = "Flytec 3040 OFF";
 				position = "action";
-				radius = 1.0000;
+				radius = 3.0000;
 				onlyForPlayer = 1;
 				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and (player getVariable ['FLAY.variometer.power.on',false])";
 				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_hide.sqf'";

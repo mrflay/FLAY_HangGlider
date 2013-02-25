@@ -57,11 +57,7 @@ _this spawn {
 				UI_LAYER(ctrl) ctrlCommit 0;
 		
 		#define DECIMAL(x,n) (str(round((x)*(10^(n)))/(10^(n))))
-		
-		#define UI_OFF \
-				for "_x" from   1 to  29 do { UI_LAYER(_x) ctrlSetFade 1; UI_LAYER(_x) ctrlCommit 0; }; \
-				for "_x" from 200 to 203 do { UI_LAYER(_x) ctrlSetFade 1; UI_LAYER(_x) ctrlCommit 0; };
-		
+				
 		_uiBgPos = [
 			(safezoneX + 0.01),
 			(safezoneY + safezoneH) - (UI_HEIGHT) - 0.01,
@@ -202,8 +198,6 @@ _this spawn {
 	
 		if (not _unitHasVario and not _vehicleHasVario) exitWith {
 			player sidechat "no variometer in unit or vehicle inventory";
-			UI_OFF; // TODO: what is this the standard way to do it?
-			_unit setVariable ["FLAY.variometer.power.on", false];
 		};
 				
 		_audioSinkTld = _vehicle getVariable ["FLAY.variometer.audio.sink_threshold", -1.5];
@@ -279,4 +273,10 @@ _this spawn {
 		
 		_powerOn = _unit getVariable ["FLAY.variometer.power.on", true];
 	};
+	
+	_unit setVariable ["FLAY.variometer.power.on", false];
+	if (not (isNull _soundSource)) then {
+		deleteVehicle _soundSource;
+	};	
+	17 cutRsc ["Default","plain"];
 };
