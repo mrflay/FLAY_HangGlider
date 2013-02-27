@@ -1,21 +1,27 @@
 CREDITS
 =======
 
-BRSSEB         OFP Addon Tutorial Site
-		       http://ofp.gamepark.cz/_hosted/brsseb/tutorials.htm
+BRSSEB			OFP Addon Tutorial Site
+				http://ofp.gamepark.cz/_hosted/brsseb/tutorials.htm
 
-Clayman        Arma2:OA Animation Viewer
-               http://www.armaholic.com/page.php?id=10941&highlight=ANIMATIONVIEWER
+Clayman			Arma2:OA Animation Viewer
+				http://www.armaholic.com/page.php?id=10941&highlight=ANIMATIONVIEWER
 
-Maddmatt/BIS   Aircraft vapour simulation
+Maddmatt/BIS	Aircraft vapour simulation
 
-CGTextures     Various textures
-               http://cgtextures.com/
+CGTextures		Various textures
+				http://cgtextures.com/
 			 
-freesound      Various sound effects
-               http://www.freesound.org
+freesound		Various sound effects
+				http://www.freesound.org
 			
-soundbible     Various sound effects
-               http://soundbible.com/
+soundbible		Various sound effects
+				http://soundbible.com/
 			   
-RKSL-Rock      Envelope info (biki)
+RKSL-Rock		Envelope info (biki)
+
+dawgbyte77		Notepad texture
+				http://www.flickr.com/photos/dawgbyte77/3058183665/
+
+fuzzimo.com		Notebook and book paper textures				
+				http://www.fuzzimo.com/free-seamless-textures-notebook-papers/

@@ -1,4 +1,4 @@
-scriptName "fn_enemyIndicator.sqf";
+scriptName "fn_assembly.sqf";
 /*
 	Author: Karel Moricky
 
@@ -27,7 +27,7 @@ _this spawn {
 	uinamespace setvariable ["BIS_RscMissionScreen_dirIndicator",uinamespace getvariable "BIS_RscMissionScreen"];
 	
 	#define IND_DISPLAY	(uinamespace getvariable "BIS_RscMissionScreen_dirIndicator")
-	#define IND_CONTROL	(1200)
+	#define IND_CONTROL	(1100)
 
 	#define IND_W		(0.1045752)
 	#define IND_H		(IND_W * 4/3)
@@ -103,10 +103,12 @@ _this spawn {
 	
 	_modelPos = _vehicle selectionPosition _mempoint;
 	_actionId=-1;
-	// onEachFrame 1.63+
+	// TODO: use onEachFrame 1.63+
 	while { alive _vehicle } do {
+
 		_worldPos = _vehicle modelToWorld _modelPos;
 		_screenPos = worldToScreen (_worldPos);
+
 		if (count _screenPos == 0) then {
 			IND_REPAIR ctrlsetfade 1;
 			IND_REPAIR ctrlcommit 0;

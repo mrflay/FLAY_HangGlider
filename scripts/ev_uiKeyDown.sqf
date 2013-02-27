@@ -18,9 +18,10 @@ _handled=false;
 
 if (_dikCode in _caps) then {
 	_dialog = findDisplay 3000;
-	if (dialog) then {
-		closeDialog 3000;
-		setMousePosition [0.5, 0.5];
+	if (not dialog) then {
+		_isDialogVisible = createDialog "FLAY_RscVarioDialog";
+		ctrlSetFocus ((findDisplay 3000) displayCtrl 3002);
+		((findDisplay 3000) displayCtrl 3002) ctrlMapCursor ["Move", "Arrow"];
 	};
 	//_handled=true;
 };

@@ -15,8 +15,8 @@ class CfgPatches
 	class FLAY_HangGlider
 	{
 		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DragonWing","FLAY_DeathWing","FLAY_WingSuit","FLAY_ArrowDownHelper"};
-		requiredVersion = 1.04;
-		requiredAddons[] = {"CACharacters","CAData","CASounds"};
+		requiredVersion = 0.1;
+		requiredAddons[] = {"CACharacters","CAData","CASounds","CAUI"};
 	};
 };
 
@@ -106,8 +106,8 @@ class CfgVehicles
 			};			
 		};
 		
-		//destrType = "DestructNo";
-		//secondaryExplosion = 0;
+		destrType = "DestructMan";
+		secondaryExplosion = -1;
 		
 		//threat[] = {0.0,0.0,0.0};
 		threat[] = {1,0.900000,0.100000};
@@ -191,6 +191,24 @@ class CfgVehicles
 		accuracy = 0.5;
 		camouflage = 2;
 
+		//rightWaterEffect=;
+		//leftWaterEffect=;
+		//rightDustEffect=
+		//leftWaterEffect=
+		airFriction0[] = {25,12,2.500000};
+		airFriction1[] = {25,12,2.500000};
+		airFriction2[] = {25,12,2.500000};
+		canFloat = true;
+		canBeShot = true;
+		damageResistance = 0.0000001;
+		damperSize = 1;
+		damperForce = 2;
+		hideUnitInfo = true;
+		hideWeaponsDriver = false;
+		selectionFabric = "latka";
+		type = 0;
+		unitInfoType = "UnitInfoSoldier";
+		
 		extCameraPosition[] = {0,3.5,-9};
 		enableGPS = 1;
 
@@ -305,11 +323,23 @@ class CfgVehicles
 				showWindow = 0;
 				//hideOnUse = 1;
 				displayName = "Get In";
-				position = "camera";
-				radius = 3.0000;
+				position = "action";
+				radius = 4.0000;
 				onlyForPlayer = 1;
 				condition = "(alive player) and isNull (driver this)";
 				statement = "[this,-1,player] execVM 'FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf'";
+			};
+			class FLAY_GetOut
+			{
+				displayNameDefault = "Get Out";
+				showWindow = 0;
+				//hideOnUse = 1;
+				displayName = "Get Out";
+				position = "action";
+				radius = 0.5000;
+				onlyForPlayer = 1;
+				condition = "(alive player) and (driver this == player)";
+				statement = "[this,'DRIVER',player] execVM 'FLAY\FLAY_HangGlider\scripts\ev_getOut.sqf'";
 			};
 		};
 		
@@ -1306,12 +1336,12 @@ class CfgMovesMaleSdr: CfgMovesBasic
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotWpn.rtm";
 			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot",0.1,"HangGlider_PilotLand",0.1"HangGlider_PilotWpn",0.1};
 		};		
-		class HangGlider_PilotLand: Crew
+		class HangGlider_PilotLand: HangGlider_Pilot
 		{
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotLand.rtm";
 			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_Pilot",0.1,"HangGlider_PilotWpn",0.1};
 		};
-		class HangGlider_PilotWlk: Crew
+		class HangGlider_PilotWlk: HangGlider_Pilot
 		{
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotWlk.rtm";
 			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotLand",0.1,"HangGlider_PilotWpn",0.1,"HangGlider_Pilot",0.1};
@@ -1779,64 +1809,7 @@ class CfgEnvSounds
 // ===========================================================================
 // DIALOGS
 // ===========================================================================
-	
-class RscButton;
-class RscActiveText
-{
-	access = 0;
-	type = 11;
-	style = 2;
-	color[] = { 0, 0, 0, 1 };
-	colorActive[] = { 0.3, 0.4, 0, 1 };
-	soundEnter[] = { "", 0.1, 1 };
-	soundPush[] = { "", 0.1, 1 };
-	soundClick[] = { "", 0.1, 1 };
-	soundEscape[] = { "", 0.1, 1 };
-	text = "";
-	default = 0;
-	idc = -1;
-	x = 0;
-	y = 0;
-	h = 0.035;
-	w = 0.035;
-	font = "Zeppelin32";
-	sizeEx = 0.03921;
-	colortext[] = { 0, 0, 0, 1 };
-};
 
-class Test
-{
-	idd = 3000; // hmm
-	enableSimulation=1;
-	movingEnable=0;
-	class Controls {
-		class foo : RscActiveText {
-			idc = 3001;
-			style = 48;
-			x = -1;
-			y = -1;
-			w = 3;
-			h = 3;
-			text = "#(argb,8,8,3)color(1,1,1,1)";
-			color[] = {0, 0, 0, 0};
-			colorActive[] = {0, 0, 0, 0};
-			onMouseMoving = "hintSilent format ['%1\n%2',_this select 1, _this select 2];";
-			//onMouseButtonClick = "player sidechat 'button clicked foo'"; 
-		};
-		class uiButton : RscActiveText {
-			idc = 3002;
-			style = 48;
-			x = safezoneX + 0.01;
-			y = safezoneY + safezoneH - 0.7 * 4 / 3;
-			w = .4;
-			h = .7 * 4/3;
-			text = "#(argb,8,8,3)color(1,1,1,1)";
-			color[] = {1, 1, 1, 0.0};
-			colorActive[] = {1, 1, 1, 0.2};
-			onMouseButtonClick = "player sidechat 'button clicked bar'"; 
-		};
-	};
-};
 
 
 // hide the landing auto pilot and eject actions from the menu
@@ -1855,790 +1828,12 @@ class CfgActions
 		textDefault = ""; //Structured parametrized text, shown as a default action; if empty, "text" is used instead.
 		textSimple = ""; //Raw parametrized text, used in radio protocol for example; if empty, "text" is used instead.
 	};
-	class Land: None
+	class Hidden: None
 	{
-		priority = 0.9;
-		text = "asd";
-		textDefault = "asd";
 		show = false;
 	};
-	class Eject: None
-	{
-		priority = 0.05;
-		//No parameters.
-		show = false;
-		shortcut = "Eject";
-		text = $STR_ACTION_EJECT;
-		textDefault = $STR_ACTION_EJECT;
-	};	
-	class GetOut: None
-	{
-		priority = 0.9;
-		showWindow = true;
-		shortcut = "GetOut";
-		//No parameters.
-		text = "$STR_ACTION_GETOUT";
-		textDefault = "$STR_ACTION_GETOUT";
-	};
+	class Land: Hidden {};
+	class Eject: Hidden {};
+	class GetOut: Hidden {};
 };
 
-class CfgWrapperUI
-{
-	class Cursors
-	{
-		class Pointer
-		{
-			texture = "\FLAY\FLAY_HangGlider\data\cursors\pointer_ca.paa";
-			width = 32;
-			height = 32;
-			hotspotX = 0.5;
-			hotspotY = 0.5;
-		};
-	};
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-
-class RscText;
-class RscStructuredText;
-class RscProgress;
-//class RscActiveText;
-class RscPicture;
-class CfgInGameUI
-{
-	colorBackground[] = {0.96,0.96,0.94,0.1};
-	colorText[] = {1,1,1,1};
-	colorBackgroundCommand[] = {0.96,0.96,0.94,0.1};
-	colorBackgroundHelp[] = {0.96,0.96,0.94,0.1};
-	class SideColors
-	{
-		colorFriendly[] = {0.0,0.7,0.0,1};
-		colorEnemy[] = {0.2,0.0,0.0,1};
-		colorNeutral[] = {0.8,0.8,0.8,1};
-		colorCivilian[] = {0.8,0.8,0.8,1};
-		colorUnknown[] = {0.8,0.6,0.0,1};
-	};
-	class Capture
-	{
-		colorBackground[] = {0.07,0.24,0.47,0};
-		colorText[] = {0.96,0.96,0.94,0.1};
-		colorLine[] = {0.9,0,0,0};
-	};
-	class TacticalDisplay: SideColors
-	{
-		colorCamera[] = {1,1,0.95,0.4};
-	};
-	class Compass
-	{
-		color[] = {1,1,1,0.75};
-		dirColor[] = {1,1,1,0.75};
-	};
-	class Menu
-	{
-		colorChecked[] = {1,1,1,1};
-		colorEnabled[] = {0.46,0.46,0.44,1};
-		colorDisabled[] = {0.5,0.5,0.5,0};
-		colorSelected[] = {0.07,0.24,0.47,0};
-		colorSelectedText[] = {0.95,0.95,0.95,0};
-	};
-	class GroupDir
-	{
-		colorBackground[] = {0.96,0.96,0.94,0.1};
-	};
-	class PlayerInfo
-	{
-		colorBackground[] = {0.96,0.96,0.94,0.1};
-	};
-	class Bar
-	{
-		colorBackground[] = {0.96,0.96,0.94,0.1};
-		colorGreen[] = {0.6,0.8392,0.4706,1.0};
-		colorYellow[] = {0.6,0.8392,0.4706,1.0};
-		colorRed[] = {0.706,0.0745,0.0196,1};
-		colorBlinkOn[] = {0.863,0.584,0.0,1};
-		colorBlinkOff[] = {0.706,0.0745,0.0196,1};
-	};
-	class Actions
-	{
-		colorText[] = {0.46,0.46,0.44,1};
-		colorBackground[] = {0.96,0.96,0.94,0.1};
-		colorSelect[] = {1,1,1,1};
-		colorBackgroundSelected[] = {0,0,0,0};
-		dimmStartTime = 2;
-		dimmEndTime = 8;
-		hideTime = 5;
-	};
-	class DefaultAction
-	{
-		colorBackground[] = {1,0,0,1};
-	};
-	class PeripheralVision
-	{
-		cueColor[] = {1,1,1,1};
-		cueEnemyColor[] = {1,1,1,1};
-		cueFriendlyColor[] = {1,1,1,1};
-	};
-};
-class RscIGText: RscText
-{
-	colorText[] = {1,1,1,1};
-};
-class RscIGProgress;
-class RscInGameUI
-{
-	colorReady[] = {1,1,1,1};
-	colorPrepare[] = {0.57,0.28,0.0,1.0};
-	colorUnload[] = {1,0.0,0.0,1.0};
-	class RscUnitInfoSoldier
-	{
-		controls[] = {"Background","Weapon","Ammo"};
-		class Background
-		{
-			colorBackground[] = {0.96,0.96,0.94,0};
-		};
-		class Weapon: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 0;
-		};
-		class Ammo: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 0;
-		};
-	};
-	class RscUnitInfoTank
-	{
-		controls[] = {"Background","Background2","ProgressBackground","TextSpeed","Weapon","Ammo","Speed","Heading","ValueFuel"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class Background2
-		{
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class ProgressBackground: RscPicture
-		{
-			colorText[] = {1,1,1,1};
-		};
-		class ValueFuel: RscIGProgress
-		{
-			colorBar[] = {1,1,1,1};
-			colorFrame[] = {1,0,0,0};
-		};
-		class Weapon: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 1;
-		};
-		class Ammo: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 1;
-		};
-		class TextSpeed: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 0;
-		};
-		class Speed: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 1;
-		};
-		class Heading: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = "0x00 + 0x100";
-			x = 0.74;
-			y = "0.018 + SafeZoneY";
-			w = 0.1;
-		};
-	};
-	class RscUnitVehicle: RscUnitInfoSoldier
-	{
-		controls[] = {"Background","Background2","Weapon","Ammo","Speed","Heading","ProgressBackground","ValueArmor","ValueFuel"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0};
-		};
-		class Background2
-		{
-			colorbackground[] = {0.96,0.96,0.94,0};
-		};
-		class Weapon: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-		class Ammo: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-		class Speed: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 0;
-		};
-		class Heading: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = "0x00 + 0x100";
-			x = 0.74;
-			y = "0.018 + SafeZoneY";
-			w = 0.1;
-		};
-		class ProgressBackground: RscPicture
-		{
-			colorText[] = {1,1,1,0};
-		};
-		class ValueArmor: RscIGProgress
-		{
-			colorBar[] = {1,1,1,0};
-			colorFrame[] = {1,0,0,0};
-		};
-		class ValueFuel: RscIGProgress
-		{
-			colorBar[] = {1,1,1,0};
-			colorFrame[] = {1,0,0,0};
-		};
-	};
-	class RscUnitInfo
-	{
-		controls[] = {"Background","Background2","ProgressBackground","ValueArmor","ValueFuel","TextSpeed","Speed","Weapon","Ammo","Heading"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0};
-		};
-		class ProgressBackground: RscPicture
-		{
-			colorText[] = {1,1,1,0};
-		};
-		class TextSpeed: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 0;
-		};
-		class Speed: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-		class Heading: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = "0x00 + 0x100";
-			x = 0.74;
-			y = "0.018 + SafeZoneY";
-			w = 0.1;
-		};
-		class ValueArmor: RscIGProgress
-		{
-			colorBar[] = {1,1,1,0};
-			colorFrame[] = {1,0,0,0};
-		};
-		class ValueFuel: RscIGProgress
-		{
-			colorBar[] = {1,1,1,0};
-			colorFrame[] = {1,0,0,0};
-		};
-		class Background2
-		{
-			colorbackground[] = {0.96,0.96,0.94,0};
-		};
-		class Weapon: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-		class Ammo: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-	};
-	class RscUnitInfoAir: RscUnitInfo
-	{
-		controls[] = {"Background","Background2","ProgressBackground","ValueArmor","ValueFuel","TextSpeed","Speed","TextAlt","Alt","Weapon","Ammo","Heading"};
-		class TextAlt: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 0;
-		};
-		class Alt: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-	};
-	class RscUnitInfoAPC: RscUnitInfo
-	{
-		controls[] = {"Background","Background2","ProgressBackground","ValueArmor","ValueFuel","TextSpeed","Speed","TextAlt","Alt","Weapon","Ammo","Heading"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class Background2
-		{
-			colorText[] = {1,1,1,0};
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class TextAlt: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 0;
-		};
-		class Alt: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 1;
-		};
-	};
-	class RscUnitInfoVehicleUnarmed: RscUnitInfo
-	{
-		controls[] = {"Background","Background2","ProgressBackground","ValueArmor","ValueFuel","TextSpeed","Speed","TextAlt","Alt","Weapon","Ammo","Heading"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0};
-		};
-		class Background2
-		{
-			colorText[] = {1,1,1,0};
-			colorbackground[] = {0.96,0.96,0.94,0};
-		};
-		class TextAlt: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 0;
-		};
-		class Alt: RscIGText
-		{
-			colorText[] = {1,1,1,0};
-			style = 1;
-		};
-	};
-	class RscUnitInfoShip: RscUnitInfo
-	{
-		controls[] = {"Background","Background2","ProgressBackground","ValueArmor","ValueFuel","TextSpeed","Speed","TextAlt","Alt","Weapon","Ammo","Heading"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class Background2
-		{
-			colorText[] = {1,1,1,0};
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class TextAlt: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 0;
-		};
-		class Alt: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 1;
-		};
-	};
-	class RscUnitInfoUAV: RscUnitInfoAir
-	{
-		controls[] = {"Background","Background2","Type","TextSpeed","Speed","TextSpeedWanted","SpeedWanted","TextAlt","Alt","TextAltWanted","AltWanted","TextPosition","Position","TextZoom","Zoom","Weapon","Ammo","Heading","Time","Date","UAV_Cross","LineTLH","LineTLV","LineTRH","LineTRV","LineBLH","LineBLV","LineBRH","LineBRV"};
-		class Background
-		{
-			colorbackground[] = {0.96,0.96,0.94,0.1};
-			colorText[] = {0.0,0.0,0.0,1.0};
-		};
-		class TextSpeed: RscIGText
-		{
-			colorText[] = {1,1,1,1};
-			style = 0;
-		};
-		class Type: TextSpeed
-		{
-			colorText[] = {1,1,1,1};
-			style = 2;
-		};
-		class Speed: TextSpeed
-		{
-			colorText[] = {1,1,1,1};
-			style = 1;
-		};
-		class LineTLH: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineTLV: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineTRH: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineTRV: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineBLH: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineBLV: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineBRH: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-		class LineBRV: RscText
-		{
-			colorBackground[] = {1.0,1.0,1.0,1.0};
-		};
-	};
-	class RscHint
-	{
-		controls[] = {"Background","Hint"};
-		class Background
-		{
-			colorBackground[] = {0.96,0.96,0.94,0.1};
-		};
-		class Hint: RscStructuredText
-		{
-			colorText[] = {1,0,1,1};
-			class controlsBackground
-			{
-				class Background
-				{
-					colorBackground[] = {0.96,0.96,0.94,0.1};
-				};
-			};
-		};
-	};
-	class RscTaskHint
-	{
-		idd = 302;
-		movingEnable = 0;
-		class controlsBackground
-		{
-			class Background
-			{
-				colorBackground[] = {0.96,0.96,0.94,0.1};
-			};
-		};
-		class Controls
-		{
-			class Hint: RscStructuredText
-			{
-				colorText[] = {1.0,1.0,1.0,1.0};
-				colorBackground[] = {0.0,0.0,0.0,1.0};
-			};
-		};
-	};
-};
-*/
-
-class RscListBox;
-class RscIGUIValue;
-class RscIGUIText;
-class RscText;
-class RscEdit;
-class RscStructuredText;
-class RscProgress;
-class RscPicture;
-class RscIGText: RscText
-{
-	colorText[] = {0,0,0,0};
-};
-class RscIGProgress;
-class RscInGameUI
-{
-	class RscUnitInfo;
-	class RscUnitInfoAir: RscUnitInfo
-	{
-		idd = 300;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-		updateWidthByWeapon = 0;
-		updateHeightByCrew = 0;
-		updateWidthByCrew = 0;
-		controls[] = {"CA_Weapon","CA_Mode","CA_Ammo","CA_ValueFuelBackground","CA_ValueFuel","CA_GunnerWeapon","CA_SpeedBackground","CA_TextSpeed","CA_Speed","CA_AltBackground","CA_TextAlt","CA_Alt","CA_HeadingBackground","CA_Heading","CA_ValueArmor","CA_TextFlares","CA_TextFlaresMode"};
-		class CA_Mode: RscIGUIText
-		{
-			idc = 149;
-			style = 0;
-			x = "(SafeZoneW + SafeZoneX) - (1 - 0.761)";
-			y = "0.054 + SafeZoneY";
-			w = 0.214;
-			h = 0.039;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_Ammo: RscIGUIValue
-		{
-			idc = 119;
-			style = 1;
-			x = "(SafeZoneW + SafeZoneX) - (1 - 0.761)";
-			y = "0.054 + SafeZoneY";
-			w = 0.214;
-			h = 0.039;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-
-		};
-		class CA_Weapon: RscIGUIText
-		{
-			idc = 118;
-			style = 0;
-			x = "(SafeZoneW + SafeZoneX) - (1 - 0.761)";
-			y = "0.015 + SafeZoneY";
-			w = 0.214;
-			h = 0.039;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-
-			};
-		class CA_GunnerWeapon: RscIGUIText
-		{
-			idc = 150;
-			style = 0;
-			x = "(SafeZoneW + SafeZoneX) - (1 - 0.761)";
-			y = "0.132 + SafeZoneY";
-			w = 0.214;
-			h = 0.039;
-			SizeEx = 0.034;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-
-		};
-		class CA_SpeedBackground: RscEdit
-		{
-			idc = -1;
-			sizeEx = 0.034;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			style = "0x02 + 0x40";
-			shadow = 2;
-			type = 0;
-			x = 0.314;
-			y = "0.017 + SafeZoneY";
-			w = 0.06;
-			h = 0.033;
-		};
-		class CA_TextSpeed: RscIGUIText
-		{
-			style = 0;
-			x = 0.257;
-			y = "0.015 + SafeZoneY";
-			w = 0.12;
-			text = "SPD";
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_Speed: RscIGUIValue
-		{
-			idc = 121;
-			style = 0;
-			x = 0.257;
-			//y = "0.015 + SafeZoneY";
-			y = -1;
-			w = 0.12;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_AltBackground: RscEdit
-		{
-			idc = -1;
-			sizeEx = 0.034;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-
-			style = "0x02 + 0x40";
-			type = 0;
-			x = 0.625;
-			y = "0.017 + SafeZoneY";
-			w = 0.06;
-			h = 0.033;
-		};
-		class CA_TextAlt: RscIGUIText
-		{
-			style = 1;
-			x = 0.625;
-			y = "0.015 + SafeZoneY";
-			w = 0.12;
-			text = "ALT";
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_Alt: RscIGUIValue
-		{
-			idc = 122;
-			style = 0;
-			x = 0.625;
-			y = "0.015 + SafeZoneY";
-			w = 0.12;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_HeadingBackground: RscEdit
-		{
-			idc = -1;
-			sizeEx = 0.034;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-
-			style = "0x02 + 0x40";
-			type = 0;
-			x = 0.469;
-			y = "0.017 + SafeZoneY";
-			w = 0.061;
-			h = 0.033;
-		};
-		class CA_Heading: RscIGUIValue
-		{
-			idc = 148;
-			style = 2;
-			x = 0.45;
-			y = "0.015 + SafeZoneY";
-			w = 0.1;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_ValueFuelBackground: RscPicture
-		{
-			idc = -1;
-			shadow = 2;
-			x = "0.018 + SafeZoneX";
-			y = "0.01 + SafeZoneY";
-			w = 0.0196078;
-			h = 0.2091503;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-
-			text = "\ca\ui\data\ui_fuel_background.paa";
-		};
-		class CA_ValueFuel: RscIGProgress
-		{
-			idc = 113;
-			x = "0.02 + SafeZoneX";
-			y = "0.036 + SafeZoneY";
-			w = 0.01;
-			h = 0.18;
-			texture = "\ca\ui\data\igui_fuel_progress.paa";
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_ValueArmor: RscListBox
-		{
-			idc = 111;
-			sizeEx = 0.03525;
-			x = "0.040 + SafeZoneX";
-			//y = "0.016 + SafeZoneY";
-			y = -1;
-			w = 0.0357;
-			h = 0.76;
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_TextFlaresMode: RscIGUIText
-		{
-			idc = 152;
-			style = 0;
-			sizeEx = 0.02674;
-			x = "0.078 + SafeZoneX";
-			y = "0.012 + SafeZoneY";
-			w = "0.161*SafezoneW";
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-		class CA_TextFlares: RscIGUIValue
-		{
-			idc = 151;
-			style = 1;
-			sizeEx = 0.02674;
-			x = "0.078  + SafeZoneX";
-			y = "0.012 + SafeZoneY";
-			w = "0.161*SafezoneW";
-		colorBackground[] = {0,0,0,0};
-		colorText[] = {0,0,0,0};
-		colorSelection[] = {0,0,0,0};
-		colorBar[] = {0,0,0,0};
-		colorFrame[] = {0,0,0,0};				
-			
-		};
-	};
-};

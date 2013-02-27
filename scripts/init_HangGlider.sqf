@@ -7,12 +7,16 @@ FLAY_HangGlider_fnc_Ground = compile preprocessFile "\FLAY\FLAY_HangGlider\scrip
 FLAY_HangGlider_fnc_VapourTrails = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\fn_vapourTrails.sqf";
 
 FLAY_HangGlider_EH_UiKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_uiKeyUp.sqf";
+FLAY_HangGlider_EH_UiKeyDown = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_uiKeyDown.sqf";
 FLAY_HangGlider_EH_AirborneKeyDown = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_airborneKeyDown.sqf";
 FLAY_HangGlider_EH_AirborneKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_airborneKeyUp.sqf";
 FLAY_HangGlider_EH_GroundKeyDown = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_groundKeyDown.sqf";
 FLAY_HangGlider_EH_GroundKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_groundKeyUp.sqf";
 FLAY_HangGlider_EH_GetIn = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf";
 FLAY_HangGlider_EH_GetOut = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_getOut.sqf";
+
+
+FLAY_Vario_EH_ButtonClick = compile preprocessFile "\FLAY\FLAY_HangGlider\scripts\ev_varioClicked.sqf";
 
 _glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
 _glider addEventHandler ["GetOut", FLAY_HangGlider_EH_GetOut]; 
@@ -21,10 +25,8 @@ _glider setVehicleLock "LOCKED";
 // EXPERIMENTAL - assemble / disassemble
 //[_glider, "FLAY.craft.ui.pos_assemble","Disassemble Hang Glider","FLAY\FLAY_HangGlider\scripts\ev_disassemble.sqf"] execVM "FLAY\FLAY_HangGlider\scripts\fn_assemble.sqf";
 
-// TEMPORARY - testing "Get In" animation.
-//_glider addAction ["Get In", "FLAY\FLAY_HangGlider\scripts\ev_getIn.sqf"];
-
-_UiKeyUpHandlerId = (findDisplay 46) displayAddEventHandler ["KeyUp","_this call FLAY_HangGlider_EH_UiKeyUp"];
+//_UiKeyUpHandlerId = (findDisplay 46) displayAddEventHandler ["KeyUp","_this call FLAY_HangGlider_EH_UiKeyUp"];
+//_UiDownUpHandlerId = (findDisplay 46) displayAddEventHandler ["KeyDown","_this call FLAY_HangGlider_EH_UiKeyDown"];
 
 [_glider] spawn {
 	[_this select 0] call FLAY_HangGlider_fnc_VapourTrails;
