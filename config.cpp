@@ -16,7 +16,8 @@ class CfgPatches
 	{
 		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DragonWing","FLAY_DeathWing","FLAY_WingSuit","FLAY_ArrowDownHelper"};
 		requiredVersion = 0.1;
-		requiredAddons[] = {"CACharacters","CAData","CASounds","CAUI"};
+		//requiredAddons[] = {"CACharacters","CAData","CASounds","CAUI"};
+		requiredAddons[] = {};
 	};
 };
 
@@ -61,8 +62,9 @@ class CfgVehicles
 	
 	class FLAY_GliderBase: Plane
 	{
+		scope = 1;
 		armor = 5;
-		scope = 2;
+		
 		
 		side = 4;
 		Icon = "\flay\flay_hangglider\data\glider_ico_ca.paa";
@@ -77,39 +79,29 @@ class CfgVehicles
 		fuelCapacity = 0;
 		
 		soundEngine[] = {};
-		soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
+		//soundEnviron[] = {"\Ca\sounds\Air\Noises\padak_let",0.31622776,1,80};
+		//soundEnviron[] = {"\FLAY\FLAY_Hangglider\data\sfx\padak_let",0.31622776,1,80}; // A3
+		soundEnviron[] = {"c:\flay_hangglider\padak_let",0.31622776,1,80}; // A3
 		soundGetIn[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
 		soundGetOut[] = {"\Ca\sounds\Air\Noises\padak_getIN",0.31622776,1,20};
 		soundCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,0,0};
 		soundLandCrash[] = {"\Ca\sounds\Air\Noises\padak_dopad",0.031622775,0,0};
 		soundWaterCrash[] = {"\Ca\sounds\Air\Noises\padak_dopadvoda",3.1622777,0,0};
 
-		class DestructionEffects
-		{
-			class DamageAround1
-			{
-				simulation = "damageAround";
-				type = "DamageAroundPole";
-				position = "";
-				intensity = 1;
-				interval = 1;
-				lifeTime = 1;
-			};
-			class Smoke1
-			{
-				simulation = "particles";
-				type = "BarelDestructionSmoke";
-				position = "destructionEffect1";
-				intensity = 0.15;
-				interval = 1;
-				lifeTime = 3.2;
-			};			
-		};
+		driverLeftHandAnimName = "pilot_lefthand";
+		driverRightHandAnimName = "pilot_righthand";
+		driverLeftLegAnimName = "pilot_leftfoot";
+		driverRightLegAnimName = "pilot_rightfoot";
+		simulation="airplane";
 		
-		destrType = "DestructMan";
+		class DestructionEffects {};
+		explosionEffects = "NoExplosion";
+		CraterEffects = "NoCrater";
+		
+		destrType = "DestructNo";
 		secondaryExplosion = -1;
+		crewVulnerable = true;
 		
-		//threat[] = {0.0,0.0,0.0};
 		threat[] = {1,0.900000,0.100000};
 		
 		htMin = 60;
@@ -125,17 +117,16 @@ class CfgVehicles
 		transportMaxMagazines = 0;
 		transportMaxWeapons = 0;
 		
-		driverCanSee = "2"; // crosshair / no compass
+		driverCanSee = "2"; 
 		extCameraPosition[] = {0,1,-3};
 
 		enableGPS = 0;
-		driverOpticsModel = "\ca\weapons\optika_empty";
 		
 		class ViewPilot: ViewPilot
 		{
-			initFov = 1.2;
+			initFov = 1.3;
 			minFov = 0.5;
-			maxFov = 1.2;
+			maxFov = 1.3;
 			initAngleX = 0;
 			minAngleX = -80;
 			maxAngleX = 80;
@@ -144,8 +135,8 @@ class CfgVehicles
 			maxAngleY = 110;
 		};
 
-		driverAction = "WingSuit_Pilot";
-		driverInAction = "WingSuit_Pilot";
+		driverAction = "HangGlider_Pilot";
+		driverInAction = "HangGlider_Pilot";
 		getInAction = "GetInLow";
 		getOutAction = "GetOutLow";
 		
@@ -176,6 +167,8 @@ class CfgVehicles
 	
 	class FLAY_HangGlider: FLAY_GliderBase
 	{
+		scope = 2;
+	
 		class EventHandlers: DefaultEventhandlers
 		{
 			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_HangGlider.sqf"";";
@@ -184,10 +177,13 @@ class CfgVehicles
 		displayName = "FLAY Hang Glider";
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider";
 
-		//weapons[] = {"BikeHorn"};
-		weapons[] = {};
-		magazines[] = {};	
-		armor = 5000;
+		//weapons[] = {};
+		//magazines[] = {};	
+		
+		weapons[] = {"HangGliderBombs"};
+		magazines[] = {"4Rnd_Bomb_HangGlider"};
+		
+		armor = 5;
 		accuracy = 0.5;
 		camouflage = 2;
 
@@ -200,11 +196,11 @@ class CfgVehicles
 		airFriction2[] = {25,12,2.500000};
 		canFloat = true;
 		canBeShot = true;
-		damageResistance = 0.0000001;
-		damperSize = 1;
-		damperForce = 2;
+		damageResistance = 0.000000000001;
+		damperSize = 2;
+		damperForce = 0.5;
 		hideUnitInfo = true;
-		hideWeaponsDriver = false;
+		hideWeaponsDriver = true;
 		selectionFabric = "latka";
 		type = 0;
 		unitInfoType = "UnitInfoSoldier";
@@ -226,39 +222,32 @@ class CfgVehicles
 		noseDownCoef = 0.0025;
 		ejectDeadDriver = true;
 		ejectSpeed[] = {0,-1,-5};
-		
+				
 		class AnimationSources: AnimationSources
 		{
 			class GliderPitch
 			{
 				source = "user";
 				animPeriod = 0.05;
-				initPhase = 0;
+				initPhase = 5;
 			};		
-			class HarnessHide
+			class HarnessAnchorHide
 			{
 				source = "user";
 				animPeriod = 0.000001;
 				initPhase = 0;
 			};
-			class FeetRotation
+			class HarnessStrapsHide
 			{
 				source = "user";
-				animPeriod = 0;
+				animPeriod = 0.000001;
 				initPhase = 0;
-			};
-			class FeetDamper {};
-			class LegsDamper 
+			};			
+			class LandingGear
 			{
 				source = "user";
-				animPeriod = 0;
-				initPhase = 1;
-			};
-			class FeetStabilizer
-			{
-				source = "user";
-				animPeriod = 0.1;
-				initPhase = 0;
+				animPeriod = 1.5;
+				initPhase =  0.15;
 			};
 			class HelperHide
 			{
@@ -289,6 +278,12 @@ class CfgVehicles
 				animPeriod = 0.000001;
 				initPhase = 0;
 			};
+			class FireGeoPilotHide
+			{
+				source = "user";
+				animPeriod = 0.000001;
+				initPhase = 0;
+			};			
 		};
 
 		class UserActions
@@ -300,7 +295,7 @@ class CfgVehicles
 				//hideOnUse = 1;
 				displayName = "Flytec 3040 ON";
 				position = "action";
-				radius = 0.5000;
+				radius = 4.0;
 				onlyForPlayer = 1;
 				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and not (player getVariable ['FLAY.variometer.power.on',false])";
 				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_show.sqf'";
@@ -312,7 +307,7 @@ class CfgVehicles
 				//hideOnUse = 1;
 				displayName = "Flytec 3040 OFF";
 				position = "action";
-				radius = 0.5000;
+				radius = 4.0;
 				onlyForPlayer = 1;
 				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and (player getVariable ['FLAY.variometer.power.on',false])";
 				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_hide.sqf'";
@@ -336,7 +331,7 @@ class CfgVehicles
 				//hideOnUse = 1;
 				displayName = "Get Out";
 				position = "action";
-				radius = 0.5000;
+				radius = 4.0000;
 				onlyForPlayer = 1;
 				condition = "(alive player) and (driver this == player)";
 				statement = "[this,'DRIVER',player] execVM 'FLAY\FLAY_HangGlider\scripts\ev_getOut.sqf'";
@@ -392,85 +387,12 @@ class CfgVehicles
 		//	displayName = "";
 		//};
 	};
-	
-	class FLAY_HangGlider2: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 2";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider2";
-	};
-	
-	class FLAY_HangGlider3: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 3";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider3";
-	};
-	
-	class FLAY_HangGlider4: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 4";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider4";
-	};
-
-	class FLAY_HangGlider5: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 5";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider5";
-	};
-	
-	class FLAY_HangGlider6: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 6";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider6";
-	};
-
-	class FLAY_HangGlider7: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 7";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider7";
-	};
-	
-	class FLAY_HangGlider8: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 8";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider8";
-	};
-
-	class FLAY_HangGlider9: FLAY_HangGlider
-	{
-		displayName = "FLAY Hang Glider 9";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider9";
-	};	
-	
-	class FLAY_NightWing: FLAY_HangGlider
-	{
-		displayName = "FLAY Night Wing";
-		model = "FLAY\FLAY_HangGlider\FLAY_NightWing";
-	};
-	
-	class FLAY_DeathWing: FLAY_HangGlider
-	{
-		displayName = "FLAY Death Wing";
-		model = "FLAY\FLAY_HangGlider\FLAY_DeathWing";
-		weapons[] = {"HangGliderM60A4","HangGliderBombs"};
-		magazines[] = {"400Rnd_762x51_M240_HangGlider","4Rnd_Bomb_HangGlider"};
-		gunAimDown = 0.15;
-		HeadAimDown = 8;		
-	};
-	
-	class FLAY_DragonWing: FLAY_HangGlider
-	{
-		displayName = "FLAY Dragon Wing";
-		model = "FLAY\FLAY_HangGlider\FLAY_DragonWing";
-		weapons[] = {"M2","DSHKM","HangGliderBombs"};
-		magazines[] = {"100Rnd_127x99_M2","100Rnd_127x99_M2","100Rnd_127x99_M2","50Rnd_127x107_DSHKM","50Rnd_127x107_DSHKM","50Rnd_127x107_DSHKM","4Rnd_Bomb_HangGlider"};
-		gunAimDown = 0.15;
-		HeadAimDown = 8;
-	};
 
 	class FLAY_HangGliderAI: FLAY_HangGlider
 	{
+		scope = 2;
 		displayName = "FLAY Hang Glider (AI)";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider8";
+		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider2";
 		fuelCapacity = 1000;
 		maxSpeed = 100;
 		landingSpeed = 70;
@@ -479,27 +401,60 @@ class CfgVehicles
 		aileronSensitivity = 3.5;
 		elevatorSensitivity = 0.1;
 		wheelSteeringSensitivity = 2.7;
-		noseDownCoef = 0.00000025;		
+		noseDownCoef = 0.00000025;
 	};
 	
 	class FLAY_WingSuit: FLAY_GliderBase
 	{
+		scope = 2;
 		displayName = "FLAY Wing Suit";
 		model = "FLAY\FLAY_HangGlider\FLAY_WingSuit";
-		Icon = "\ca\air\data\map_ico\icomap_Para_CA.paa";
-		picture = "\ca\air\data\ico\Para_CA.paa";
+		unitInfoType = "RscUnitInfoNoHUD";
 		
 		driverAction = "WingSuit_Pilot";
 		driverInAction = "WingSuit_Pilot";
 
 		envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
 
-		maxSpeed = 200;
-		aileronSensitivity = 0.5;
-		elevatorSensitivity = 0.05;
+		maxSpeed = 300;
+		aileronSensitivity = 0.3;
+		elevatorSensitivity = 0.03;
 		wheelSteeringSensitivity = 0.001;
-		noseDownCoef = 0.1;
+		noseDownCoef = -0.2;
 	};
+	
+	class FLAY_Parachute: FLAY_GliderBase
+	{
+		scope = 2;
+		displayName = "FLAY Parachute";
+		model = "FLAY\FLAY_HangGlider\FLAY_Parachute";
+		unitInfoType = "RscUnitInfoNoHUD";
+		
+		driverAction = "HangGlider_PilotLand";
+		driverInAction = "HangGlider_PilotLand";
+		simulation="airplane";
+
+		class EventHandlers{};
+		class ViewPilot: ViewPilot
+		{
+			initFov = 0.95;
+			minFov = 0.95;
+			maxFov = 0.95;
+			initAngleX = 0;
+			minAngleX = -70;
+			maxAngleX = 70;
+			initAngleY = 0;
+			minAngleY = -110;
+			maxAngleY = 110;
+		};
+
+		occludeSoundsWhenIn = 1.0;
+		obstructSoundsWhenIn = 1.0;
+		envelope[] = {0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9};
+		maxSpeed = 1;
+		landingSpeed = 1;
+
+	};	
 	
 	// Assemble Info
 	
@@ -519,100 +474,12 @@ class CfgVehicles
 //		};
 //	};
 
-	class FLAY_HiddenTrolley: Plane
+	class B_AssaultPack_blk;
+	class FLAY_HangGlider_Bag: B_AssaultPack_blk
 	{
 		scope = 2;
-		displayName = "FLAY - Hidden Trolley";
-		model = "FLAY\FLAY_HangGlider\FLAY_HiddenTrolley";
-		armor = 5;
-		
-		side = 4;
-		Icon = "\flay\flay_hangglider\data\glider_ico_ca.paa";
-		picture = "\flay\flay_hangglider\data\glider_pic_ca.paa";
-		mapSize = 10;
-		
-		//nameSound = "veh_parachute";
-		accuracy = 0.1;
-		camouflage = 1;
-		audible = 0;
-		hasGunner = 0;
-		fuelCapacity = 0;
-
-		threat[] = {0.0,0.0,0.0};
-		class DestructionEffects {};
-		
-		htMin = 60;
-		htMax = 1800;
-		afMax = 100;
-		mfMax = 80;
-		mFact = 0;
-		tBody = 0;
-		turnCoef = 2;
-		outsideSoundFilter = 0;
-		wheelCircumference = 2.28;
-		transportMaxMagazines = 0;
-		transportMaxWeapons = 0;
-		
-		driverCanSee = "2";
-		secondaryExplosion = 0;
-		extCameraPosition[] = {0,1,-3};
-		destrType = "DestructNo";
-		enableGPS = 0;
-
-		driverOpticsModel = "\ca\weapons\optika_empty";
-		
-		class ViewPilot: ViewPilot
-		{
-			initFov = 1.2;
-			minFov = 0.5;
-			maxFov = 1.2;
-			initAngleX = 0;
-			minAngleX = -80;
-			maxAngleX = 80;
-			initAngleY = 30;
-			minAngleY = -110;
-			maxAngleY = 110;
-		};
-
-		driverAction = "HangGlider_Pilot";
-		driverInAction = "HangGlider_Pilot";
-		getInAction = "";
-		getOutAction = "";
-		
-		cabinOpening = 1;
-		occludeSoundsWhenIn = 1.0;
-		obstructSoundsWhenIn = 1.0;
-		
-		class Turrets {};
-		class Reflectors {};
-		class Armory
-		{
-			disabled = 1;
-		};
-		
-		gearRetracting = 0;
-		flaps = 0;
-		envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
-		
-		maxSpeed = 200;
-		aileronSensitivity = 0.5;
-		elevatorSensitivity = 0.05;
-		wheelSteeringSensitivity = 0.001;
-		noseDownCoef = 0.1;
-		ejectDeadDriver = false;
-		ejectSpeed[] = {0,0,0};		
-	};
-	
-	class FLAY_HangGlider_Bag: Thing
-	{
-		class EventHandlers: DefaultEventhandlers
-		{
-			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_HangGliderBag.sqf"";";
-		};	
-		scope = 1;
-		displayName = "FLAY HangGlider Bag";
-		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider_Bag.p3d";
-		vehicleClass = "Misc";
+		displayName = "Hang Glider Kit";
+		descriptionShort = "Hang Glider Kit";
 	};
 		
 	class FLAY_3DAxis10m: Thing
@@ -688,13 +555,13 @@ class CfgVehicles
 			{
 				source = "user";
 				animPeriod = 0.0001;
-				initPhase = 0;
+				initPhase = 1;
 			};
 			class HideArrowBlue
 			{
 				source = "user";
 				animPeriod = 0.0001;
-				initPhase = 0;
+				initPhase = 1;
 			};		
 		};		
 	};
@@ -741,38 +608,6 @@ class CfgVehicles
 		};			
 	};	
 
-	class Man;
-	class CaManbase: Man
-	{
-		class UserActions
-		{
-			class FLAY_Flytec3040_ON
-			{
-				displayNameDefault = "Flytec 3040 ON";
-				showWindow = 0;
-				//hideOnUse = 1;
-				displayName = "Flytec 3040 ON";
-				position = "action";
-				radius = 3.0000;
-				onlyForPlayer = 1;
-				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and not (player getVariable ['FLAY.variometer.power.on',false])";
-				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_show.sqf'";
-			};
-			class FLAY_Flytec3040_OFF
-			{
-				displayNameDefault = "Flytec 3040 OFF";
-				showWindow = 0;
-				//hideOnUse = 1;
-				displayName = "Flytec 3040 OFF";
-				position = "action";
-				radius = 3.0000;
-				onlyForPlayer = 1;
-				condition = "(alive player) and ('FLAY_Flytec3040_Variometer' in (weapons player) or 'FLAY_Flytec3040_Variometer' in (weapons (vehicle player))) and (player getVariable ['FLAY.variometer.power.on',false])";
-				statement = "[player] execVM '\FLAY\FLAY_HangGlider\scripts\ui_variometer_hide.sqf'";
-			};			
-		};	
-	};
-	
 	class Sound;
 	class Sound_VarioDn01: Sound
 	{
@@ -1036,21 +871,25 @@ class CfgVehicles
 class cfgWeapons
 {
     class Default;
-	class ItemCore: Default {};
+	class ItemCore;
 	class FLAY_Flytec3040_Variometer: ItemCore
 	{
 		scope=2;
 		displayName="Flytec 3040";
 		picture="\FLAY\FLAY_HangGlider\data\img\item_vario.paa";
 		descriptionShort="Visual and acoustic vario display with adjustable sink alarm tone.";
+		class ItemInfo
+		{
+			mass = 1;
+		};		
 	};	
 	class RocketPods;
 	class HangGliderBombs: RocketPods
 	{
 		scope = 1;
-		displayName = "Bombs";
-		cursorAim = "\ca\Weapons\Data\clear_empty";
-		cursor = "Vehicle_Grenade_W";
+		displayName = "Grenades";
+		cursorAim = "EmptyCursor";
+		cursor = "EmptyCursor";
 		cursorSize = 1;
 		autoFire = 0;
 		sound[] = {"",10.0,1};
@@ -1067,97 +906,25 @@ class cfgWeapons
 		autoReload = 1;
 		canLock = 0;
 	};
-	class MGun;	
-	class M134: MGun
-	{
-		class LowROF {};
-	};
-	class HangGliderM134: M134
-	{
-	    modes[] = {"LowROF"};
-		class LowROF: LowROF
-		{
-			reloadTime = 0.015;
-			dispersion = 0.025;
-			minRange = 1;
-			minRangeProbab = 0.09;
-			midRange = 2;
-			midRangeProbab = 0.058;
-			maxRange = 3;
-			maxRangeProbab = 0.004;
-		};
-	};
-	class Rifle;
-	class M60A4_EP1: Rifle {
-		class manual;
-	};	
-	class HangGliderM60A4: M60A4_EP1
-	{
-		cursor = "Air_W_MG";
-		cursorAim = "Air_Dot";
-		cursorSize = 1;
-		showAimCursorInternal = 1;	
-		magazines[] = {"400Rnd_762x51_M240_HangGlider","100Rnd_762x51_M240"};
-	    modes[] = {"manual"};
-		class manual: manual
-		{
-			dispersion = 0.020;
-			//dispersion = 0.0008;
-			reloadTime = 0.06;
-		};
-	};
-	
-	class Launcher;
-	class FLAY_HangGlider_BagLauncher: Launcher
+	class launch_RPG32_F;
+	class FLAY_HangGlider_BagLauncher: launch_RPG32_F
 	{
 		scope = 2;
 		displayName = "FLAY Hang Glider Bag";
 		model = "FLAY\FLAY_HangGlider\FLAY_HangGlider_Bag.p3d";
-		cursorAim = "\ca\Weapons\Data\clear_empty";
-		cursor = "\ca\Weapons\Data\clear_empty";
-		handAnim[] = {"OFP2_ManSkeleton","\Ca\weapons\Data\Anim\m136.rtm"};
+		cursorAim = "EmptyCursor";
+		cursor = "EmptyCursor";
 		modelOptics = "-";
-		magazines[] = {"M136"};
 		sound[] = {"",10.0,1,1400};
 		drySound[] = {"",0.0001,1,10};
 		reloadMagazineSound[] = {"",0.00031622776,1,20};
 		soundFly[] = {"",100.0,1.5,700};
-		picture = "\CA\weapons\data\equip\W_m136_launcher_CA.paa";
-		UiPicture = "\CA\weapons\data\Ico\i_at_CA.paa";
-		recoil = "launcherBase";
-		minRange = 0;
-		midRange = 0;
-		maxRange = 0;
-		aiRateOfFire = 0;
-		aiRateOfFireDistance = 0;
 		class Library
 		{
-			libTextDesc = "$STR_LIB_M136";
+			libTextDesc = "FLAY Hang Glider Bag";
 		};
-		descriptionShort = "$STR_DSS_M136";
+		descriptionShort = "FLAY Hang Glider Bag";
 	};
-	
-	/*
-	class Binocular;
-	class Binocular_Vector: Binocular
-	{
-		displayName = "$STR_EP1_DN_cfgWeapons_Binocular_Vector";
-		visionMode[] = {"Normal","NVG"};
-		modelOptics = "\ca\weapons_E\optics_vector.p3d";
-		opticsZoomInit = 0.0293;
-		opticsZoomMin = 0.0293;
-		opticsZoomMax = 0.0293;
-		weaponInfoType = "RscWeaponRangeFinder";
-		model = "\ca\weapons_E\vector\vector21dt";
-		Picture = "\CA\weapons_E\Data\icons\bino_vector_CA.paa";
-	};
-	class Laserdesignator: Binocular
-	{
-		weaponInfoType = "RscWeaponRangeFinder";
-		visionMode[] = {"Normal","NVG","TI"};
-		thermalMode[] = {0,1};
-	};
-	*/
 };
 
 
@@ -1242,7 +1009,7 @@ class CfgAmmo
 	};	
 	class G_HangGlider_HE: G_Camel_HE
 	{
-		model = "\ca\Weapons\granat";
+		model = "\A3\weapons_f\Ammo\UGL_slug";
 		hit = 20;
 		indirectHit = 12;
 		indirectHitRange = 5;
@@ -1260,8 +1027,6 @@ class CfgAmmo
 		hit = 100;
 		indirectHit = 20;
 		indirectHitRange = 10;
-		visibleFire = 28;
-		audibleFire = 28;		
 		cost = 1000;
 		irLock = 0;
 		laserLock = 0;
@@ -1274,9 +1039,17 @@ class CfgAmmo
 		initTime = 0;
 		thrustTime = 0;
 		thrust = 0;
-		soundHit[] = {"Ca\sounds\Weapons\explosions\explosion_large1",28.183832,1,1900};
-		model = "\ca\Weapons\granat";
-		proxyShape = "\ca\Weapons\granat";
+		soundHit1[] = {"A3\Sounds_F\weapons\Explosion\expl_big_1",5.0118723,1,2400};
+		soundHit2[] = {"A3\Sounds_F\weapons\Explosion\expl_big_2",5.0118723,1,2400};
+		soundHit3[] = {"A3\Sounds_F\weapons\Explosion\expl_big_3",5.0118723,1,2400};
+		soundHit4[] = {"A3\Sounds_F\weapons\Explosion\expl_shell_1",5.0118723,1,2400};
+		soundHit5[] = {"A3\Sounds_F\weapons\Explosion\expl_shell_2",5.0118723,1,2400};
+		multiSoundHit[] = {"soundHit1",0.2,"soundHit2",0.2,"soundHit3",0.2,"soundHit4",0.2,"soundHit5",0.2};
+		explosionSoundEffect = "DefaultExplosion";
+		model = "\A3\weapons_f\Ammo\UGL_slug";
+		proxyShape = "\A3\weapons_f\Ammo\UGL_slug";
+		//CraterEffects = "BombCrater";
+		//explosionEffects = "BombExplosion";
 		CraterEffects = "HERocketCrater";
 		explosionEffects = "HERocketExplosion";
 		whistleDist = 24;
@@ -1300,8 +1073,10 @@ class CfgMovesBasic
 		HangGlider_PilotWpn = "HangGlider_PilotWpn";
 		HangGlider_PilotLand = "HangGlider_PilotLand";
 		HangGlider_PilotWlk = "HangGlider_PilotWlk";
+		HangGlider_PilotSwoop = "HangGlider_PilotSwoop";
 		WingSuit_Pilot = "WingSuit_Pilot";
 		CarryHangGliderGesture[] = {"CarryHangGlider","Gesture"};
+		HangGliderSwoopGesture[] = {"HangGliderSwoopGesture","Gesture"};
 		ResetGesture[] = {"ResetGesture","Gesture"};
 	};
 };
@@ -1324,39 +1099,57 @@ class CfgMovesMaleSdr: CfgMovesBasic
 		};
 		class HangGlider_Pilot: Crew
 		{
-			actions = "RifleLowStandActions";
+			//actions = "RifleLowStandActions";
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_Pilot.rtm";
 			speed = 0.6;
-			soundEnabled = 0;
+			soundEnabled = 1;
+			disableWeapons = 1;
+			interpolationSpeed = 1;
 			ConnectTo[] = {};			
-			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_PilotLand",0.1"HangGlider_PilotWpn",0.1};
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_PilotLand",0.1"HangGlider_PilotWlk",0.1};
+			leftHandIKCurve[] = {1};
+			rightHandIKCurve[] = {1};
 		};
 		class HangGlider_PilotWpn: HangGlider_Pilot
 		{
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotWpn.rtm";
-			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot",0.1,"HangGlider_PilotLand",0.1"HangGlider_PilotWpn",0.1};
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_Pilot",0.1,"HangGlider_PilotLand",0.1"HangGlider_PilotWlk",0.1};
+			rightHandIKCurve[] = {0};
+			disableWeapons = 0;
+			canPullTrigger = 1;
 		};		
 		class HangGlider_PilotLand: HangGlider_Pilot
 		{
 			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotLand.rtm";
-			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_Pilot",0.1,"HangGlider_PilotWpn",0.1};
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotWpn",0.1,"HangGlider_Pilot",0.1,"HangGlider_PilotWlk",0.1};
 		};
 		class HangGlider_PilotWlk: HangGlider_Pilot
 		{
-			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotWlk.rtm";
+			//file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotWlk.rtm";
 			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotLand",0.1,"HangGlider_PilotWpn",0.1,"HangGlider_Pilot",0.1};
+			leftHandIKCurve[] = {1};
+			rightHandIKCurve[] = {1};
 		};
-		class WingSuit_Pilot: Crew
+		class HangGlider_PilotSwoop: HangGlider_Pilot
+		{
+			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotSwoop.rtm";
+			speed = 0.5;
+			interpolationSpeed = 0.5;
+			interpolateTo[] = {"HangGlider_Dead",1,"HangGlider_PilotLand",0.05,"HangGlider_PilotWpn",0.05,"HangGlider_Pilot",0.05};
+			interpolateFrom[] = {"HangGlider_PilotLand",0.05,"HangGlider_PilotWpn",0.05,"HangGlider_Pilot",0.05};
+			leftHandIKCurve[] = {1};
+			rightHandIKCurve[] = {1};
+		};		
+		class WingSuit_Pilot: HangGlider_Pilot
 		{
 			file = "\FLAY\FLAY_HangGlider\anims\WingSuit_Pilot.rtm";
 			interpolateTo[] = {"HangGlider_Dead",1};
-		};		
+		};	
 	};
 };
 
 class CfgGesturesMale
 {
-
 	class Default;
 	class States
 	{
@@ -1366,12 +1159,20 @@ class CfgGesturesMale
 			looped = 0;
 			speed = 0;
 			mask = "handsWeapon";
-			//mask = "upperTorso";
 			headBobStrength = 0;
 			headBobMode = 0;
-			leftHandIKCurve[] = {0};
-			rightHandIKCurve[] = {0};			
+			leftHandIKCurve[] = {1};
+			rightHandIKCurve[] = {1};
 		};
+		class HangGliderSwoopGesture: Default
+		{
+			file = "\FLAY\FLAY_HangGlider\anims\HangGlider_PilotSwoop.rtm";
+			looped = 1;
+			speed = 2;
+			mask = "legs";
+			leftHandIKCurve[] = {1};
+			rightHandIKCurve[] = {1};
+		};		
 		class ResetGesture: Default
 		{
 			file = "";
@@ -1420,7 +1221,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioDn01Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\varioDn1.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\varioDn1.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1428,7 +1229,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_SilenceSfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\silence.ogg",0.31622776,1,1,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\silence.ogg",0.61622776,1,1,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1436,7 +1237,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp01Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario1.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1444,7 +1245,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp02Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario2.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario2.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1452,7 +1253,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp03Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario3.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario3.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1460,7 +1261,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp04Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario4.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario4.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1468,7 +1269,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp05Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario5.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario5.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1476,7 +1277,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp06Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario6.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario6.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1484,7 +1285,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp07Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario7.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario7.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1492,7 +1293,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp08Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario8.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario8.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -1500,7 +1301,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp09Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario9.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario9.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1508,7 +1309,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp10Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario10.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario10.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1516,7 +1317,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp11Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario11.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario11.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1524,7 +1325,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp12Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario12.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario12.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1532,7 +1333,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp13Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario13.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario13.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1540,7 +1341,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp14Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario14.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario14.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1548,7 +1349,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp15Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario15.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario15.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1556,7 +1357,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp16Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario16.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario16.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1564,7 +1365,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp17Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario17.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario17.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1572,7 +1373,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp18Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario18.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario18.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1580,7 +1381,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp19Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario19.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario19.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1588,7 +1389,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp20Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario20.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario20.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1596,7 +1397,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp21Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario21.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario21.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1604,7 +1405,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp22Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario22.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario22.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1612,7 +1413,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp23Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario23.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario23.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1620,7 +1421,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp24Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario24.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario24.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1628,7 +1429,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp25Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario25.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario25.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1636,7 +1437,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp26Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario26.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario26.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1644,7 +1445,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp27Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario27.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario27.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1652,7 +1453,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp28Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario28.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario28.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1660,7 +1461,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp29Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario29.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario29.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1668,7 +1469,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp30Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario30.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario30.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -1676,7 +1477,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp31Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario31.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario31.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -1684,7 +1485,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp32Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario32.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario32.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -1692,7 +1493,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp33Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario33.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario33.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -1700,7 +1501,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp34Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario34.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario34.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1708,7 +1509,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp35Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario35.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario35.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -1716,7 +1517,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp36Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario36.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario36.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1724,7 +1525,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp37Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario37.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario37.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1732,7 +1533,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp38Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario38.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario38.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -1740,7 +1541,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp39Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario39.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario39.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -1748,7 +1549,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp40Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario40.ogg",0.31622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\data\sfx\vario40.ogg",0.61622776,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	

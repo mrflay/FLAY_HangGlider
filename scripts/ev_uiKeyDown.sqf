@@ -23,5 +23,5 @@ if (_dikCode in _caps) then {
 		ctrlSetFocus ((findDisplay 3000) displayCtrl 3002);
 		((findDisplay 3000) displayCtrl 3002) ctrlMapCursor ["Move", "Arrow"];
 	};
-	//_handled=true;
+	_handled=true;
 };

@@ -38,29 +38,54 @@ if (_key in _down) then
 	};
 	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
     _handled=true;
-	_glider animate ["GliderPitch",45];
+	_glider animate ["GliderPitch",28];
+};
+
+if (_key in _down) then {
+	_anims = ["hangglider_pilotland", "hangglider_pilotswoop"]; // case sensitive str compare in arrays
+	if (not ((animationState player) in _anims)) then {
+		_glider animate ["pilotposz",0];
+		_glider animate ["pilotposy",0];
+		//_glider animate ["pilotposz",-0.05];
+		//_glider animate ["pilotposy",0.05];
+		_glider animate ["HarnessStrapsHide", 1];
+		_glider animate ["LandingGear", -0.40];
+		_glider setVariable ["FLAY.hangglider.state.landing", true];
+		player playAction "ResetGesture";
+		//player playMoveNow (_anims select 0);
+		player switchMove (_anims select 0);
+	};
+	_handled=true;
+};
+
+if (_key in _up) then {
+	_anims = ["hangglider_pilot", "hangglider_pilotswoop"]; // case sensitive str compare in arrays
+	if (not ((animationState player) in _anims)) then {
+		_glider animate ["pilotposz",-0.05];
+		_glider animate ["pilotposy",0.05]; 
+		_glider animate ["gliderpitch", 5];
+		_glider animate ["HarnessStrapsHide", 0];
+		_glider animate ["LandingGear", 0.15];
+		_glider setVariable ["FLAY.hangglider.state.landing", false];
+		player playAction "ResetGesture";
+		//player playMoveNow (_anims select 0);
+		player switchMove (_anims select 0);
+	};
+	_handled=true;
 };
 
 if (_key in _space) then
 {	
-	_anim = "HangGlider_PilotLand";
-	if (animationState player != _anim) then {
-		_glider animate ["PilotPosY", 0];
-		_glider animate ["PilotPosZ", 0];
-		player playAction "ResetGesture";
-		player switchMove _anim;
+	if (_shift) then {
+		_wingsuit = "FLAY_WingSuit" createVehicle (getpos player);
+		_wingsuit setpos (getpos player);
+		moveout player; 
+		player moveindriver _wingsuit;
+		_wingsuit setVectorDir (vectorDir _glider);
+		_wingsuit setDir (getDir _glider);
+		_wingsuit setVelocity (velocity _glider);
+		_handled = true;
 	};
-	_k = -0.2;
-	if (_speed < 8) then {
-		_k = 0;
-	};
-	_glider setVelocity [(_v select 0) + _k * (_dir select 0), (_v select 1) + _k * (_dir select 1), (_v select 2) + _k * (_dir select 2)];
-	_glider setVariable ["FLAY_HangGlider_BlockSpaceKeyUntilReleased", true];
-	_glider setVariable ["FLAY_HangGlider_airborne", false];
-	_glider animate ["FeetStabilizer", 1];
-	_glider animate ["HideHarness",0];
-	[_glider] call FLAY_HangGlider_fnc_Ground;
-	_handled=true;
 };
 
 _handled;

@@ -22,5 +22,5 @@ if (_dikCode in _caps) then {
 		closeDialog 3000;
 		setMousePosition [0.5, 0.5];
 	};
-	//_handled=true;
+	_handled=true;
 };

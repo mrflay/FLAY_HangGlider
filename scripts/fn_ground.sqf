@@ -17,12 +17,16 @@ _KeyUpHandlerId = (findDisplay 46) displayAddEventHandler ["KeyUp","_this call F
 _glider setVariable ["FLAY_HangGlider_KeyDownHandlerId", _KeyDownHandlerId];
 _glider setVariable ["FLAY_HangGlider_KeyUpHandlerId", _KeyUpHandlerId];
 
-_glider animate ["PilotPosY",0.5];
-_glider animate ["PilotPosZ",-0.1];
-_glider animate ["HideHarness",1];
+_glider animate ["pilotposz",-0.05]; 
+_glider animate ["pilotposy",0.2]; 
+_glider animate ["gliderpitch", 25];
+
+_glider animate ["HarnessAnchorHide",1];
+_glider animate ["HarnessStrapsHide",1];
 
 _glider setVariable ["FLAY_HangGlider_airborne", false];
+_glider setVariable ["FLAY.hangglider.state.landing", false];
 
-_glider animate ["FeetStabilizer", 1];
+_glider animate ["LandingGear", 0];
 _glider setVectorUp (vectorUp _glider);
 

@@ -1,9 +1,6 @@
 // fn_lift.sqf
 
 _this spawn {
-
-	BIS_fnc_crossProduct = compile preprocessFile "\ca\modules\Functions\vectors\fn_crossProduct.sqf";
-	BIS_fnc_dirTo = compile preprocessFile "\ca\modules\Functions\geometry\fn_dirTo.sqf";
 	
 	private ["_done"];
 
@@ -27,14 +24,17 @@ _this spawn {
 			
 			// FIXME: lift is only applied to FLAY_HangGlider at the moment
 			if (_vehicle isKindOf "FLAY_HangGlider") then {
-				_enableThermalLift = _vehicle getVariable ["FLAY.HangGlider.lift.thermal.enable", false];
+				_enableThermalLift = _vehicle getVariable ["FLAY.HangGlider.lift.thermal.enable", true];
 				_enableRidgeLift = _vehicle getVariable ["FLAY.HangGlider.lift.ridge.enable", false];
 				_enableWaveLift = _vehicle getVariable ["FLAY.HangGlider.lift.wave.enable", false];
 				_enableWindGusts = _vehicle getVariable ["FLAY.HangGlider.lift.gusts.enable", false];
 				_enableTurbulence = _vehicle getVariable ["FLAY.HangGlider.lift.turbulence.enable", false];
 			
+				// thermals don't affect the glider when it's in landing state
+				_landing = _vehicle getVariable ["FLAY.hangglider.state.landing", false];
+			
 				// emulate thermal lift
-				if (_enableThermalLift) then {
+				if (_enableThermalLift and not _landing) then {
 					_strengthTotal = 0;
 					
 					// find the thermals affecting the vehicle
@@ -42,14 +42,14 @@ _this spawn {
 					
 					{
 						_thermal = _x;
-						_thermalStrength = _thermal getVariable ["FLAY.HangGlider.lift.thermal.strength", 0.2];
-						_thermalRadiusHorz = _thermal getVariable ["FLAY.HangGlider.lift.thermal.radius", 300];
+						_thermalStrength = _thermal getVariable ["FLAY.HangGlider.lift.thermal.strength", 0.1];
+						_thermalRadiusHorz = _thermal getVariable ["FLAY.HangGlider.lift.thermal.radius", 500];
 						_thermalFalloffCoeffHorz = _thermal getVariable ["FLAY.HangGlider.lift.thermal.falloff_coeff_horz", 1.5];
 						_thermalDistanceHorz = _vehicle distance _thermal; // horizontal (i.e. map) distance.
 						_thermalAltitudeMin = _thermal getVariable ["FLAY.HangGlider.lift.thermal.altitude_min", 20];
-						_thermalAltitudeMax = _thermal getVariable ["FLAY.HangGlider.lift.thermal.altitude_max", 80];
-						_thermalSpeedMin = _thermal getVariable ["FLAY.HangGlider.lift.thermal.speed_min", 0];
-						_thermalSpeedMax = _thermal getVariable ["FLAY.HangGlider.lift.thermal.speed_max", 100];
+						_thermalAltitudeMax = _thermal getVariable ["FLAY.HangGlider.lift.thermal.altitude_max", 600];
+						_thermalSpeedMin = _thermal getVariable ["FLAY.HangGlider.lift.thermal.speed_min", 18];
+						_thermalSpeedMax = _thermal getVariable ["FLAY.HangGlider.lift.thermal.speed_max", 200];
 												
 						_thermalRadiusVert = (_thermalAltitudeMax - _thermalAltitudeMin) / 2;
 						_thermalFalloffCoeffVert = _thermal getVariable ["FLAY.HangGlider.lift.thermal.falloff_coeff_vert", 1.5];
@@ -66,18 +66,25 @@ _this spawn {
 							_strengthTotal = _strengthTotal + _thermalStrength * (_strengthHorz + _strengthVert);
 						};
 						
-						if (_thermalStrength > 0) then {
-							_thermalPosATL = getPosATL _thermal;
-							_thermal setPosATL [_thermalPosATL select 0, _thermalPosATL select 1, _thermalAltitudeMin];
-							_thermal animate ["SizeArrowRed", (_thermalAltitudeMax - _thermalAltitudeMin) * 0.5];
-							_thermal animate ["HideArrowBlue", 1];
-							_thermal animate ["HideArrowRed", 0];
+						// make thermals visible if the variometer is on debug
+						_unitHasVario = (driver _vehicle) getVariable ["FLAY.variometer.debug", false];
+						if (_unitHasVario) then {
+							if (_thermalStrength > 0) then {
+								_thermalPosATL = getPosATL _thermal;
+								_thermal setPosATL [_thermalPosATL select 0, _thermalPosATL select 1, _thermalAltitudeMin];
+								_thermal animate ["SizeArrowRed", (_thermalAltitudeMax - _thermalAltitudeMin) * 0.5];
+								_thermal animate ["HideArrowBlue", 1];
+								_thermal animate ["HideArrowRed", 0];
+							} else {
+								_thermalPosATL = getPosATL _thermal;
+								_thermal setPosATL [_thermalPosATL select 0, _thermalPosATL select 1, _thermalAltitudeMax];
+								_thermal animate ["SizeArrowBlue", (_thermalAltitudeMax - _thermalAltitudeMin) * 0.5];
+								_thermal animate ["HideArrowRed", 1];
+								_thermal animate ["HideArrowBlue", 0];
+							};
 						} else {
-							_thermalPosATL = getPosATL _thermal;
-							_thermal setPosATL [_thermalPosATL select 0, _thermalPosATL select 1, _thermalAltitudeMax];
-							_thermal animate ["SizeArrowBlue", (_thermalAltitudeMax - _thermalAltitudeMin) * 0.5];
 							_thermal animate ["HideArrowRed", 1];
-							_thermal animate ["HideArrowBlue", 0];
+							_thermal animate ["HideArrowBlue", 1];
 						};
 					
 					} forEach _thermals;
@@ -155,7 +162,7 @@ _this spawn {
 			
 		} forEach _vehicles;
 	
-		sleep 0.1; 
+		sleep 0.05; 
 	};
 	
 	player sideChat "END lift.sqf";

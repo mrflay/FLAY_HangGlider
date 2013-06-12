@@ -27,117 +27,23 @@ _this spawn {
 	_unitHasVario = ("FLAY_Flytec3040_Variometer" in weapons _unit);
 	_vehicleHasVario = ("FLAY_Flytec3040_Variometer" in (weapons (vehicle _unit))); // in cargo?
 	
-	if (not _unitHasVario and not _vehicleHasVario) exitWith {
-		player sidechat "no variometer in unit or vehicle inventory";
-	};
+	//if (not _unitHasVario and not _vehicleHasVario) exitWith {
+	//	player sidechat "no variometer in unit or vehicle inventory";
+	//};
 	
 	if (_unit == player) then {
 
-		17 cutRsc ["RscMissionScreen","plain"];
-		waitUntil {!isNull (uiNamespace getVariable "BIS_RscMissionScreen")};
-		uiNamespace setVariable ["FLAY_RscVarioScreen", uiNamespace getVariable "BIS_RscMissionScreen"];
+		17 cutRsc ["FLAY_RscVarioScreen","plain"];
+		waitUntil {!isNull (uiNamespace getVariable "FLAY_RscVarioScreen")};
 				
 		#define UI_DISPLAY	(uiNamespace getVariable "FLAY_RscVarioScreen")
-		#define UI_CONTROL	(1100)
+		#define UI_CONTROL	(4000)
 
 		#define UI_WIDTH	(0.7)
 		#define UI_HEIGHT	(UI_WIDTH * 4/3)
 		#define UI_LAYER(x)	(UI_DISPLAY displayctrl (UI_CONTROL + (x)))
 		
-		#define UI_SETUP(x,pos,img,opacity) \
-				UI_LAYER(x) ctrlsetposition (pos); \
-				UI_LAYER(x) ctrlsettextcolor [1,1,1,1]; \
-				UI_LAYER(x) ctrlsetfade (1-(opacity)); \
-				UI_LAYER(x) ctrlsettext (img); \
-				UI_LAYER(x) ctrlcommit 0;
-		
-		#define UI_FONT(ctrl,fontName,fontHeight) \
-				UI_LAYER(ctrl) ctrlSetFont (fontName); \
-				UI_LAYER(ctrl) ctrlSetFontHeight (fontHeight); \
-				UI_LAYER(ctrl) ctrlCommit 0;
-		
 		#define DECIMAL(x,n) (str(round((x)*(10^(n)))/(10^(n))))
-				
-		_uiBgPos = [
-			(safezoneX + 0.01),
-			(safezoneY + safezoneH) - (UI_HEIGHT) - 0.01,
-			UI_WIDTH,
-			UI_HEIGHT
-		];
-		
-		_uiFgPos = [
-			(_uiBgPos select 0),
-			(_uiBgPos select 1),
-			(_uiBgPos select 2),
-			(_uiBgPos select 3)
-		];		
-		
-		_uiVarioPos = [
-			(_uiBgPos select 0) - 0.07,
-			(_uiBgPos select 1) + 0.275,
-			(_uiBgPos select 2),
-			(_uiBgPos select 3)
-		];
-		
-		_uiSpeedPos = [
-			(_uiBgPos select 0) - 0.07,
-			(_uiBgPos select 1) + 0.275,
-			(_uiBgPos select 2),
-			(_uiBgPos select 3)
-		];
-
-		_uiAltPos = [
-			(_uiBgPos select 0) - 0.08,
-			(_uiBgPos select 1) + 0.48,
-			(_uiBgPos select 2),
-			(_uiBgPos select 3)
-		];
-
-		_uiTempPos = [
-			(_uiBgPos select 0) - 0.08,
-			(_uiBgPos select 1) + 0.54,
-			(_uiBgPos select 2),
-			(_uiBgPos select 3)
-		];		
-		
-		// background
-		UI_SETUP( 1, _uiBgPos, "FLAY\FLAY_HangGlider\data\vario_big\background.paa", 1);	
-		// indicators
-		UI_SETUP( 2, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario01.paa", 0);
-		UI_SETUP( 3, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario02.paa", 0);
-		UI_SETUP( 4, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario03.paa", 0);
-		UI_SETUP( 5, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario04.paa", 0);
-		UI_SETUP( 6, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario05.paa", 0);	
-		UI_SETUP( 7, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario06.paa", 0);	
-		UI_SETUP( 8, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario07.paa", 0);	
-		UI_SETUP( 9, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario08.paa", 0);	
-		UI_SETUP(10, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario09.paa", 0);	
-		UI_SETUP(11, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario10.paa", 0);	
-		UI_SETUP(12, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario11.paa", 0);	
-		UI_SETUP(13, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario12.paa", 0);	
-		UI_SETUP(14, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario13.paa", 0);	
-		UI_SETUP(15, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario14.paa", 0);	
-		UI_SETUP(16, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario15.paa", 0);	
-		UI_SETUP(17, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario16.paa", 0);	
-		UI_SETUP(18, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario17.paa", 0);	
-		UI_SETUP(19, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario18.paa", 0);	
-		UI_SETUP(20, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario19.paa", 0);	
-		UI_SETUP(21, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario20.paa", 0);	
-		UI_SETUP(22, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario21.paa", 0);	
-		UI_SETUP(23, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario22.paa", 0);	
-		UI_SETUP(24, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario23.paa", 0);	
-		UI_SETUP(25, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario24.paa", 0);	
-		UI_SETUP(26, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario25.paa", 0);	
-		UI_SETUP(27, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\vario26.paa", 0);
-		// masks
-		UI_SETUP(28, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\maskdn.paa",  0);
-		UI_SETUP(29, _uiFgPos, "FLAY\FLAY_HangGlider\data\vario_big\maskup.paa",  0);
-		// numeric display 
-		UI_SETUP(200, _uiVarioPos, "", 1);
-		UI_SETUP(201, _uiAltPos, "", 1);
-		UI_SETUP(202, _uiTempPos, "" ,1);
-		UI_SETUP(203, _uiSpeedPos, "", 0);
-		
 	};
 	
 	#define AUDIO_OFF       9
@@ -188,7 +94,11 @@ _this spawn {
 	_unit setVariable ["FLAY.variometer.power.on", true];
 	_powerOn = true;
 	
-	while { alive _unit and (_unitHasVario or _vehicleHasVario) and _powerOn} do {
+	// FIXME: find out how to hide the controls in the ui config.
+	for [{_i=1}, {_i<30}, {_i=_i+1}] do { UI_LAYER(_x) ctrlSetFade 1; UI_LAYER(_x) ctrlCommit 0; };
+	
+	//while { alive _unit and (_unitHasVario or _vehicleHasVario) and _powerOn} do {
+	while { alive _unit and _powerOn} do {
 		
 		sleep 0.05;
 		
@@ -196,9 +106,9 @@ _this spawn {
 		_unitHasVario = ("FLAY_Flytec3040_Variometer" in weapons _unit);
 		_vehicleHasVario = ("FLAY_Flytec3040_Variometer" in (weapons (vehicle _unit))); // cargo?
 	
-		if (not _unitHasVario and not _vehicleHasVario) exitWith {
-			player sidechat "no variometer in unit or vehicle inventory";
-		};
+		//if (not _unitHasVario and not _vehicleHasVario) exitWith {
+		//	player sidechat "no variometer in unit or vehicle inventory";
+		//};
 				
 		_audioSinkTld = _vehicle getVariable ["FLAY.variometer.audio.sink_threshold", -1.5];
 		_audioClimbTld = _vehicle getVariable ["FLAY.variometer.audio.climb_threshold", 0.15];
@@ -207,17 +117,18 @@ _this spawn {
 		_index = AUDIO_OFF;
 
 		_velocity = velocity (_vehicle);		
+		_speed = _velocity call BIS_fnc_magnitude;
 		_vSpeedAvg = _velocity select 2;
 		
 		if (_vSpeedAvg < 0) then {
-			_layer = (2 + round (abs _vSpeedAvg * 5)) min 27;
+			_layer = (1 + round (abs _vSpeedAvg * 5)) min 26;
 			_index = AUDIO_SINK;
 			if (_vSpeedAvg > _audioSinkTld) then { _index = AUDIO_OFF };
 		};
 		
 		if (_vSpeedAvg > 0) then {
-			_layer = (2 + round (_vSpeedAvg * 5)) min 27;
-			_index = (10 + round (2 * _vSpeedAvg)) min 19;
+			_layer = (1 + round (_vSpeedAvg * 5)) min 26;
+			_index = (9 + round (2 * _vSpeedAvg)) min 18;
 			if (_vSpeedAvg < _audioClimbTld) then { _index = AUDIO_OFF };
 		};
 		
@@ -227,12 +138,12 @@ _this spawn {
 		
 		// only display ui for the player unit (sounds are played for all units)
 		if (_unit == player) then {
-			UI_LAYER(200) ctrlSetText DECIMAL(_vSpeedAvg, 1);
-			UI_LAYER(201) ctrlSetText DECIMAL(_altitudeATL, 0);
-			UI_LAYER(202) ctrlSetText DECIMAL(_temperature, 1);
-			UI_LAYER(200) ctrlCommit 0;
-			UI_LAYER(201) ctrlCommit 0;
-			UI_LAYER(202) ctrlCommit 0;
+			UI_LAYER(31) ctrlSetText DECIMAL(_vSpeedAvg, 1);
+			UI_LAYER(32) ctrlSetText DECIMAL(_altitudeATL, 0);
+			UI_LAYER(33) ctrlSetText DECIMAL(_speed * 60.0 * 60.0 / 1000.0, 0);
+			UI_LAYER(31) ctrlCommit 0;
+			UI_LAYER(32) ctrlCommit 0;
+			UI_LAYER(33) ctrlCommit 0;
 			// update climb indicator if vertical speed has changed since last iteration.
 			if (_prevLayer != _layer) then {
 				UI_LAYER(_prevLayer) ctrlsetfade 1;
@@ -243,19 +154,19 @@ _this spawn {
 				};
 				// mask upper or lower part of indicator display
 				if (_vSpeedAvg > 0) then {
-					UI_LAYER(28) ctrlSetFade 0;
-					UI_LAYER(29) ctrlSetFade 1;
-				} else {
+					UI_LAYER(27) ctrlSetFade 0;
 					UI_LAYER(28) ctrlSetFade 1;
-					UI_LAYER(29) ctrlSetFade 0;				
+				} else {
+					UI_LAYER(27) ctrlSetFade 1;
+					UI_LAYER(28) ctrlSetFade 0;				
 				};
-				UI_LAYER(28) ctrlCommit 0;
-				UI_LAYER(29) ctrlCommit 0;				
+				UI_LAYER(27) ctrlCommit 0;
+				UI_LAYER(28) ctrlCommit 0;				
 				_prevLayer = _layer;
 			};
 		};
 		
-		_audioOn = _vehicle getVariable ["FLAY.variometer.audio.on", true];
+		_audioOn = _unit getVariable ["FLAY.variometer.audio.on", true];
 		 
 		if (time > _timeout and _audioOn) then {
 			if (_prevIndex != _index) then {
@@ -270,6 +181,11 @@ _this spawn {
 			};
 			_timeout = time + 0.7;
 		};
+		if (not _audioOn) then {
+			if (not (isNull _soundSource)) then {
+				deleteVehicle _soundSource;
+			};
+		};
 		
 		_powerOn = _unit getVariable ["FLAY.variometer.power.on", true];
 	};
@@ -277,6 +193,9 @@ _this spawn {
 	_unit setVariable ["FLAY.variometer.power.on", false];
 	if (not (isNull _soundSource)) then {
 		deleteVehicle _soundSource;
-	};	
-	17 cutRsc ["Default","plain"];
+	};
+	
+	if (_unit == player) then {
+		17 cutRsc ["FLAY_Default","plain"];
+	};
 };
