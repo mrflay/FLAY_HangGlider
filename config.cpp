@@ -1,20 +1,8 @@
-enum {
-	stabilizedinaxisx = 1,
-	compartment1 = 1,
-	stabilizedinaxisy = 2,
-	compartment2 = 2,
-	stabilizedinaxesboth = 3,
-	compartment3 = 4,
-	compartment4 = 8,
-	stabilizedinaxesnone = 0
-};
-
-
 class CfgPatches
 {
 	class FLAY_HangGlider
 	{
-		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_HangGlider3","FLAY_NightWing","FLAY_DragonWing","FLAY_DeathWing","FLAY_WingSuit","FLAY_ArrowDownHelper"};
+		units[] = {"FLAY_HangGlider","FLAY_HangGlider2","FLAY_WingSuit"};
 		requiredVersion = 0.1;
 		//requiredAddons[] = {"CACharacters","CAData","CASounds","CAUI"};
 		requiredAddons[] = {};
@@ -22,24 +10,6 @@ class CfgPatches
 };
 
 class DefaultEventhandlers;
-
-class CfgDamageAround
-{
-	class DamageAroundPole
-	{
-		radiusRatio = "0.1";
-		indirectHit = "1";
-	};
-};
-class CfgDestructPos
-{
-	class DelayedDestruction
-	{
-		timeBeforeHiding = "0.2";
-		hideDuration = "0.65+lifeTime*0.05";
-	};
-};
-
 
 // ===========================================================================
 // VEHICLES
