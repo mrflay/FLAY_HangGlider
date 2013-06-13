@@ -283,7 +283,7 @@ class CfgVehicles
 				source = "user";
 				animPeriod = 0.000001;
 				initPhase = 0;
-			};			
+			};		
 		};
 
 		class UserActions
@@ -414,12 +414,13 @@ class CfgVehicles
 		driverAction = "WingSuit_Pilot";
 		driverInAction = "WingSuit_Pilot";
 
-		envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
+		//envelope[] = { 0.10, 0.20, 0.5, 0.9, 1.0, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
+		envelope[] = { 0.20, 0.30, 0.6, 1.0, 1.1, 1.5, 2.0, 2.5, 2.5, 3.0, 2.5, 2.5, 2.0, 1.75, 1.75, 1.75, 1.75, 1.5, 1.25, 1.0 };
 
 		maxSpeed = 300;
-		aileronSensitivity = 0.3;
-		elevatorSensitivity = 0.03;
-		wheelSteeringSensitivity = 0.001;
+		aileronSensitivity = 0.6;
+		elevatorSensitivity = 0.06;
+		wheelSteeringSensitivity = 0.002;
 		noseDownCoef = -0.2;
 	};
 	
@@ -893,7 +894,7 @@ class cfgWeapons
 		cursorSize = 1;
 		autoFire = 0;
 		sound[] = {"",10.0,1};
-		magazines[] = {"6Rnd_Grenade_HangGlider","2Rnd_Bomb_HangGlider","4Rnd_Bomb_HangGlider"};
+		magazines[] = {"4Rnd_Bomb_HangGlider"};
 		reloadTime = 1;
 		magazineReloadTime = 0.1;
 		dispersion = 0.015;
@@ -937,37 +938,7 @@ class CfgMagazines
 {
 	class Default;
 	class CA_Magazine: Default {};
-	class 100Rnd_762x51_M240: CA_Magazine {};
 	class VehicleMagazine: CA_Magazine {};
-	class 400Rnd_762x51_M240_HangGlider: 100Rnd_762x51_M240
-	{
-		scope = 2;
-		displayName = "400 Rnd M240";
-		count = 400;
-		//ammo = "B_762x51_Ball";
-		//tracersEvery = 4;
-		//lastRoundsTracer = 4;
-	};	
-	class 6Rnd_Grenade_HangGlider: VehicleMagazine
-	{
-		scope = 2;
-		displayName = "Bomb";
-		ammo = "G_HangGlider_HE";
-		count = 4;
-		initSpeed = 1;
-		maxLeadSpeed = 200;
-		nameSound = "grenade";
-	};
-	class 2Rnd_Bomb_HangGlider: VehicleMagazine
-	{
-		scope = 2;
-		displayName = "Bomb";
-		ammo = "Bo_HangGlider_50";
-		count = 2;
-		initSpeed = 1;
-		maxLeadSpeed = 200;
-		nameSound = "grenade";
-	};
 	class 4Rnd_Bomb_HangGlider: VehicleMagazine
 	{
 		scope = 2;
@@ -989,39 +960,7 @@ class CfgMagazines
 class CfgAmmo
 {
     class Default;
-	class BulletBase;
-	class RocketCore {};
 	class BombCore {};
-    class G_Camel_HE: RocketCore {};
-	class B_545x39_Ball_HangGlider: BulletBase
-	{
-		hit = 8;
-		indirectHit = 0;
-		indirectHitRange = 0;
-		cost = 1;
-		airFriction = -0.001412;
-		caliber = 0.5;
-		model = "\ca\Weapons\Data\bullettracer\tracer_green";
-		tracerScale = 2;
-		tracerStartTime = 0.05;
-		tracerEndTime = 2;
-		nvgOnly = 0;
-	};	
-	class G_HangGlider_HE: G_Camel_HE
-	{
-		model = "\A3\weapons_f\Ammo\UGL_slug";
-		hit = 20;
-		indirectHit = 12;
-		indirectHitRange = 5;
-		visibleFire = 18;
-		audibleFire = 18;
-		explosive = 1;
-		cost = 10;
-		initTime = 0;
-		thrustTime = 0.01;
-		thrust = 0.01;
-		whistleDist = 10;
-	};
 	class Bo_HangGlider_50: BombCore
 	{
 		hit = 100;
@@ -1572,40 +1511,6 @@ class CfgSFX
 	};	
 };
 
-class CfgEnvSounds
-{
-	//class Rain
-	//{
-	//	name = "$STR_DN_RAIN";
-	//	sound[] = {"\Ca\sounds\Ambient\rain\rain_hard1",0.17782794,1};
-	//	soundNight[] = {"\Ca\sounds\Ambient\rain\rain_hard1",0.17782794,1};
-	//};
-	//class WindNoForestHigh
-	//{
-	//	name = "$STR_DN_WIND";
-	//	sound[] = {"ca\sounds\Ambient\forest\wind-global-2",0.03981072,1};
-	//	volume = "(1-forest)*(windy factor[0,1])*(0.1+(hills factor[0,1])*0.9)-(night*0.25)";
-	//};
-	//class Forest
-	//{
-	//	name = "$STR_DN_WIND";
-	//	sound[] = {"ca\sounds\Ambient\forest\forest-day-2",0.03981072,1};
-	//	volume = "forest*(1-night)";
-	//	randSamp11[] = {"ca\sounds\Ambient\forest\forest-sfx-9bird",0.1,1,30,0.14,5,8,10};
-	//	randSamp10[] = {"ca\sounds\Ambient\forest\forest-sfx-12datel",0.1,30,0.125,10,20,40};
-	//	randSamp0[] = {"ca\sounds\Ambient\forest\forest-sfx-5bird",0.12589253,1,30,0.13,4,8,12};
-	//	randSamp1[] = {"ca\sounds\Ambient\forest\forest-sfx-6bird",0.12589253,1,30,0.125,4,8,12};
-	//	randSamp2[] = {"ca\sounds\Ambient\forest\forest-sfx-7bird",0.12589253,1,30,0.125,4,8,12};
-	//	randSamp3[] = {"ca\sounds\Ambient\forest\forest-sfx-8bird",0.12589253,1,30,0.1,4,8,12};
-	//	randSamp8[] = {"ca\sounds\Ambient\forest\forest-sfx-10bird-flapping",0.1,1,30,0.04,10,20,40};
-	//	randSamp9[] = {"ca\sounds\Ambient\forest\forest-sfx-11holub-flapping",0.1,1,30,0.04,10,20,40};
-	//	randSamp4[] = {"ca\sounds\Ambient\forest\forest-sfx-1",0.1,1,30,0.025,4,8,10};
-	//	randSamp5[] = {"ca\sounds\Ambient\forest\forest-sfx-2",0.1,1,30,0.025,4,8,10};
-	//	randSamp6[] = {"ca\sounds\Ambient\forest\forest-sfx-3",0.1,1,30,0.025,4,8,10};
-	//	randSamp7[] = {"ca\sounds\Ambient\forest\forest-sfx-4",0.1,1,30,0.025,4,8,10};
-	//	random[] = {"randSamp11","randSamp10","randSamp0","randSamp1","randSamp2","randSamp3","randSamp8","randSamp9","randSamp4","randSamp5","randSamp6","randSamp7"};
-	//};
-};
 
 // ===========================================================================
 // DIALOGS
@@ -1614,7 +1519,6 @@ class CfgEnvSounds
 
 
 // hide the landing auto pilot and eject actions from the menu
-
 class CfgActions
 {
 	class None
@@ -1637,4 +1541,3 @@ class CfgActions
 	class Eject: Hidden {};
 	class GetOut: Hidden {};
 };
-
