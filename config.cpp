@@ -35,7 +35,6 @@ class CfgVehicles
 		scope = 1;
 		armor = 5;
 		
-		
 		side = 4;
 		Icon = "\flay\flay_hangglider\data\glider_ico_ca.paa";
 		picture = "\flay\flay_hangglider\data\glider_pic_ca.paa";
@@ -62,14 +61,10 @@ class CfgVehicles
 		driverRightHandAnimName = "pilot_righthand";
 		driverLeftLegAnimName = "pilot_leftfoot";
 		driverRightLegAnimName = "pilot_rightfoot";
+		
 		simulation="airplane";
 		
-		class DestructionEffects {};
-		explosionEffects = "NoExplosion";
-		CraterEffects = "NoCrater";
-		
-		destrType = "DestructNo";
-		secondaryExplosion = -1;
+		damageEffect = "";
 		crewVulnerable = true;
 		
 		threat[] = {1,0.900000,0.100000};
@@ -80,6 +75,7 @@ class CfgVehicles
 		mfMax = 80;
 		mFact = 0;
 		tBody = 0;
+		
 		turnCoef = 5;//TEST
 		outsideSoundFilter = 0;
 		wheelCircumference = 2.28;
@@ -139,7 +135,7 @@ class CfgVehicles
 	{
 		scope = 2;
 	
-		class EventHandlers: DefaultEventhandlers
+		class EventHandlers: DefaultEventHandlers
 		{
 			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\scripts\init_HangGlider.sqf"";";
 		};
@@ -419,8 +415,6 @@ class CfgVehicles
 			maxAngleY = 110;
 		};
 
-		occludeSoundsWhenIn = 1.0;
-		obstructSoundsWhenIn = 1.0;
 		envelope[] = {0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9};
 		maxSpeed = 1;
 		landingSpeed = 1;
