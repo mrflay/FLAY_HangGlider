@@ -1,27 +1,28 @@
 CREDITS
 =======
 
-BRSSEB			OFP Addon Tutorial Site
-				http://ofp.gamepark.cz/_hosted/brsseb/tutorials.htm
+pumpkin			Author of fn_soaring.sqf script (used in ridge lift module)
 
-Clayman			Arma2:OA Animation Viewer
-				http://www.armaholic.com/page.php?id=10941&highlight=ANIMATIONVIEWER
+Sakura_Chan		Config help
 
-Maddmatt/BIS	Aircraft vapour simulation
+super-truite		Config help
 
-CGTextures		Various textures
-				http://cgtextures.com/
-			 
-freesound		Various sound effects
-				http://www.freesound.org
-			
-soundbible		Various sound effects
-				http://soundbible.com/
-			   
 RKSL-Rock		Envelope info (biki)
 
-dawgbyte77		Notepad texture
-				http://www.flickr.com/photos/dawgbyte77/3058183665/
+freesound.org		Various sound effects
+			http://www.freesound.org
 
-fuzzimo.com		Notebook and book paper textures				
-				http://www.fuzzimo.com/free-seamless-textures-notebook-papers/
+BRSSEB			OFP Addon Tutorial Site
+			http://ofp.gamepark.cz/_hosted/brsseb/tutorials.htm
+
+Clayman			Arma2:OA Animation Viewer
+			http://www.armaholic.com/page.php?id=10941&highlight=ANIMATIONVIEWER
+
+CGTextures		Various textures
+			http://cgtextures.com/
+			 
+			
+
+
+
+
