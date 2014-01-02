@@ -219,25 +219,25 @@ class CfgVehicles
 		{
 			class CreakNoiseIn1
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak1.ogg",0.31622776,1,80};
+				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak1.ogg",1,1,80};
 				frequency = "(randomizer*0.05+1.0)";
 				volume = "10*(speed factor[1, 80])*(1-camPos)";
 			};
 			class CreakNoiseIn2
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak1.ogg",0.31622776,1,80};
+				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak1.ogg",1,1,80};
 				frequency = "(randomizer*0.5+0.5)";
 				volume = "10*(speed factor[70, 100])*(1-camPos)";
 			};
 			class CreakNoiseIn3
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak3.ogg",0.31622776,1,80};
+				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak3.ogg",1,1,80};
 				frequency = "(randomizer*0.5+0.2)";
 				volume = "10*(speed factor[70, 100])*(1-camPos)";
 			};			
 			class CreakNoiseOut
 			{
-				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak1.ogg",0.31622776,1,80};
+				sound[] = {"\FLAY\FLAY_HangGlider\hangglider\sounds\squeak1.ogg",1,1,80};
 				frequency = "(randomizer*0.05+1.0)";
 				volume = "10*camPos*(speed factor[1, 80])";
 			};

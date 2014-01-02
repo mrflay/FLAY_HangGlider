@@ -268,21 +268,12 @@ class CfgVehicles
 class CfgSFX
 {
 	access = 2;
-	class FLAY_VarioSfx
-	{
-		sounds[] = {"sound3"};
-		name = "FLAY_VarioSfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario1.ogg",0.31622776,1,30,0.5,0,2,5};
-		sound2[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario2.ogg",0.31622776,1,30,0.4,0,1,10};
-		sound3[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario3.ogg",0.31622776,1,30,1,0,0,0};
-		empty[] = {"",0,0,0,0,0,0,0};
-	};
 	
 	class FLAY_VarioDn01Sfx
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioDn01Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\varioDn1.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\varioDn1.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -290,7 +281,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_SilenceSfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\silence.ogg",0.61622776,1,1,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\silence.ogg",1,1,1,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -298,7 +289,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp01Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario1.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario1.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -306,7 +297,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp02Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario2.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario2.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -314,7 +305,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp03Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario3.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario3.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -322,7 +313,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp04Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario4.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario4.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -330,7 +321,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp05Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario5.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario5.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -338,7 +329,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp06Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario6.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario6.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -346,7 +337,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp07Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario7.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario7.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -354,7 +345,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp08Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario8.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario8.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 
@@ -362,7 +353,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp09Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario9.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario9.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -370,7 +361,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp10Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario10.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario10.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -378,7 +369,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp11Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario11.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario11.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -386,7 +377,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp12Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario12.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario12.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -394,7 +385,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp13Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario13.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario13.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -402,7 +393,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp14Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario14.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario14.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -410,7 +401,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp15Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario15.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario15.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -418,7 +409,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp16Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario16.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario16.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -426,7 +417,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp17Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario17.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario17.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -434,7 +425,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp18Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario18.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario18.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -442,7 +433,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp19Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario19.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario19.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -450,7 +441,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp20Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario20.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario20.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -458,7 +449,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp21Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario21.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario21.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -466,7 +457,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp22Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario22.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario22.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -474,7 +465,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp23Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario23.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario23.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -482,7 +473,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp24Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario24.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario24.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -490,7 +481,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp25Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario25.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario25.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -498,7 +489,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp26Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario26.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario26.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -506,7 +497,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp27Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario27.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario27.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -514,7 +505,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp28Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario28.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario28.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -522,7 +513,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp29Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario29.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario29.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -530,7 +521,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp30Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario30.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario30.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -538,7 +529,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp31Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario31.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario31.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -546,7 +537,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp32Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario32.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario32.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -554,7 +545,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp33Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario33.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario33.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 			
@@ -562,7 +553,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp34Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario34.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario34.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -570,7 +561,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp35Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario35.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario35.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 	
@@ -578,7 +569,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp36Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario36.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario36.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -586,7 +577,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp37Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario37.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario37.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -594,7 +585,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp38Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario38.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario38.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 		
@@ -602,7 +593,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp39Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario39.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario39.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};	
 	
@@ -610,7 +601,7 @@ class CfgSFX
 	{
 		sounds[] = {"sound1"};
 		name = "FLAY_VarioUp40Sfx";
-		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario40.ogg",0.61622776,1,300,1.0,0,0,0};
+		sound1[] = {"\FLAY\FLAY_HangGlider\variometer\sounds\vario40.ogg",1,1,300,1.0,0,0,0};
 		empty[] = {"",0,0,0,0,0,0,0};
 	};
 };

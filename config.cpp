@@ -32,7 +32,7 @@ class CfgVehicles
 		};
 		
 		damageEffect = ""; // disable smoke when damaged
-		//crewVulnerable = true;		
+		crewVulnerable = true; // default?
 			
 		armor = 5;		
 		side = 4;
@@ -40,7 +40,7 @@ class CfgVehicles
 		picture = "\flay\flay_hangglider\hangglider\glider_pic_ca.paa";
 		mapSize = 10;
 		
-		nameSound = "veh_parachute";
+		nameSound = "veh_air_parachute_s";
 		accuracy = 0.1;
 		camouflage = 1;
 		audible = 0;
@@ -48,12 +48,12 @@ class CfgVehicles
 		fuelCapacity = 0;
 		
 		soundEngine[] = {};
-		soundEnviron[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_let",0.31622776,1,80};
-		soundGetIn[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_getIN",0.31622776,1,80};
-		soundGetOut[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_getIN",0.31622776,1,80};
-		soundCrash[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_dopad",0.031622775,0,80};
-		soundLandCrash[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_dopad",0.031622775,0,80};
-		soundWaterCrash[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_dopadvoda",3.1622777,0,80};
+		soundEnviron[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_let",1,1,80};
+		soundGetIn[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_getIN",1,1,80};
+		soundGetOut[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_getIN",1,1,80};
+		soundCrash[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_dopad",1,1,80};
+		soundLandCrash[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_dopad",1,1,80};
+		soundWaterCrash[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_dopadvoda",1,1,80};
 
 		driverLeftHandAnimName = "pilot_lefthand";
 		driverRightHandAnimName = "pilot_righthand";
@@ -68,12 +68,9 @@ class CfgVehicles
 		htMin = 60;
 		htMax = 1800;
 		afMax = 100;
-		mfMax = 80;
-		mFact = 0;
-		tBody = 0;
-				
-		//turnCoef = 5;//TEST
-		//wheelCircumference = 2.28;
+		mfMax = 100;
+		mFact = 0.2;
+		tBody = 150;
 		
 		transportMaxMagazines = 0;
 		transportMaxWeapons = 0;
@@ -101,17 +98,12 @@ class CfgVehicles
 		getInAction = "GetInLow";
 		getOutAction = "GetOutLow";
 		
-		cabinOpening = 1;
 		attenuationEffectType = "OpenCarAttenuation";
 		obstructSoundLFRatio = 0;
-		obstructSoundsWhenIn = 0;
-		//obstructSoundsWhenIn = 0.316228;
-		//occludeSoundLFRatio = 0.25;
+		obstructSoundsWhenIn = 1;
 		occludeSoundLFRatio = 0;
-		occludeSoundsWhenIn = 0;
-		//occludeSoundsWhenIn = 0.1;
-		outsideSoundFilter = 0.5;
-		//outsideSoundFilter = 0;
+		occludeSoundsWhenIn = 1;
+		outsideSoundFilter = 1;
 		
 		class Sounds: Sounds {};
 		class Turrets {};
