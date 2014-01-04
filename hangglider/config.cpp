@@ -51,7 +51,7 @@ class CfgVehicles
 		
 		//canFloat = true;
 		//canBeShot = true;
-		damageResistance = 0.000000000001;
+		damageResistance = 0.004;
 		//damperSize = 2;
 		//damperForce = 0.5;
 		//hideUnitInfo = true;
