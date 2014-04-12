@@ -4,7 +4,7 @@ class CfgPatches
 	{
 		units[] = {"FLAY_HangGlider","FLAY_HangGliderAI"};
 		requiredVersion = 0.1;
-		requiredAddons[] = {"FLAY_HangGlider_Core"};
+		requiredAddons[] = {"FLAY_HangGlider_Core","FLAY_HangGlider_Weapons"};
 	};
 };
 
@@ -35,14 +35,11 @@ class CfgVehicles
 		displayName = "Hang Glider";
 		model = "FLAY\FLAY_HangGlider\hangglider\FLAY_HangGlider";
 
-		//weapons[] = {};
-		//magazines[] = {};	
-		
-		weapons[] = {"HangGliderBombs"};
-		magazines[] = {"4Rnd_Bomb_HangGlider"};
+		weapons[] = {"HangGliderGrenades"};
+		magazines[] = {"6Rnd_Molotov","6Rnd_Molotov"};
 		
 		armor = 5;
-		accuracy = 0.5;
+		accuracy = 2.5;
 		camouflage = 2;
 
 		//airFriction0[] = {25,12,2.500000};
@@ -242,13 +239,23 @@ class CfgVehicles
 				volume = "10*camPos*(speed factor[1, 80])";
 			};
 		};
+		
+		class assembleInfo
+		{
+			primary = 1;
+			base = "";
+			assembleTo = "";
+			displayName = "";
+			dissasembleTo[] = {"FLAY_HangGlider_Bag"};
+		};
+		
 	};
 
 	class FLAY_HangGliderAI: FLAY_HangGlider
 	{
-		scope = 2;
+		scope = 1;
 		displayName = "Hang Glider (AI)";
-		model = "FLAY\FLAY_HangGlider\hangglider\FLAY_HangGlider2";
+		model = "FLAY\FLAY_HangGlider\hangglider\FLAY_HangGliderAI";
 		fuelCapacity = 1000;
 		maxSpeed = 100;
 		landingSpeed = 70;
@@ -260,13 +267,71 @@ class CfgVehicles
 		noseDownCoef = 0.00000025;
 	};
 		
-	class B_AssaultPack_blk;
-	class FLAY_HangGlider_Bag: B_AssaultPack_blk
+	class FLAY_HangGliderBlack: FLAY_HangGlider
+	{
+		scope = 2;
+		displayName = "Night Wing";
+		model = "FLAY\FLAY_HangGlider\hangglider\FLAY_HangGliderBlack";
+
+		armor = 5;
+		accuracy = 4.5;
+		camouflage = 0.75;
+
+		weapons[] = {"HangGliderGrenades","HangGliderBombs","HangGliderMines"};
+		magazines[] = {"3Rnd_ClusterGrenades","3Rnd_ClusterGrenades","2Rnd_Bomb_HE","2Rnd_Bomb_HE","3Rnd_ClusterAPMines","6Rnd_Molotov","6Rnd_Molotov"};
+		
+		//envelope[] = { 0.1, 0.8, 1.5, 2.0, 2.7, 3.0, 3.1, 3.2, 3.4, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.8, 2.5, 2.3, 2.0 };
+		//maxSpeed = 120;
+		//aileronSensitivity = 2;
+		//elevatorSensitivity = 0.25;
+		//wheelSteeringSensitivity = 5;
+		//noseDownCoef = 0.0025;
+		
+		class assembleInfo
+		{
+			primary = 1;
+			base = "";
+			assembleTo = "";
+			displayName = "";
+			dissasembleTo[] = {"FLAY_HangGliderBlack_Bag"};
+		};
+		
+	};
+	
+	class Weapon_Bag_Base;
+	class B_UAV_01_backpack_F: Weapon_Bag_Base
+	{
+		class assembleInfo;
+	};	
+	class FLAY_HangGlider_Bag: B_UAV_01_backpack_F
 	{
 		scope = 2;
 		displayName = "Hang Glider Kit";
 		descriptionShort = "Hang Glider Kit";
+		side = 4;
+		faction = "CIV_F";
+		author = "mrflay";
+		maximumLoad = 0;
+		mass = 300;
+		class assembleInfo: assembleInfo
+		{
+			base = "";
+			displayName = "";
+			assembleTo = "FLAY_HangGlider";
+		};		
 	};
+	class FLAY_HangGliderBlack_Bag: FLAY_HangGlider_Bag
+	{
+		scope = 2;
+		displayName = "Night Wing Kit";
+		descriptionShort = "Night Wing Kit";
+		class assembleInfo: assembleInfo
+		{
+			base = "";
+			displayName = "";
+			assembleTo = "FLAY_HangGliderBlack";
+		};		
+	};	
 		
 };
 

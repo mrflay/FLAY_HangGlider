@@ -140,7 +140,9 @@ class CfgVehicles
 					
 		class ModuleDescription: ModuleDescription
 		{
-			description = "";
+			description = "Thermal lift effect"; // Short description, will be formatted as structured text
+	 		position = 1; // Position is taken into effect
+			direction = 0; // Direction is taken into effect
 		};
 	};	
 	class FLAY_ModuleRidgeLift: Module_F
@@ -216,6 +218,8 @@ class CfgVehicles
 		class ModuleDescription: ModuleDescription
 		{
 			description = "Ridge lift effect";
+	 	 	position = 0; // Position is taken into effect
+			direction = 1; // Direction is taken into effect
 		};
 	};
 };

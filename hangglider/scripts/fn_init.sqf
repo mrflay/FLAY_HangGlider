@@ -12,13 +12,9 @@ FLAY_HangGlider_EH_GroundKeyUp = compile preprocessFile "\FLAY\FLAY_HangGlider\h
 FLAY_HangGlider_EH_GetIn = compile preprocessFile "\FLAY\FLAY_HangGlider\hangglider\scripts\ev_getIn.sqf";
 FLAY_HangGlider_EH_GetOut = compile preprocessFile "\FLAY\FLAY_HangGlider\hangglider\scripts\ev_getOut.sqf";
 
-_glider addEventHandler ["fired", {addCamShake [3, 0.25, 75];}];
+_glider addEventHandler ["fired", "_this call FLAY_fnc_clusterGrenades;"];
 _glider setVehicleLock "LOCKED";
-
-// EXPERIMENTAL - assemble / disassemble
-//[_glider, "FLAY.craft.ui.pos_assemble","Disassemble Hang Glider","FLAY\FLAY_HangGlider\hangglider\scripts\ev_disassemble.sqf"] execVM "FLAY\FLAY_HangGlider\hangglider\scripts\fn_assemble.sqf";
-
-_glider addAction ["Disassemble", "FLAY\FLAY_HangGlider\hangglider\scripts\ev_disassemble.sqf", [], -1, false, true, "", "backpack player == ''"];
+//_glider addAction ["Disassemble", "FLAY\FLAY_HangGlider\hangglider\scripts\ev_disassemble.sqf", [], -1, false, true, "", "(backpack _this == '') and (count crew _target == 0)"];
 
 [_glider] spawn {
 
@@ -33,7 +29,7 @@ _glider addAction ["Disassemble", "FLAY\FLAY_HangGlider\hangglider\scripts\ev_di
 	_trail1 attachto [_glider,[0,0,0],"swoop"];
 	_trail1 setParticleRandom [0.2, [0.05, 0.05, 0.05], [0, 0, 0], 0, 0, [0, 0, 0, 0], 0, 0];
 
-	
+	// make into fsm
 	while { alive _glider } do {
 		
 		if (vehicle player == _glider) then {
@@ -55,7 +51,7 @@ _glider addAction ["Disassemble", "FLAY\FLAY_HangGlider\hangglider\scripts\ev_di
 			_posASL = getPosASL _glider;
 			_xy = [_posASL select 0, _posASL select 1];
 			_altitudeASL = _posASL select 2;
-			_trail1 setdropinterval 0;
+			_trail1 setDropInterval 0;
 			
 			if (_altitudeASL < 5) then {
 				if (surfaceIsWater _xy) then {
@@ -114,7 +110,11 @@ _glider addAction ["Disassemble", "FLAY\FLAY_HangGlider\hangglider\scripts\ev_di
 								
 				sleep 0.05;
 			} else {
-				sleep 1;	
+				//_airborne = _glider getVariable ["FLAY_HangGlider_airborne", false];				
+				//if (not _airborne) then {
+				//	[_glider] call FLAY_HangGlider_fnc_Airborne;
+				//};
+				sleep 1;
 			};
 			
 

@@ -4,7 +4,7 @@ class CfgPatches
 	{
 		units[] = {"FLAY_Wingsuit"};
 		requiredVersion = 0.1;
-		requiredAddons[] = {"FLAY_HangGlider_Core"};
+		requiredAddons[] = {"FLAY_HangGlider_Core","FLAY_HangGlider_Weapons"};
 	};
 };
 
@@ -24,7 +24,7 @@ class CfgVehicles
 	
 	class FLAY_Wingsuit: FLAY_GliderBase
 	{
-		scope = 2;
+		scope = 1;
 
 		class EventHandlers: EventHandlers
 		{

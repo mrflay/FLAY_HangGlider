@@ -23,7 +23,7 @@ _speed = sqrt((_v select 0)^2+(_v select 1)^2+(_v select 2)^2);
 if (_key in _up) then
 {
 	_glider animate ["pilotposz2",0.3];
-	_k = 0.05;
+	_k = 0.1;
 	if (_speed > 30) then {
 		_k = 0;
 	};	

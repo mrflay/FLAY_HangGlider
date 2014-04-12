@@ -188,6 +188,7 @@ _this spawn {
 		};
 		
 		_powerOn = _unit getVariable ["FLAY.variometer.power.on", true];
+		_powerOn = _powerOn and _vehicle != _unit; // power off when exiting vehicle
 	};
 	
 	_unit setVariable ["FLAY.variometer.power.on", false];

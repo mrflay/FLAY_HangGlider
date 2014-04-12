@@ -4,7 +4,7 @@ class CfgPatches
 	{
 		units[] = {"FLAY_Paraglider"};
 		requiredVersion = 0.1;
-		requiredAddons[] = {"FLAY_HangGlider_Core"};
+		requiredAddons[] = {"FLAY_HangGlider_Core","FLAY_HangGlider_Weapons"};
 	};
 };
 

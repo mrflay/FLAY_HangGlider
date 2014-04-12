@@ -68,7 +68,7 @@ class CfgVehicles
 	
 	class FLAY_Thermal: Static
 	{
-		scope = 2;
+		scope = 1;
 		displayName = "FLAY Thermal";
 		model = "FLAY\FLAY_HangGlider\thermals\FLAY_Thermal.p3d";
 		vehicleClass = "Misc";

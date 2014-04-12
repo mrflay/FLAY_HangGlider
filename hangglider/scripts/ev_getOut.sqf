@@ -21,8 +21,22 @@ if (_position == "DRIVER" and _unit == player) then {
 	_unit playAction "ResetGesture";
 	
 	moveOut _unit;
+	
 	_unit setPosASL [getPosASL _glider select 0, getPosASL _glider select 1, getPosASL _glider select 2];
 	_unit setDir (getDir _glider);
+	
+	_item = currentWeapon _unit;
+	_type = getNumber (configFile >> "cfgWeapons" >> _item >> "type");
+	_anim = "AmovPknlMstpSnonWnonDnon";
+
+	switch _type do {
+	  case 1 : { _anim = "AmovPknlMstpSlowWrflDnon"; };
+	  case 2 : { _anim = "AmovPknlMstpSlowWpstDnon"; };
+	  case 4 : { _anim = "AmovPknlMstpSlowWlnrDnon"; };
+	  default  { _anim = "AmovPknlMstpSnonWnonDnon"; };
+	};
+
+	_unit switchMove _anim;	
 	
 	_glider animate ["LandingGear", 0.15];
 	_glider setVectorUp (vectorUp _glider);
