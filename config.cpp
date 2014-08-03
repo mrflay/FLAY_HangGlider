@@ -46,6 +46,8 @@ class CfgVehicles
 		audible = 0;
 		hasGunner = 0;
 		fuelCapacity = 0;
+		fuelExplosionPower = 0;
+		damageEffect = "";
 		
 		soundEngine[] = {};
 		soundEnviron[] = {"\FLAY\FLAY_Hangglider\hangglider\sounds\padak_let",1,1,80};

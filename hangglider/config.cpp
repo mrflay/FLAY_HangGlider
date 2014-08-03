@@ -2,7 +2,7 @@ class CfgPatches
 {
 	class FLAY_HangGlider
 	{
-		units[] = {"FLAY_HangGlider","FLAY_HangGliderAI"};
+		units[] = {"FLAY_HangGlider","FLAY_HangGliderBlack","FLAY_HangGliderAI","FLAY_HangGliderWest","FLAY_HangGliderEast","FLAY_HangGliderG","FLAY_HangGlider_Bag","FLAY_HangGliderBlack_Bag"}
 		requiredVersion = 0.1;
 		requiredAddons[] = {"FLAY_HangGlider_Core","FLAY_HangGlider_Weapons"};
 	};
@@ -24,8 +24,9 @@ class CfgVehicles
 	
 	class FLAY_HangGlider: FLAY_GliderBase
 	{
-		scope = 2;
-
+		scope = 2;		
+		curatorScope = 2;
+		
 		class EventHandlers: EventHandlers
 		{
 			init = "_scr = _this execVM ""\FLAY\FLAY_HangGlider\hangglider\scripts\fn_init.sqf"";";
@@ -331,8 +332,31 @@ class CfgVehicles
 			displayName = "";
 			assembleTo = "FLAY_HangGliderBlack";
 		};		
+	};
+	class FLAY_HangGliderWest: FLAY_HangGliderBlack
+	{
+		vehicleClass = "Air";
+		side = 1;
+		faction = "BLU_F";
+		crew = "B_Helipilot_F";
+		typicalCargo[] = {"B_Helipilot_F"};
+	};
+	class FLAY_HangGliderEast: FLAY_HangGliderBlack
+	{
+		vehicleClass = "Air";
+		side = 0;
+		faction = "OPF_F";
+		crew = "O_Helipilot_F";
+		typicalCargo[] = {"O_Helipilot_F"};
+	};
+	class FLAY_HangGliderG: FLAY_HangGliderBlack
+	{
+		vehicleClass = "Air";
+		side = 2;
+		faction = "IND_F";
+		crew = "I_Helipilot_F";
+		typicalCargo[] = {"I_Helipilot_F"};
 	};	
-		
 };
 
 // ===========================================================================
