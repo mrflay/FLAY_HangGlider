@@ -57,8 +57,8 @@ class CfgVehicles
 
 		driverLeftHandAnimName = "pilot_lefthand";
 		driverRightHandAnimName = "pilot_righthand";
-		driverLeftLegAnimName = "pilot_leftfoot";
-		driverRightLegAnimName = "pilot_rightfoot";
+		//driverLeftLegAnimName = "pilot_leftfoot";
+		//driverRightLegAnimName = "pilot_rightfoot";
 		
 		simulation="airplane";
 		unitInfoType = "RscUnitInfoNoHUD";		
